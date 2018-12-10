@@ -5,16 +5,19 @@
  */
 package l.ileinterdite;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author rousstan
  */
 public class Tuile {
-    
+    private NomTuile nom;
     private EtatTuile etatTuile;
     private ArrayList<Aventurier> joueursSurGrille = new ArrayList();
 
-    public Tuile(EtatTuile etatTuile, ArrayList<Aventurier> joueursSurGrille) {
+    public Tuile(NomTuile nom, EtatTuile etatTuile, ArrayList<Aventurier> joueursSurGrille) {
+        this.nom = nom;
         this.etatTuile = etatTuile;
         this.joueursSurGrille = joueursSurGrille;
     }
@@ -23,7 +26,7 @@ public class Tuile {
         return etatTuile;
     }
 
-    public ArrayList<Aventurier> getJoueursSurGrille() {
+    public ArrayList<Aventurier> arriveJoueur() {
         return joueursSurGrille;
     }
 
@@ -38,4 +41,10 @@ public class Tuile {
     public void departJoueur(Aventurier joueur) {
         this.joueursSurGrille.remove(joueur);
     }
+
+    public Tuile(NomTuile nom) {
+        this.nom = nom;
+    }
+    
+    
 }
