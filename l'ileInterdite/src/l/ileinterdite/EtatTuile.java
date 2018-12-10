@@ -9,7 +9,7 @@ package l.ileinterdite;
  *
  * @author rousstan
  */
-public class EtatTuile {
+public enum EtatTuile {
     NORMAL,
     INONDEE,
     NOYEE;
