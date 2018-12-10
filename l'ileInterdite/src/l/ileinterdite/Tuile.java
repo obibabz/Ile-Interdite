@@ -23,7 +23,7 @@ public class Tuile {
         return etatTuile;
     }
 
-    public ArrayList<Aventurier> arriveJoueur() {
+    public ArrayList<Aventurier> getJoueursSurGrille() {
         return joueursSurGrille;
     }
 
