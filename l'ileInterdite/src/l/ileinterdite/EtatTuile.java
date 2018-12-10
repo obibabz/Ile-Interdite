@@ -11,6 +11,6 @@ package l.ileinterdite;
  */
 public class EtatTuile {
     NORMAL,
-    INNONDEE,
+    INONDEE,
     NOYEE;
 }
