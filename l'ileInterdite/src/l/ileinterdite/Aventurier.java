@@ -13,12 +13,10 @@ public abstract class Aventurier {
  
     
     String nomJoueur;
-    Tuile caseDepart;
     Tuile position;
 
-    public Aventurier(String nomJoueur, Tuile caseDepart, Tuile position) {
+    public Aventurier(String nomJoueur , Tuile position) {
         this.nomJoueur = nomJoueur;
-        this.caseDepart = caseDepart;
         this.position = position;
     }
 
@@ -26,9 +24,6 @@ public abstract class Aventurier {
         return nomJoueur;
     }
 
-    public Tuile getCaseDepart() {
-        return caseDepart;
-    }
 
     public Tuile getPosition() {
         return position;
