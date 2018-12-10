@@ -37,7 +37,7 @@ public abstract class Aventurier {
         
     }
     
-    public void getTuilesAssechables() {
+    public void getTuilesAssechables(Grille g) {
         
     }
     
