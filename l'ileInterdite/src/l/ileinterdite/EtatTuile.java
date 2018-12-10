@@ -10,5 +10,7 @@ package l.ileinterdite;
  * @author rousstan
  */
 public class EtatTuile {
-    
+    NORMAL,
+    INNONDEE,
+    NOYEE;
 }
