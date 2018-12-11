@@ -15,12 +15,10 @@ public abstract class Aventurier {
  
     
     String nomJoueur;
-    Tuile caseDepart;
     Tuile position;
 
-    public Aventurier(String nomJoueur, Tuile caseDepart, Tuile position) {
+    public Aventurier(String nomJoueur , Tuile position) {
         this.nomJoueur = nomJoueur;
-        this.caseDepart = caseDepart;
         this.position = position;
     }
 
@@ -28,9 +26,6 @@ public abstract class Aventurier {
         return nomJoueur;
     }
 
-    public Tuile getCaseDepart() {
-        return caseDepart;
-    }
 
     public Tuile getPosition() {
         return position;
@@ -42,13 +37,13 @@ public abstract class Aventurier {
     
     public ArrayList<Tuile> getTuilesAccessibles(Grille g){
         ArrayList<Tuile> tuilesAdj = g.getTuileAdj(position);
-        ArrayList<Tuile tuilesAccess = g.getTuilesNonCoulees(tuilesAdj);
+        ArrayList<Tuile> tuilesAccess = g.getTuilesNonCoulees(tuilesAdj);
         return tuilesAccess;
     }
     
     public ArrayList<Tuile> getTuilesAssechables(Grille g) {
         ArrayList<Tuile> tuilesAdj = g.getTuileAdj(position);
-        ArrayList<Tuile tuilesAssech = g.getTuilesInondees(tuilesAdj);
+        ArrayList<Tuile> tuilesAssech = g.getTuilesInondees(tuilesAdj);
         return tuilesAssech;
     }
     
