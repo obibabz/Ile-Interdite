@@ -37,7 +37,7 @@ public class Grille {
         int i = 0;
         int j = 0;
         
-        while (i < 6 && grille[i][j]!= tuile){
+        while (i < 6 && grille[i][j] != tuile){
             j = 0;
             while ( j < 6 && grille[i][j]!=tuile){
                 j++;
