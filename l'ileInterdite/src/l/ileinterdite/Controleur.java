@@ -9,6 +9,78 @@ package l.ileinterdite;
  *
  * @author rousstan
  */
+        
+import java.util.ArrayList;
+import java.util.Scanner;
+
 public class Controleur {
+    
+    private int nbActionsRestantes;
+    
+    /**
+     *
+     * @param nbJoueurs
+     * @return
+     */
+    public ArrayList<Aventurier> getListeAventuriers(int nbJoueurs){
+        String nomj;
+        ArrayList<Aventurier> ListeAventuriers;
+        ListeAventuriers = new ArrayList();
+        Scanner sc = new Scanner(System.in);
+        
+        for(int i=1;i<=nbJoueurs;i++){
+            System.out.println("Nom du joueur "+i+" : ");
+            nomj=sc.nextLine();
+            }
+        return ListeAventuriers;
+            
+        }
+
+    
+    
+    
+    
+    
+    
+    public void gererDeplacement(){
+    
+    }
+    
+    public void gererAssechement(){
+    
+    }
+
+    /**
+     * @return the nbActionsRestantes
+     */
+    public int getNbActionsRestantes() {
+        return nbActionsRestantes;
+    }
+
+    /**
+     * @param nbActionsRestantes the nbActionsRestantes to set
+     */
+    public void setNbActionsRestantes(int nbActionsRestantes) {
+        this.nbActionsRestantes = nbActionsRestantes;
+    }
+    
+    public void getJoueurCourant(){
+    
+    }
+    
+    /**
+     *
+     * @return
+     */
+    public Grille getGrille(){
+        return (null);
+    
+    }
+    
+    
+    public void getTuile(){
+    
+    }
+    
     
 }
