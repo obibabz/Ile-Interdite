@@ -19,9 +19,11 @@ public class Plongeur extends Aventurier{
     
     @Override
    public ArrayList<Tuile> getTuilesAccessibles(Grille g){
+       
        ArrayList <Tuile> tuilesAdj = g.getTuileAdj(position);
        ArrayList <Tuile> tuilesAccess = g.getTuilesNonCoulees(tuilesAdj);
        ArrayList <Tuile> tuilesAdjPS = g.getTuilesPasSeches(tuilesAdj);
+       
        for(Tuile t : tuilesAdjPS){
            ArrayList <Tuile> tAdj = g.getTuileAdj(t);
            ArrayList <Tuile> tAdjPC = g.getTuilesNonCoulees(tAdj);
@@ -37,6 +39,7 @@ public class Plongeur extends Aventurier{
                }
            }
        }
+       
        return tuilesAccess;
    }
         
