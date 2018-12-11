@@ -53,7 +53,7 @@ public class Grille {
         return liste;
     }
     
-        public ArrayList<Tuile> getTuileDiag(Tuile tuile){
+    public ArrayList<Tuile> getTuileDiag(Tuile tuile){
         
         ArrayList<Tuile> liste = new ArrayList();
         
@@ -74,5 +74,35 @@ public class Grille {
         liste.add(getTuile(i-1,j-1));
         
         return liste;
+    }
+    
+    public ArrayList<Tuile> getTuilesInondees(ArrayList<Tuile> tuiles){
+        ArrayList<Tuile> tuilesInondees = new ArrayList();
+        for(Tuile tuile : tuiles){
+            if (tuile.getEtatTuile() == EtatTuile.INONDEE){
+                tuilesInondees.add(tuile);
+            }
+        }
+        return tuilesInondees;
+    }
+    
+    public ArrayList<Tuile> getTuilesPasSeches(ArrayList<Tuile> tuiles){
+        ArrayList<Tuile> tuilesPasSeches = new ArrayList();
+        for(Tuile tuile : tuiles){
+            if (tuile.getEtatTuile() != EtatTuile.NORMAL){
+                tuilesPasSeches.add(tuile);
+            }
+        }
+        return tuilesPasSeches;
+    }
+    
+    public ArrayList<Tuile> getTuilesNonCoulees(ArrayList<Tuile> tuiles){
+        ArrayList<Tuile> tuilesPasSeches = new ArrayList();
+        for(Tuile tuile : tuiles){
+            if (tuile.getEtatTuile() != EtatTuile.NOYEE){
+                tuilesPasSeches.add(tuile);
+            }
+        }
+        return tuilesPasSeches;
     }
 }
