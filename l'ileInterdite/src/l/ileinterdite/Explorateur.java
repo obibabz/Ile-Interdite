@@ -5,6 +5,8 @@
  */
 package l.ileinterdite;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author rousstan
@@ -15,6 +17,11 @@ public class Explorateur extends Aventurier{
         super(nomJoueur, position);
     }
     
+    public ArrayList <Tuile> getTuilesAssechables(Grille g){
+        
+        ArrayList <Tuile> tuilesAdj = g.getTuileAdj(position);
+        
+    }
     
     
 }
