@@ -11,8 +11,8 @@ package l.ileinterdite;
  */
 public class Pilote extends Aventurier{
 
-    public Pilote(String nomJoueur, Tuile caseDepart, Tuile position) {
-        super(nomJoueur, caseDepart, position);
+    public Pilote(String nomJoueur , Tuile position) {
+        super(nomJoueur, position);
     }
     
     

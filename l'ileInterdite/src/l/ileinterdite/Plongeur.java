@@ -11,8 +11,8 @@ package l.ileinterdite;
  */
 public class Plongeur extends Aventurier{
 
-    public Plongeur(String nomJoueur, Tuile caseDepart, Tuile position) {
-        super(nomJoueur, caseDepart, position);
+    public Plongeur(String nomJoueur, Tuile position) {
+        super(nomJoueur, position);
     }
     
    // public Tuile getTuilesAdjacentes() {}
