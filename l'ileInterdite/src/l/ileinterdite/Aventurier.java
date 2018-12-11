@@ -5,6 +5,8 @@
  */
 package l.ileinterdite;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author rousstan
@@ -33,12 +35,16 @@ public abstract class Aventurier {
         this.position = position;
     }
     
-    public void getTuilesAccessibles(Grille g){
-        
+    public ArrayList<Tuile> getTuilesAccessibles(Grille g){
+        ArrayList<Tuile> tuilesAdj = g.getTuileAdj(position);
+        ArrayList<Tuile> tuilesAccess = g.getTuilesNonCoulees(tuilesAdj);
+        return tuilesAccess;
     }
     
-    public void getTuilesAssechables(Grille g) {
-        
+    public ArrayList<Tuile> getTuilesAssechables(Grille g) {
+        ArrayList<Tuile> tuilesAdj = g.getTuileAdj(position);
+        ArrayList<Tuile> tuilesAssech = g.getTuilesInondees(tuilesAdj);
+        return tuilesAssech;
     }
     
 
