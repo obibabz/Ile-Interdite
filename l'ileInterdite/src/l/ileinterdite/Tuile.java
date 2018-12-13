@@ -12,11 +12,11 @@ import java.util.ArrayList;
  * @author rousstan
  */
 public class Tuile {
-    private NomTuile nom;
+    private String nom;
     private EtatTuile etatTuile;
     private ArrayList<Aventurier> joueursSurGrille = new ArrayList();
 
-    public Tuile(NomTuile nom, EtatTuile etatTuile, ArrayList<Aventurier> joueursSurGrille) {
+    public Tuile(String nom, EtatTuile etatTuile, ArrayList<Aventurier> joueursSurGrille) {
         this.nom = nom;
         this.etatTuile = etatTuile;
         this.joueursSurGrille = joueursSurGrille;
@@ -28,6 +28,10 @@ public class Tuile {
 
     public ArrayList<Aventurier> arriveJoueur() {
         return joueursSurGrille;
+    }
+
+    public String getNom() {
+        return nom;
     }
 
     public void setEtatTuile(EtatTuile etatTuile) {
@@ -42,7 +46,7 @@ public class Tuile {
         this.joueursSurGrille.remove(joueur);
     }
 
-    public Tuile(NomTuile nom) {
+    public Tuile(String nom) {
         this.nom = nom;
     }
     
