@@ -53,6 +53,18 @@ public class Grille {
         return liste;
     }
     
+    public Tuile getTuile(String nom){
+        Tuile t;
+        for(int i = 0; i<=6; i++){
+            for(int j = 0; j<=6; j++){
+                
+                if(getTuile(i,j).getNom()== nom ){t = getTuile(i,j);}
+                
+            }
+        }
+        return t;
+    }
+    
     public ArrayList<Tuile> getTuileDiag(Tuile tuile){
         
         ArrayList<Tuile> liste = new ArrayList();
