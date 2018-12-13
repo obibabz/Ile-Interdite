@@ -9,6 +9,7 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import javax.security.auth.login.Configuration.Parameters;
 import javax.swing.JOptionPane;
 import model.aventuriers.Aventurier;
 
