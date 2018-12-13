@@ -36,9 +36,18 @@ public class Controleur {
             
         }
 
+    public void afficherTuiles(ArrayList<Tuile> listeTuiles){
+        for(Tuile t : listeTuiles){
+            System.out.println(t.getNom());
+        }
+    }
     
-    
-    
+    public Tuile choixTuile(){
+         Scanner sc = new Scanner(System.in);
+    System.out.println("Veuillez rentrer le nom de la tuile choisie");            
+    String nomActeur = sc.nextLine();
+    Tuile t = 
+    }
     
     
     
