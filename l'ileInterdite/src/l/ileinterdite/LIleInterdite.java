@@ -63,40 +63,40 @@ public class LIleInterdite {
         Tuile[][] grille = new Tuile[6][6];
 
         grille[0][0] = V1;
-        grille[1][0] = V2;
-        grille[2][0] = PAb;
-        grille[3][0] = PBr;
-        grille[4][0] = V3;
-        grille[5][0] = V4;
-        grille[0][1] = V5;
+        grille[0][1] = V2;
+        grille[0][2] = PAb;
+        grille[0][3] = PBr;
+        grille[0][4] = V3;
+        grille[0][5] = V4;
+        grille[1][0] = V5;
         grille[1][1] = COm;
-        grille[2][1] = PFe;
-        grille[3][1] = POr;
-        grille[4][1] = FOu;
-        grille[5][1] = V6;
-        grille[0][2] = PCo;
-        grille[1][2] = PAr;
+        grille[1][2] = PFe;
+        grille[1][3] = POr;
+        grille[1][4] = FOu;
+        grille[1][5] = V6;
+        grille[2][0] = PCo;
+        grille[2][1] = PAr;
         grille[2][2] = DIl;
-        grille[3][2] = H;
-        grille[4][2] = PCu;
-        grille[5][2] = JHu;
-        grille[0][3] = FPo;
-        grille[1][3] = LPe;
-        grille[2][3] = MBr;
+        grille[2][3] = H;
+        grille[2][4] = PCu;
+        grille[2][5] = JHu;
+        grille[3][0] = FPo;
+        grille[3][1] = LPe;
+        grille[3][2] = MBr;
         grille[3][3] = O;
-        grille[4][3] = RFa;
-        grille[5][3] = CBr;
-        grille[0][4] = V7;
-        grille[1][4] = TSo;
-        grille[2][4] = TLu;
-        grille[3][4] = PMa;
+        grille[3][4] = RFa;
+        grille[3][5] = CBr;
+        grille[4][0] = V7;
+        grille[4][1] = TSo;
+        grille[4][2] = TLu;
+        grille[4][3] = PMa;
         grille[4][4] = VCr;
-        grille[5][4] = V8;
-        grille[0][5] = V9;
-        grille[1][5] = V10;
-        grille[2][5] = TGu;
-        grille[3][5] = JMu;
-        grille[4][5] = V11;
+        grille[4][5] = V8;
+        grille[5][0] = V9;
+        grille[5][1] = V10;
+        grille[5][2] = TGu;
+        grille[5][3] = JMu;
+        grille[5][4] = V11;
         grille[5][5] = V12;
         
         Grille grid = new Grille(grille);
@@ -110,9 +110,9 @@ public class LIleInterdite {
         
         
         ArrayList<Aventurier> joueursSurGrille = new ArrayList<Aventurier>();
-        Aventurier joueur1 = new Plongeur("joueur1", PFe, violet); joueursSurGrille.add(joueur1);
-        Aventurier joueur2 = new Ingenieur("joueur2", PBr, rouge); joueursSurGrille.add(joueur2);
-        Aventurier joueur3 = new Explorateur("joueur3", PCu, vert); joueursSurGrille.add(joueur3);
+        Aventurier joueur1 = new Ingenieur("joueur1", PBr, rouge); joueursSurGrille.add(joueur1);
+        Aventurier joueur2 = new Explorateur("joueur2", PCu, vert); joueursSurGrille.add(joueur2);
+        Aventurier joueur3 = new Plongeur("joueur3", PFe, violet); joueursSurGrille.add(joueur3);
         Aventurier joueur4 = new Pilote("joueur4", H, bleu); joueursSurGrille.add(joueur4);
         Aventurier joueur5 = new Navigateur("joueur5", POr, jaune); joueursSurGrille.add(joueur5);
         Aventurier joueur6 = new Messager("joueur6", PAr, orange); joueursSurGrille.add(joueur6);
@@ -124,8 +124,16 @@ public class LIleInterdite {
             }
         }
         */
-        VueAventurier vue1 = new VueAventurier(joueur1.getNomJoueur(), "Plongeur", Color.blue);
+        VueAventurier vue1 = new VueAventurier(joueur1.getNomJoueur(), joueur1.getClass().getName(), joueur1.getPion().getCouleur());
         vue1.afficher();
+        
+        Controleur controleur = new Controleur();
+
+        controleur.setGrille(grid);
+        controleur.setListeJoueurs(joueursSurGrille);
+        controleur.setJCourant(joueur1);
+        controleur.setNbActionsRestantes(3);
+        vue1.addObserver(controleur);
     }
     
 }

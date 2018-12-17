@@ -37,42 +37,32 @@ public class Grille {
         int i = 0;
         int j = 0;
         
-        while (i < 6 && grille[i][j] != tuile){
+        while (i < 6 && j < 6 &&(grille[i][j].getNom() != tuile.getNom())){
             j = 0;
-            while ( j < 6 && grille[i][j]!=tuile){
+            while ( j < 5 && grille[i][j].getNom() !=tuile.getNom()){
                 j++;
             }
+            if(grille[i][j].getNom() != tuile.getNom()){
             i++;
+            }
         }
-        
-        if (!"void".equals(getTuile(i, j+1).getNom())){
+
+        if (j != 5 && !"Void".equals(getTuile(i, j+1).getNom())){
             liste.add(getTuile(i,j+1));
         }
-        if (!"void".equals(getTuile(i, j-1).getNom())){
+        if (j != 0 && !"Void".equals(getTuile(i, j-1).getNom())){
             liste.add(getTuile(i,j-1));
         }
-        if (!"void".equals(getTuile(i-1, j).getNom())){
+        if (i != 0 &&!"Void".equals(getTuile(i-1, j).getNom())){
             liste.add(getTuile(i-1,j));
         }
-        if (!"void".equals(getTuile(i-1, j).getNom())){
-            liste.add(getTuile(i-1,j));
+        if (i != 5 && !"Void".equals(getTuile(i+1, j).getNom())){
+            liste.add(getTuile(i+1,j));
         }
         
         return liste;
     }
-    
-    public Tuile getTuile(String nom){
-        Tuile t = null;
-        for(int i = 0; i<=6; i++){
-            for(int j = 0; j<=6; j++){
-                
-                if(getTuile(i,j).getNom()== nom ){t = getTuile(i,j);}
-                
-            }
-        }
-        return t;
-    }
-    
+
     public ArrayList<Tuile> getTuileDiag(Tuile tuile){
         
         ArrayList<Tuile> liste = new ArrayList();
@@ -88,16 +78,16 @@ public class Grille {
             i++;
         }
         
-        if (!"void".equals(getTuile(i+1, j+1).getNom())){
+        if ( i != 5 && j !=5 && !"Void".equals(getTuile(i+1, j+1).getNom())){
             liste.add(getTuile(i+1,j+1));
         }
-        if (!"void".equals(getTuile(i+1, j-1).getNom())){
+        if (i != 5 && j != 0 && !"Void".equals(getTuile(i+1, j-1).getNom())){
             liste.add(getTuile(i+1,j-1));
         }
-        if (!"void".equals(getTuile(i-1, j+1).getNom())){
+        if (i != 0 && j != 5 && !"Void".equals(getTuile(i-1, j+1).getNom())){
             liste.add(getTuile(i-1,j+1));
         }
-        if (!"void".equals(getTuile(i-1, j-1).getNom())){
+        if (i != 0 && j != 0 && !"Void".equals(getTuile(i-1, j-1).getNom())){
             liste.add(getTuile(i-1,j-1));
         }
                 

@@ -132,5 +132,7 @@ public class VueAventurier extends Observable{
     public void afficher() {
         this.window.setVisible(true);
     }
-    
+       public void close() {
+        this.window.dispose();
+    }
 }
