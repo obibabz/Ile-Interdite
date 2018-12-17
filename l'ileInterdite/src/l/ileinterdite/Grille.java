@@ -45,10 +45,18 @@ public class Grille {
             i++;
         }
         
-        liste.add(getTuile(i+1,j));
-        liste.add(getTuile(i,j+1));
-        liste.add(getTuile(i-1,j));
-        liste.add(getTuile(i,j-1));
+        if (!"void".equals(getTuile(i, j+1).getNom())){
+            liste.add(getTuile(i,j+1));
+        }
+        if (!"void".equals(getTuile(i, j-1).getNom())){
+            liste.add(getTuile(i,j-1));
+        }
+        if (!"void".equals(getTuile(i-1, j).getNom())){
+            liste.add(getTuile(i-1,j));
+        }
+        if (!"void".equals(getTuile(i-1, j).getNom())){
+            liste.add(getTuile(i-1,j));
+        }
         
         return liste;
     }
@@ -80,11 +88,19 @@ public class Grille {
             i++;
         }
         
-        liste.add(getTuile(i+1,j+1));
-        liste.add(getTuile(i+1,j-1));
-        liste.add(getTuile(i-1,j+1));
-        liste.add(getTuile(i-1,j-1));
-        
+        if (!"void".equals(getTuile(i+1, j+1).getNom())){
+            liste.add(getTuile(i+1,j+1));
+        }
+        if (!"void".equals(getTuile(i+1, j-1).getNom())){
+            liste.add(getTuile(i+1,j-1));
+        }
+        if (!"void".equals(getTuile(i-1, j+1).getNom())){
+            liste.add(getTuile(i-1,j+1));
+        }
+        if (!"void".equals(getTuile(i-1, j-1).getNom())){
+            liste.add(getTuile(i-1,j-1));
+        }
+                
         return liste;
     }
     
