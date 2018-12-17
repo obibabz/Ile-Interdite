@@ -19,7 +19,7 @@ public class LIleInterdite {
     public static void main(String[] args) {
         // TODO code application logic here
         
-        ArrayList<Aventurier> joueursSurGrille = new ArrayList<Aventurier>();
+        
         
         Tuile V1 = new Tuile("Void", l.ileinterdite.EtatTuile.NORMAL); V1.setEtatTuile(null);
         Tuile V2 = new Tuile("Void", l.ileinterdite.EtatTuile.NORMAL); V2.setEtatTuile(null);
@@ -99,19 +99,23 @@ public class LIleInterdite {
         
         Grille grid = new Grille(grille);
         
+        ArrayList<Aventurier> joueursSurGrille = new ArrayList<Aventurier>();
+        Aventurier joueur1 = new Plongeur("joueur1", PFe); joueursSurGrille.add(joueur1);
+        Aventurier joueur2 = new Ingenieur("joueur2", PBr); joueursSurGrille.add(joueur2);
+        Aventurier joueur3 = new Explorateur("joueur3", PCu); joueursSurGrille.add(joueur3);
+        Aventurier joueur4 = new Pilote("joueur4", H); joueursSurGrille.add(joueur4);
+        Aventurier joueur5 = new Navigateur("joueur5", POr); joueursSurGrille.add(joueur5);
+        Aventurier joueur6 = new Messager("joueur6", PAr); joueursSurGrille.add(joueur6);
+        
+        
         for (int i = 0; i < 6; i++) {
             for (int j = 0; j < 6; j++) {
                 System.out.println(grille[j][i].getNom());  
             }
-            
         }
         
-        Aventurier joueur1 = new Plongeur("joueur1", PAb);
-        Aventurier joueur2 = new Ingenieur("joueur2", TSo);
-        Aventurier joueur3 = new Explorateur("joueur3", TGu);
-        Aventurier joueur4 = new Pilote("joueur4", RFa);
-        Aventurier joueur5 = new Navigateur("joueur5", CBr);
-        Aventurier joueur6 = new Messager("joueur6", MBr);
+        
+        
     }
     
 }
