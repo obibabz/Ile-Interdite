@@ -20,7 +20,8 @@ public class Explorateur extends Aventurier{
     public ArrayList <Tuile> getTuilesAssechables(Grille g){
         
         ArrayList <Tuile> tuilesAdj = g.getTuileAdj(position);
-        
+        tuilesAdj.addAll(g.getTuileDiag(position));
+        return tuilesAdj;
     }
     
     
