@@ -9,6 +9,9 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import static java.awt.FlowLayout.CENTER;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Observable;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -22,7 +25,7 @@ import javax.swing.border.MatteBorder;
  *
  * @author rousstan
  */
-public class VueAventurier {                                                                                                                                            
+public class VueAventurier extends Observable{                                                                                                                                            
     private final JPanel panelBoutons ;
     private final JPanel panelCentre ;
     private final JFrame window;
@@ -79,10 +82,42 @@ public class VueAventurier {
         this.btnTerminerTour = new JButton("Terminer Tour") ;
 
         this.panelBoutons.add(btnBouger);
+        btnBouger.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    setChanged();
+                    notifyObservers(MessageAction.BOUGER);
+                    clearChanged();
+                }
+            });
 	this.panelBoutons.add(btnAssecher);
+        btnAssecher.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    setChanged();
+                    notifyObservers(MessageAction.ASSECHER);
+                    clearChanged();
+                }
+            });
         this.panelBoutons.add(btnAutreAction);
         this.panelBoutons.add(btnTerminerTour);
 
 
+    }
+
+    public JButton getBtnBouger() {
+        return btnBouger;
+    }
+
+    public JButton getBtnAssecher() {
+        return btnAssecher;
+    }
+
+    public JButton getBtnAutreAction() {
+        return btnAutreAction;
+    }
+
+    public JButton getBtnTerminerTour() {
+        return btnTerminerTour;
     }
 }
