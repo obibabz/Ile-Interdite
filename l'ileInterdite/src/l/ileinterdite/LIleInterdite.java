@@ -21,7 +21,19 @@ public class LIleInterdite {
         
         ArrayList<Aventurier> joueursSurGrille = new ArrayList<Aventurier>();
         
-        Tuile PAb = new Tuile("Le Pont des Abîmes", l.ileinterdite.EtatTuile.NORMAL);
+        Tuile V1 = new Tuile("Void", l.ileinterdite.EtatTuile.NORMAL); V1.setEtatTuile(null);
+        Tuile V2 = new Tuile("Void", l.ileinterdite.EtatTuile.NORMAL); V2.setEtatTuile(null);
+        Tuile V3 = new Tuile("Void", l.ileinterdite.EtatTuile.NORMAL); V3.setEtatTuile(null);
+        Tuile V4 = new Tuile("Void", l.ileinterdite.EtatTuile.NORMAL); V4.setEtatTuile(null);
+        Tuile V5 = new Tuile("Void", l.ileinterdite.EtatTuile.NORMAL); V5.setEtatTuile(null);
+        Tuile V6 = new Tuile("Void", l.ileinterdite.EtatTuile.NORMAL); V6.setEtatTuile(null);
+        Tuile V7 = new Tuile("Void", l.ileinterdite.EtatTuile.NORMAL); V7.setEtatTuile(null);
+        Tuile V8 = new Tuile("Void", l.ileinterdite.EtatTuile.NORMAL); V8.setEtatTuile(null);
+        Tuile V9 = new Tuile("Void", l.ileinterdite.EtatTuile.NORMAL); V9.setEtatTuile(null);
+        Tuile V10 = new Tuile("Void", l.ileinterdite.EtatTuile.NORMAL); V10.setEtatTuile(null);
+        Tuile V11 = new Tuile("Void", l.ileinterdite.EtatTuile.NORMAL); V11.setEtatTuile(null);
+        Tuile V12 = new Tuile("Void", l.ileinterdite.EtatTuile.NORMAL); V12.setEtatTuile(null);
+        Tuile PAb = new Tuile("Le Pont des Abîmes", l.ileinterdite.EtatTuile.NORMAL); 
         Tuile PBr = new Tuile("La Porte de Bronze", l.ileinterdite.EtatTuile.INONDEE);
         Tuile COm = new Tuile("La Caverne des Ombres", l.ileinterdite.EtatTuile.NORMAL);
         Tuile PFe = new Tuile("La Porte de Fer", l.ileinterdite.EtatTuile.NORMAL);
@@ -47,13 +59,19 @@ public class LIleInterdite {
         Tuile JMu = new Tuile("Le Jardin des Murmures", l.ileinterdite.EtatTuile.INONDEE);
         
         Tuile[][] grille = new Tuile[6][6];
-        
+
+        grille[0][0] = V1;
+        grille[1][0] = V2;
         grille[2][0] = PAb;
         grille[3][0] = PBr;
+        grille[4][0] = V3;
+        grille[5][0] = V4;
+        grille[0][1] = V5;
         grille[1][1] = COm;
         grille[2][1] = PFe;
         grille[3][1] = POr;
         grille[4][1] = FOu;
+        grille[5][1] = V6;
         grille[0][2] = PCo;
         grille[1][2] = PAr;
         grille[2][2] = DIl;
@@ -66,16 +84,34 @@ public class LIleInterdite {
         grille[3][3] = O;
         grille[4][3] = RFa;
         grille[5][3] = CBr;
+        grille[0][4] = V7;
         grille[1][4] = TSo;
         grille[2][4] = TLu;
         grille[3][4] = PMa;
         grille[4][4] = VCr;
+        grille[5][4] = V8;
+        grille[0][5] = V9;
+        grille[1][5] = V10;
         grille[2][5] = TGu;
         grille[3][5] = JMu;
+        grille[4][5] = V11;
+        grille[5][5] = V12;
         
         Grille grid = new Grille(grille);
         
+        for (int i = 0; i < 6; i++) {
+            for (int j = 0; j < 6; j++) {
+                System.out.println(grille[j][i].getNom());  
+            }
+            
+        }
         
+        Aventurier joueur1 = new Plongeur("joueur1", PAb);
+        Aventurier joueur1 = new Ingenieur("joueur2", TSo);
+        Aventurier joueur1 = new Explorateur("joueur3", TGu);
+        Aventurier joueur1 = new Pilote("joueur4", Rfa);
+        Aventurier joueur1 = new 
+        Aventurier joueur1 = new 
     }
     
 }
