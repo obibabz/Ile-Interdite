@@ -22,25 +22,25 @@ public class Controleur {
     
     /**
      *
-     * @param arrayList
-     * @return
+     * @param listeTuiles
      */
     
-    public static ArrayList<Aventurier> melangerAventuriers(ArrayList<Aventurier> arrayList) {
+    /*public static ArrayList<Aventurier> melangerAventuriers(ArrayList<Aventurier> arrayList) {
         if (Parameters.ALEAS) {
             Collections.shuffle(arrayList);
-        }
+        }*/
 
     public void afficherTuiles(ArrayList<Tuile> listeTuiles){
-        for(Tuile t : listeTuiles){
+        listeTuiles.forEach((t) -> {
             System.out.println(t.getNom());
-        }
+        });
     }
     
     public Tuile choixTuile(){
          Scanner sc = new Scanner(System.in);
     System.out.println("Veuillez rentrer le nom de la tuile choisie");            
     String nomActeur = sc.nextLine();
+    return null;
     
     }
     
