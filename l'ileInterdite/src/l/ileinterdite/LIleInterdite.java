@@ -125,7 +125,7 @@ public class LIleInterdite {
         }
         */
         VueAventurier vue1 = new VueAventurier(joueur1.getNomJoueur(), "Plongeur", Color.blue);
-        
+        vue1.afficher();
     }
     
 }

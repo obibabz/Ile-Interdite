@@ -13,14 +13,14 @@ import java.util.ArrayList;
  */
 public class Plongeur extends Aventurier{
 
-    public Plongeur(String nomJoueur, Tuile position) {
-        super(nomJoueur, position);
+    public Plongeur(String nomJoueur, Tuile position, Pion pion) {
+        super(nomJoueur, position, pion);
     }
     
     @Override
    public ArrayList<Tuile> getTuilesAccessibles(Grille g){
        
-       ArrayList <Tuile> tuilesAdj = g.getTuileAdj(position);
+       ArrayList <Tuile> tuilesAdj = g.getTuileAdj(super.getPosition());
        ArrayList <Tuile> tuilesAccess = g.getTuilesNonCoulees(tuilesAdj);
        ArrayList <Tuile> tuilesAdjPS = g.getTuilesPasSeches(tuilesAdj);
        
@@ -28,7 +28,7 @@ public class Plongeur extends Aventurier{
            ArrayList <Tuile> tAdj = g.getTuileAdj(t);
            ArrayList <Tuile> tAdjPC = g.getTuilesNonCoulees(tAdj);
            for(Tuile t2 : tAdjPC){
-               if(tuilesAccess.contains(t2) == false && t2 != position){
+               if(tuilesAccess.contains(t2) == false && t2 != super.getPosition()){
                    tuilesAccess.add(t2);
                }
            }

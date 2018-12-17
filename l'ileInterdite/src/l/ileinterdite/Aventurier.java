@@ -14,13 +14,17 @@ import java.util.ArrayList;
 public abstract class Aventurier {
  
     
-    String nomJoueur;
-    Tuile position;
+    private String nomJoueur;
+    private Tuile position;
+    private Pion pion;
 
-    public Aventurier(String nomJoueur , Tuile position) {
+    public Aventurier(String nomJoueur, Tuile position, Pion pion) {
         this.nomJoueur = nomJoueur;
         this.position = position;
+        this.pion = pion;
     }
+
+
 
     public String getNomJoueur() {
         return nomJoueur;
@@ -45,6 +49,10 @@ public abstract class Aventurier {
         ArrayList<Tuile> tuilesAdj = g.getTuileAdj(position);
         ArrayList<Tuile> tuilesAssech = g.getTuilesInondees(tuilesAdj);
         return tuilesAssech;
+    }
+
+    public Pion getPion() {
+        return pion;
     }
     
 

@@ -11,8 +11,8 @@ package l.ileinterdite;
  */
 public class Messager extends Aventurier{
 
-    public Messager(String nomJoueur , Tuile position) {
-        super(nomJoueur, position);
+    public Messager(String nomJoueur , Tuile position, Pion pion) {
+        super(nomJoueur, position, pion);
     }
     
     

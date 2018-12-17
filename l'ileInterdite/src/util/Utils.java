@@ -12,7 +12,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import javax.security.auth.login.Configuration.Parameters;
 import javax.swing.JOptionPane;
-import model.aventuriers.Aventurier;
 
 /**
  *
@@ -73,14 +72,14 @@ public class Utils {
             return null ;
         }
     }
-
+/*
     public static ArrayList<Aventurier> melangerAventuriers(ArrayList<Aventurier> arrayList) {
         if (Parameters.ALEAS) {
             Collections.shuffle(arrayList);
         }
         return arrayList ;
     }
-    
+  */  
     /**
      * Permet de poser une question à laquelle l'utilisateur répond par oui ou non
      * @param question texte à afficher

@@ -11,8 +11,8 @@ package l.ileinterdite;
  */
 public class Navigateur extends Aventurier{
 
-    public Navigateur(String nomJoueur , Tuile position) {
-        super(nomJoueur, position);
+    public Navigateur(String nomJoueur , Tuile position, Pion pion) {
+        super(nomJoueur, position, pion);
     }
     
     

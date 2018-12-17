@@ -11,8 +11,8 @@ package l.ileinterdite;
  */
 public class Ingenieur extends Aventurier {
 
-    public Ingenieur(String nomJoueur , Tuile position) {
-        super(nomJoueur, position);
+    public Ingenieur(String nomJoueur , Tuile position, Pion pion) {
+        super(nomJoueur, position, pion);
     }
   
     

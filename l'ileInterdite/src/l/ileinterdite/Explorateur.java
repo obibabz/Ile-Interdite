@@ -13,14 +13,14 @@ import java.util.ArrayList;
  */
 public class Explorateur extends Aventurier{
 
-    public Explorateur(String nomJoueur, Tuile position) {
-        super(nomJoueur, position);
+    public Explorateur(String nomJoueur, Tuile position, Pion pion) {
+        super(nomJoueur, position, pion);
     }
     
     public ArrayList <Tuile> getTuilesAssechables(Grille g){
         
-        ArrayList <Tuile> tuilesAdj = g.getTuileAdj(position);
-        tuilesAdj.addAll(g.getTuileDiag(position));
+        ArrayList <Tuile> tuilesAdj = g.getTuileAdj(super.getPosition());
+        tuilesAdj.addAll(g.getTuileDiag(super.getPosition()));
         return tuilesAdj;
     }
     

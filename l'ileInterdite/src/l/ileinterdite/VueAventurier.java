@@ -7,7 +7,7 @@ package l.ileinterdite;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import static java.awt.FlowLayout.CENTER;
+import static javax.swing.SwingConstants.CENTER;
 import java.awt.GridLayout;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -17,6 +17,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.MatteBorder;
+
 
 /**
  *
@@ -85,4 +86,9 @@ public class VueAventurier {
 
 
     }
+    
+    public void afficher() {
+        this.window.setVisible(true);
+    }
+    
 }
