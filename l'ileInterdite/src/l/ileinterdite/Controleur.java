@@ -117,27 +117,42 @@ public class Controleur implements Observer{
     
     }
 
+    public void setJCourant(Aventurier JCourant) {
+        this.JCourant = JCourant;
+    }
+    /*
+    public void joueurSuivant(ArrayList <Aventurier> listeJoueurs){
+        if(listeJoueurs.indexOf(JCourant) < listeJoueurs.size ){
+        setJCourant(listeJoueurs.get(listeJoueurs.indexOf(JCourant)+1 ));
+        }
+    }
+*/
     @Override
     public void update(Observable o, Object arg) {
         if (arg instanceof MessageAction) {
             if (((MessageAction) arg) == MessageAction.BOUGER) {
                 gererDeplacement();
-                if (nbActionsRestantes == 0){
-                    ((VueAventurier) o).getBtnBouger().setEnabled(false);
-                    ((VueAventurier) o).getBtnAutreAction().setEnabled(false);
-                    ((VueAventurier) o).getBtnBouger().setEnabled(false);
+                finTour(o, nbActionsRestantes);
                 }
             }
             else if (((MessageAction) arg) == MessageAction.ASSECHER) {
                 gererAssechement();
-                 if (nbActionsRestantes == 0){
+                finTour(o, nbActionsRestantes);
+            }
+            else if (((MessageAction ) arg) == MessageAction.PASSER) {
+                
+            }
+    }
+        
+    
+    
+    
+
+    public void finTour(Observable o, int nbActionsRestantes){
+        if (nbActionsRestantes == 0){
                     ((VueAventurier) o).getBtnBouger().setEnabled(false);
                     ((VueAventurier) o).getBtnAutreAction().setEnabled(false);
                     ((VueAventurier) o).getBtnBouger().setEnabled(false);
-            }
-        
-    
-    }
     }
 }
 }

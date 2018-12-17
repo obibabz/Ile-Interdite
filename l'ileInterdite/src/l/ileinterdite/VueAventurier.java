@@ -101,7 +101,14 @@ public class VueAventurier extends Observable{
             });
         this.panelBoutons.add(btnAutreAction);
         this.panelBoutons.add(btnTerminerTour);
-
+        btnTerminerTour.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    setChanged();
+                    notifyObservers(MessageAction.PASSER);
+                    clearChanged();
+                }
+            });
 
     }
 
