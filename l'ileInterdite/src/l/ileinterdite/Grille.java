@@ -104,6 +104,23 @@ public class Grille {
         return liste;
     }
     
+    public ArrayList<Tuile> getTuilePouvoirPilote(ArrayList<Tuile> tuiles){
+        
+        ArrayList<Tuile> tuilesPilote = new ArrayList();
+        for(Tuile tuile : tuiles){
+            if (tuile.getNom() != "void" && tuile.getEtatTuile() != EtatTuile.NOYEE){
+                tuilesPilote.add(tuile);
+            }
+        }
+        return tuilesPilote;
+        
+        
+        
+        
+    
+    
+    }
+    
     public ArrayList<Tuile> getTuilesInondees(ArrayList<Tuile> tuiles){
         ArrayList<Tuile> tuilesInondees = new ArrayList();
         for(Tuile tuile : tuiles){
