@@ -16,10 +16,10 @@ public class Tuile {
     private EtatTuile etatTuile;
     private ArrayList<Aventurier> joueursSurGrille = new ArrayList();
 
-    public Tuile(String nom, EtatTuile etatTuile, ArrayList<Aventurier> joueursSurGrille) {
+    public Tuile(String nom, EtatTuile etatTuile) {
         this.nom = nom;
         this.etatTuile = etatTuile;
-        this.joueursSurGrille = joueursSurGrille;
+        
     }
 
     public EtatTuile getEtatTuile() {
