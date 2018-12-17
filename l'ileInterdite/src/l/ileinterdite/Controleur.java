@@ -36,13 +36,14 @@ public class Controleur implements Observer{
         }*/
 
     public void afficherTuiles(ArrayList<Tuile> listeTuiles){
-        listeTuiles.forEach((t) -> {
+        for(Tuile t : listeTuiles) {
             System.out.println(listeTuiles.indexOf(t)+ " : "+t.getNom());
-            if(listeTuiles.isEmpty() ){System.out.println("Il n'y a pas de tuile à afficher");}
-        });
+        }
+        
     }
     
     public Tuile choixTuile(ArrayList<Tuile> listeTuiles){
+         
          Scanner sc = new Scanner(System.in);
     System.out.println("Veuillez rentrer le numéro de la tuile choisie");            
     Integer numTuile = sc.nextInt();
@@ -131,9 +132,10 @@ public class Controleur implements Observer{
 
     
     public void joueurSuivant(ArrayList <Aventurier> listeJoueurs){
-        if(listeJoueurs.indexOf(JCourant) < listeJoueurs.size() ){
+        if(listeJoueurs.indexOf(JCourant) < listeJoueurs.size()-1 ){
             setJCourant(listeJoueurs.get(listeJoueurs.indexOf(JCourant)+1 ));
         }
+        else{setJCourant(listeJoueurs.get(0));}
     }
      
     public void setGrille(Grille grille) {
@@ -147,18 +149,18 @@ public class Controleur implements Observer{
                 gererDeplacement();
                 finTour(o, nbActionsRestantes);
             }
-        }
-        else if (((MessageAction) arg) == MessageAction.ASSECHER) {
-            gererAssechement();
-            finTour(o, nbActionsRestantes);
-        }
-        else if (((MessageAction ) arg) == MessageAction.PASSER) {
-            
-            ((VueAventurier) o).close();
-            joueurSuivant(listeJoueurs);
-            VueAventurier vue1 = new VueAventurier(JCourant.getNomJoueur(), JCourant.getClass().getName() , JCourant.getPion().getCouleur());
-            vue1.addObserver(this);
-            vue1.afficher();
+        
+            else if (((MessageAction) arg) == MessageAction.ASSECHER) {
+                gererAssechement();
+                finTour(o, nbActionsRestantes);
+            }
+            else if (((MessageAction ) arg) == MessageAction.PASSER) {
+                ((VueAventurier) o).close();
+                joueurSuivant(listeJoueurs);
+                VueAventurier vue1 = new VueAventurier(JCourant.getNomJoueur(), JCourant.getClass().getName() , JCourant.getPion().getCouleur());
+                vue1.addObserver(this);
+                vue1.afficher();
+            }
         }
     }
         
