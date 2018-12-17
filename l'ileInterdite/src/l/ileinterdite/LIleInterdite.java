@@ -107,11 +107,11 @@ public class LIleInterdite {
         }
         
         Aventurier joueur1 = new Plongeur("joueur1", PAb);
-        Aventurier joueur1 = new Ingenieur("joueur2", TSo);
-        Aventurier joueur1 = new Explorateur("joueur3", TGu);
-        Aventurier joueur1 = new Pilote("joueur4", Rfa);
-        Aventurier joueur1 = new 
-        Aventurier joueur1 = new 
+        Aventurier joueur2 = new Ingenieur("joueur2", TSo);
+        Aventurier joueur3 = new Explorateur("joueur3", TGu);
+        Aventurier joueur4 = new Pilote("joueur4", RFa);
+        Aventurier joueur5 = new Navigateur("joueur5", CBr);
+        Aventurier joueur6 = new Messager("joueur6", MBr);
     }
     
 }
