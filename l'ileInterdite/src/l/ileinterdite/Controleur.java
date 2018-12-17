@@ -14,11 +14,15 @@ import java.util.ArrayList;
 import javax.security.auth.login.Configuration.Parameters;
 import javax.swing.JOptionPane;
 import java.util.Collections;
+import java.util.Observable;
+import java.util.Observer;
 import java.util.Scanner;
 
-public class Controleur {
-    
+public class Controleur implements Observer{
+    private ArrayList <Aventurier> listeJoueurs;
     private int nbActionsRestantes;
+    private Aventurier JCourant;
+    private Grille grille;
     
     /**
      *
@@ -36,11 +40,11 @@ public class Controleur {
         });
     }
     
-    public Tuile choixTuile(){
+    public Tuile choixTuile(ArrayList<Tuile> listeTuiles){
          Scanner sc = new Scanner(System.in);
     System.out.println("Veuillez rentrer le nom de la tuile choisie");            
-    String nomActeur = sc.nextLine();
-    return null;
+    Integer numTuile = sc.nextInt();
+    return listeTuiles.get(numTuile);
     
     }
     
@@ -69,11 +73,20 @@ public class Controleur {
     
     
     public void gererDeplacement(){
-    
+        ArrayList <Tuile> tuilesAccess = JCourant.getTuilesAccessibles(grille);
+        afficherTuiles(tuilesAccess);
+        Tuile tuile = choixTuile(tuilesAccess);
+        JCourant.getPosition().departJoueur(JCourant);
+        JCourant.setPosition(tuile);
+        nbActionsRestantes+=-1;
     }
     
     public void gererAssechement(){
-    
+        ArrayList <Tuile> tuilesAssech = JCourant.getTuilesAssechables(grille);
+        afficherTuiles(tuilesAssech);
+        Tuile tuile = choixTuile(tuilesAssech);
+        tuile.setEtatTuile(l.ileinterdite.EtatTuile.NORMAL);
+        nbActionsRestantes+=-1;
     }
 
     /**
@@ -89,11 +102,7 @@ public class Controleur {
     public void setNbActionsRestantes(int nbActionsRestantes) {
         this.nbActionsRestantes = nbActionsRestantes;
     }
-    
-    public void getJoueurCourant(){
-    
-    }
-    
+ 
     /**
      *
      * @return
@@ -107,6 +116,27 @@ public class Controleur {
     public void getTuile(){
     
     }
+
+    @Override
+    public void update(Observable o, Object arg) {
+        if (arg instanceof MessageAction) {
+            if (((MessageAction) arg) == MessageAction.BOUGER) {
+                gererDeplacement();
+                if (nbActionsRestantes == 0){
+                    ((VueAventurier) o).getBtnBouger().setEnabled(false);
+                    ((VueAventurier) o).getBtnAutreAction().setEnabled(false);
+                    ((VueAventurier) o).getBtnBouger().setEnabled(false);
+                }
+            }
+            else if (((MessageAction) arg) == MessageAction.ASSECHER) {
+                gererAssechement();
+                 if (nbActionsRestantes == 0){
+                    ((VueAventurier) o).getBtnBouger().setEnabled(false);
+                    ((VueAventurier) o).getBtnAutreAction().setEnabled(false);
+                    ((VueAventurier) o).getBtnBouger().setEnabled(false);
+            }
+        
     
-    
+    }
+    }
 }
