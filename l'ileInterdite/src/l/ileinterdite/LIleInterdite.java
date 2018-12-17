@@ -5,7 +5,9 @@
  */
 package l.ileinterdite;
 
+import java.awt.Color;
 import java.util.ArrayList;
+import util.Utils;
 
 /**
  *
@@ -19,7 +21,7 @@ public class LIleInterdite {
     public static void main(String[] args) {
         // TODO code application logic here
         
-        ArrayList<Aventurier> joueursSurGrille = new ArrayList<Aventurier>();
+        
         
         Tuile V1 = new Tuile("Void", l.ileinterdite.EtatTuile.NORMAL); V1.setEtatTuile(null);
         Tuile V2 = new Tuile("Void", l.ileinterdite.EtatTuile.NORMAL); V2.setEtatTuile(null);
@@ -99,19 +101,31 @@ public class LIleInterdite {
         
         Grille grid = new Grille(grille);
         
-        for (int i = 0; i < 6; i++) {
+        Pion rouge = Pion.ROUGE;
+        Pion bleu = Pion.BLEU;
+        Pion jaune = Pion.JAUNE;
+        Pion orange = Pion.ORANGE;
+        Pion vert = Pion.VERT;
+        Pion violet = Pion.VIOLET;
+        
+        
+        ArrayList<Aventurier> joueursSurGrille = new ArrayList<Aventurier>();
+        Aventurier joueur1 = new Plongeur("joueur1", PFe, violet); joueursSurGrille.add(joueur1);
+        Aventurier joueur2 = new Ingenieur("joueur2", PBr, rouge); joueursSurGrille.add(joueur2);
+        Aventurier joueur3 = new Explorateur("joueur3", PCu, vert); joueursSurGrille.add(joueur3);
+        Aventurier joueur4 = new Pilote("joueur4", H, bleu); joueursSurGrille.add(joueur4);
+        Aventurier joueur5 = new Navigateur("joueur5", POr, jaune); joueursSurGrille.add(joueur5);
+        Aventurier joueur6 = new Messager("joueur6", PAr, orange); joueursSurGrille.add(joueur6);
+        
+        
+       /* for (int i = 0; i < 6; i++) {
             for (int j = 0; j < 6; j++) {
                 System.out.println(grille[j][i].getNom());  
             }
-            
         }
+        */
+        VueAventurier vue1 = new VueAventurier(joueur1.getNomJoueur(), "Plongeur", Color.blue);
         
-        Aventurier joueur1 = new Plongeur("joueur1", PAb);
-        Aventurier joueur2 = new Ingenieur("joueur2", TSo);
-        Aventurier joueur3 = new Explorateur("joueur3", TGu);
-        Aventurier joueur4 = new Pilote("joueur4", RFa);
-        Aventurier joueur5 = new Navigateur("joueur5", CBr);
-        Aventurier joueur6 = new Messager("joueur6", MBr);
     }
     
 }
