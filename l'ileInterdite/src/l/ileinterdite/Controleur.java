@@ -86,14 +86,15 @@ public class Controleur implements Observer{
     public void gererAssechement(){
         ArrayList <Tuile> tuilesAssech = JCourant.getTuilesAssechables(grille);
         if(tuilesAssech.isEmpty()){
-            System.out.println("Il n'y a pas de tuile asséchable disponible");;
+            System.out.println("Il n'y a pas de tuile asséchable disponible");
+            nbActionsRestantes+=1;
         }else{
             afficherTuiles(tuilesAssech);
             Tuile tuile = choixTuile(tuilesAssech);
             tuile.setEtatTuile(l.ileinterdite.EtatTuile.NORMAL);
             System.out.println("Vous avez asséchés la tuile : " +tuile.getNom());
         }
-        nbActionsRestantes+=-1;
+        
     }
     
     public void gererPouvoir(){
@@ -162,6 +163,7 @@ public class Controleur implements Observer{
 
                 gererDeplacement();
                 ((VueAventurier) o).getPosition().setText(JCourant.getPosition().getNom());
+                System.out.println(nbActionsRestantes);
                 finTour(o, nbActionsRestantes);
 
             }
@@ -171,13 +173,16 @@ public class Controleur implements Observer{
                     gererAssechement();
                     if(JCourant.getPion().toString()=="Rouge"){
                         gererAssechement();
-                        nbActionsRestantes+=1;
+                        
                     }
+                    nbActionsRestantes+=-1;
+                    System.out.println(nbActionsRestantes);
                     finTour(o, nbActionsRestantes);
                 
             }
             else if (((MessageAction ) arg) == MessageAction.PASSER) {
                 ((VueAventurier) o).close();
+                nbActionsRestantes = 3;
                 joueurSuivant(listeJoueurs);
                 VueAventurier vue1 = new VueAventurier(JCourant.getNomJoueur(), JCourant.getClass().getName() , JCourant.getPion().getCouleur(), JCourant.getPosition().getNom());
                 vue1.addObserver(this);
