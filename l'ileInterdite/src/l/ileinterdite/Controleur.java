@@ -76,11 +76,14 @@ public class Controleur implements Observer{
     public void gererDeplacement(){
         ArrayList <Tuile>  tuilesAccess = JCourant.getTuilesAccessibles(grille);
         afficherTuiles(tuilesAccess);
+        if(tuilesAccess.isEmpty()){
+            System.out.println("Il n'y a pas de tuile asséchable disponible");
+            nbActionsRestantes+=1;
+        }
         Tuile tuile = choixTuile(tuilesAccess);
         JCourant.getPosition().departJoueur(JCourant);
         JCourant.setPosition(tuile);
         System.out.println("Vous vous êtes déplacé sur la tuile : " +tuile.getNom());
-        nbActionsRestantes+=-1;
     }
     
     public void gererAssechement(){
@@ -100,12 +103,14 @@ public class Controleur implements Observer{
     public void gererPouvoir(){
         ArrayList <Tuile> tuilesAccess = JCourant.getTuileAccessiblesPouvoir(grille);
         afficherTuiles(tuilesAccess);
+        if(tuilesAccess.isEmpty()){
+            System.out.println("Il n'y a pas de tuile asséchable disponible");
+            nbActionsRestantes+=1;
+        }
         Tuile tuile = choixTuile(tuilesAccess);
         JCourant.getPosition().departJoueur(JCourant);
         JCourant.setPosition(tuile);
-        System.out.println("Vous vous êtes déplacé sur la tuile : " +tuile.getNom());
-        nbActionsRestantes+=-1;
-        
+        System.out.println("Vous vous êtes déplacé sur la tuile : " +tuile.getNom());        
     }
 
     /**
@@ -173,7 +178,6 @@ public class Controleur implements Observer{
                     gererAssechement();
                     if(JCourant.getPion().toString()=="Rouge"){
                         gererAssechement();
-                        
                     }
                     nbActionsRestantes+=-1;
                     System.out.println(nbActionsRestantes);
