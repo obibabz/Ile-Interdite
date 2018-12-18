@@ -105,13 +105,15 @@ public class Grille {
         while (i < 6 && j < 6 ){
             j = 0;
             while ( j < 5 ){
+                
+            
+                if (grille[i][j].getNom() != "Void" && grille[i][j].getEtatTuile() != EtatTuile.NOYEE){
+                    tuilesPilote.add(grille[i][j]);
+                    System.out.println("i : "+i+ "j : "+j);
+                }
                 j++;
-            
-                if (tuile.getNom() != "Void" && tuile.getEtatTuile() != EtatTuile.NOYEE){
-                    tuilesPilote.add(grille[i][j]);}
-                i++;
-            
             }
+            i++;
         }
         return tuilesPilote;
     }

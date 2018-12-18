@@ -22,8 +22,7 @@ public class Controleur implements Observer{
     private int nbActionsRestantes;
     private Aventurier JCourant;
     private Grille grille;
-    private ArrayList <Tuile> tuilesAssech;
-    private ArrayList <Tuile> tuilesAccess;
+
     /**
      *
      * @param listeTuiles
@@ -75,7 +74,7 @@ public class Controleur implements Observer{
     
     
     public void gererDeplacement(){
-        tuilesAccess = JCourant.getTuilesAccessibles(grille);
+        ArrayList <Tuile>  tuilesAccess = JCourant.getTuilesAccessibles(grille);
         afficherTuiles(tuilesAccess);
         Tuile tuile = choixTuile(tuilesAccess);
         JCourant.getPosition().departJoueur(JCourant);
@@ -85,7 +84,7 @@ public class Controleur implements Observer{
     }
     
     public void gererAssechement(){
-        tuilesAssech = JCourant.getTuilesAssechables(grille);
+        ArrayList <Tuile> tuilesAssech = JCourant.getTuilesAssechables(grille);
         afficherTuiles(tuilesAssech);
         Tuile tuile = choixTuile(tuilesAssech);
         tuile.setEtatTuile(l.ileinterdite.EtatTuile.NORMAL);
@@ -155,28 +154,19 @@ public class Controleur implements Observer{
     @Override
     public void update(Observable o, Object arg) {
         if (arg instanceof MessageAction) {
-            if (((MessageAction) arg) == MessageAction.BOUGER) {
-//<<<<<<< HEAD
-                if (tuilesAccess.isEmpty()) {
-                    gererDeplacement();
-                    finTour(o, nbActionsRestantes);
-                } else {
-                    System.out.println("Aucune tuile n'est disponible pour se déplacer");
-                }
-//=======
+            if (((MessageAction) arg) == MessageAction.BOUGER) { 
+
                 gererDeplacement();
                 ((VueAventurier) o).getPosition().setText(JCourant.getPosition().getNom());
                 finTour(o, nbActionsRestantes);
-//>>>>>>> origin/master
+
             }
         
             else if (((MessageAction) arg) == MessageAction.ASSECHER) {
-                if (tuilesAssech.isEmpty()) {
+               
                     gererAssechement();
                     finTour(o, nbActionsRestantes);
-                } else {
-                    System.out.println("Aucune tuile asséchable n'est disponible");
-                }
+                
             }
             else if (((MessageAction ) arg) == MessageAction.PASSER) {
                 ((VueAventurier) o).close();
