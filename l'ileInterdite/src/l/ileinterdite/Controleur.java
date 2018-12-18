@@ -182,6 +182,7 @@ public class Controleur implements Observer{
             }
             else if (((MessageAction ) arg) == MessageAction.POUVOIR) {
                 gererPouvoir();
+                ((VueAventurier) o).getPosition().setText(JCourant.getPosition().getNom());
                 ((VueAventurier) o).getBtnAutreAction().setEnabled(false);
                 
             }
