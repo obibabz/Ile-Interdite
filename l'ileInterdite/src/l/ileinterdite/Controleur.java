@@ -85,10 +85,14 @@ public class Controleur implements Observer{
     
     public void gererAssechement(){
         ArrayList <Tuile> tuilesAssech = JCourant.getTuilesAssechables(grille);
-        afficherTuiles(tuilesAssech);
-        Tuile tuile = choixTuile(tuilesAssech);
-        tuile.setEtatTuile(l.ileinterdite.EtatTuile.NORMAL);
-        System.out.println("Vous avez asséchés la tuile : " +tuile.getNom());
+        if(tuilesAssech.isEmpty()){
+            System.out.println("Il n'y a pas de tuile asséchable disponible");;
+        }else{
+            afficherTuiles(tuilesAssech);
+            Tuile tuile = choixTuile(tuilesAssech);
+            tuile.setEtatTuile(l.ileinterdite.EtatTuile.NORMAL);
+            System.out.println("Vous avez asséchés la tuile : " +tuile.getNom());
+        }
         nbActionsRestantes+=-1;
     }
     
