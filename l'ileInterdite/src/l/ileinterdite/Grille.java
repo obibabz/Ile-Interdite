@@ -102,15 +102,15 @@ public class Grille {
         int i = 0;
         int j = 0;
         
-        while (i < 6 && j < 6 ){
+        while (i < 6  ){
             j = 0;
-            while ( j < 5 ){
-                
-            
-                if (grille[i][j].getNom() != "Void" && grille[i][j].getEtatTuile() != EtatTuile.NOYEE){
+            while ( j < 6 ){
+
+                if (grille[i][j].getNom() != "Void" && grille[i][j].getEtatTuile() != EtatTuile.NOYEE && tuile.getNom() != grille[i][j].getNom()){
                     tuilesPilote.add(grille[i][j]);
-                    System.out.println("i : "+i+ "j : "+j);
+
                 }
+                System.out.println("i : "+i+ "j : "+j);
                 j++;
             }
             i++;

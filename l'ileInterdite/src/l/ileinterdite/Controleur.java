@@ -98,7 +98,7 @@ public class Controleur implements Observer{
         Tuile tuile = choixTuile(tuilesAccess);
         JCourant.getPosition().departJoueur(JCourant);
         JCourant.setPosition(tuile);
-        System.out.println("Vous avez asséchés la tuile : " +tuile.getNom());
+        System.out.println("Vous vous êtes déplaces sur la tuile : " +tuile.getNom());
         nbActionsRestantes+=-1;
         
     }
