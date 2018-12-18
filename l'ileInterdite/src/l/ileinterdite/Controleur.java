@@ -50,7 +50,7 @@ public class Controleur implements Observer{
     }
     
     
-    /**
+    /**case7.getEtat() == EtatCase.O
      * Permet de poser une question à laquelle l'utilisateur répond par oui ou non
      * @param question texte à afficher
      * @return true si l'utilisateur répond oui, false sinon
@@ -79,7 +79,7 @@ public class Controleur implements Observer{
         Tuile tuile = choixTuile(tuilesAccess);
         JCourant.getPosition().departJoueur(JCourant);
         JCourant.setPosition(tuile);
-        System.out.println("Vous vous êtes déplacés sur la tuile : " +tuile.getNom());
+        System.out.println("Vous vous êtes déplacé sur la tuile : " +tuile.getNom());
         nbActionsRestantes+=-1;
     }
     
@@ -91,7 +91,7 @@ public class Controleur implements Observer{
             afficherTuiles(tuilesAssech);
             Tuile tuile = choixTuile(tuilesAssech);
             tuile.setEtatTuile(l.ileinterdite.EtatTuile.NORMAL);
-            System.out.println("Vous avez asséchés la tuile : " +tuile.getNom());
+            System.out.println("Vous avez asséché la tuile : " +tuile.getNom());
         }
         nbActionsRestantes+=-1;
     }
@@ -102,7 +102,7 @@ public class Controleur implements Observer{
         Tuile tuile = choixTuile(tuilesAccess);
         JCourant.getPosition().departJoueur(JCourant);
         JCourant.setPosition(tuile);
-        System.out.println("Vous vous êtes déplaces sur la tuile : " +tuile.getNom());
+        System.out.println("Vous vous êtes déplacé sur la tuile : " +tuile.getNom());
         nbActionsRestantes+=-1;
         
     }
