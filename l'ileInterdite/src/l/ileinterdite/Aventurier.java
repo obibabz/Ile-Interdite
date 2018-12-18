@@ -24,8 +24,6 @@ public abstract class Aventurier {
         this.pion = pion;
     }
 
-
-
     public String getNomJoueur() {
         return nomJoueur;
     }

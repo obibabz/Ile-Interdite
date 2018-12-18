@@ -165,6 +165,10 @@ public class Controleur implements Observer{
             else if (((MessageAction) arg) == MessageAction.ASSECHER) {
                
                     gererAssechement();
+                    if(JCourant.getPion().toString()=="Rouge"){
+                        gererAssechement();
+                        nbActionsRestantes+=1;
+                    }
                     finTour(o, nbActionsRestantes);
                 
             }
