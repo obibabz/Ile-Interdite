@@ -38,7 +38,7 @@ public class VueAventurier extends Observable{
     private final JButton btnTerminerTour;
     private JTextField position;
 
-    public VueAventurier(String nomJoueur, String nomAventurier, Color couleur){
+    public VueAventurier(String nomJoueur, String nomAventurier, Color couleur, String pos){
 
         this.window = new JFrame();
         window.setSize(350, 200);
@@ -67,6 +67,7 @@ public class VueAventurier extends Observable{
 
         panelCentre.add(new JLabel ("Position", SwingConstants.CENTER));
         position = new  JTextField(30);
+        position.setText(pos);
 	position.setHorizontalAlignment(CENTER);
         panelCentre.add(position);
 
@@ -100,7 +101,7 @@ public class VueAventurier extends Observable{
                     clearChanged();
                 }
             });
-        this.panelBoutons.add(btnAutreAction);
+        this.panelBoutons.add(btnAutreAction); btnAutreAction.setEnabled(false);
         btnAutreAction.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -131,6 +132,10 @@ public class VueAventurier extends Observable{
 
     public JButton getBtnAutreAction() {
         return btnAutreAction;
+    }
+
+    public JTextField getPosition() {
+        return position;
     }
 
     public JButton getBtnTerminerTour() {

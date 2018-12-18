@@ -149,6 +149,7 @@ public class Controleur implements Observer{
         if (arg instanceof MessageAction) {
             if (((MessageAction) arg) == MessageAction.BOUGER) {
                 gererDeplacement();
+                ((VueAventurier) o).getPosition().setText(JCourant.getPosition().getNom());
                 finTour(o, nbActionsRestantes);
             }
         
@@ -163,8 +164,9 @@ public class Controleur implements Observer{
             else if (((MessageAction ) arg) == MessageAction.PASSER) {
                 ((VueAventurier) o).close();
                 joueurSuivant(listeJoueurs);
-                VueAventurier vue1 = new VueAventurier(JCourant.getNomJoueur(), JCourant.getClass().getName() , JCourant.getPion().getCouleur());
+                VueAventurier vue1 = new VueAventurier(JCourant.getNomJoueur(), JCourant.getClass().getName() , JCourant.getPion().getCouleur(), JCourant.getPosition().getNom());
                 vue1.addObserver(this);
+                if(JCourant.getPion().toString()=="Bleu" ){vue1.getBtnAutreAction().setEnabled(true);}
                 vue1.afficher();
             }
             else if (((MessageAction ) arg) == MessageAction.POUVOIR) {
