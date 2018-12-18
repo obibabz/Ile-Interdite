@@ -109,22 +109,10 @@ public class Grille {
             }
             if (tuile.getNom() != "Void" && tuile.getEtatTuile() != EtatTuile.NOYEE){
                 tuilesPilote.add(tuile);
-            i++;
-            
-        }
-        
-        
-        {
-            
+                i++;
             }
         }
         return tuilesPilote;
-        
-        
-        
-        
-    
-    
     }
     
     public ArrayList<Tuile> getTuilesInondees(ArrayList<Tuile> tuiles){

@@ -23,6 +23,7 @@ public class Explorateur extends Aventurier{
         tuilesAdj.addAll(g.getTuileDiag(super.getPosition()));
         return g.getTuilesInondees(tuilesAdj);
     }
+    
     public ArrayList <Tuile> getTuilesAccessibles(Grille g){
         ArrayList <Tuile> tuilesAdj = g.getTuileAdj(super.getPosition());
         tuilesAdj.addAll(g.getTuileDiag(super.getPosition()));
