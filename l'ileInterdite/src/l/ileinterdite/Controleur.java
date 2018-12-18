@@ -23,6 +23,7 @@ public class Controleur implements Observer{
     private Aventurier JCourant;
     private Grille grille;
     private ArrayList <Tuile> tuilesAssech;
+    private ArrayList <Tuile> tuilesAccess;
     /**
      *
      * @param listeTuiles
@@ -74,7 +75,7 @@ public class Controleur implements Observer{
     
     
     public void gererDeplacement(){
-        ArrayList <Tuile> tuilesAccess = JCourant.getTuilesAccessibles(grille);
+        tuilesAccess = JCourant.getTuilesAccessibles(grille);
         afficherTuiles(tuilesAccess);
         Tuile tuile = choixTuile(tuilesAccess);
         JCourant.getPosition().departJoueur(JCourant);
@@ -148,8 +149,18 @@ public class Controleur implements Observer{
     public void update(Observable o, Object arg) {
         if (arg instanceof MessageAction) {
             if (((MessageAction) arg) == MessageAction.BOUGER) {
+//<<<<<<< HEAD
+                if (tuilesAccess.isEmpty()) {
+                    gererDeplacement();
+                    finTour(o, nbActionsRestantes);
+                } else {
+                    System.out.println("Aucune tuile n'est disponible pour se déplacer");
+                }
+//=======
                 gererDeplacement();
+                ((VueAventurier) o).getPosition().setText(JCourant.getPosition().getNom());
                 finTour(o, nbActionsRestantes);
+//>>>>>>> origin/master
             }
         
             else if (((MessageAction) arg) == MessageAction.ASSECHER) {
@@ -163,8 +174,9 @@ public class Controleur implements Observer{
             else if (((MessageAction ) arg) == MessageAction.PASSER) {
                 ((VueAventurier) o).close();
                 joueurSuivant(listeJoueurs);
-                VueAventurier vue1 = new VueAventurier(JCourant.getNomJoueur(), JCourant.getClass().getName() , JCourant.getPion().getCouleur());
+                VueAventurier vue1 = new VueAventurier(JCourant.getNomJoueur(), JCourant.getClass().getName() , JCourant.getPion().getCouleur(), JCourant.getPosition().getNom());
                 vue1.addObserver(this);
+                if(JCourant.getPion().toString()=="Bleu" ){vue1.getBtnAutreAction().setEnabled(true);}
                 vue1.afficher();
             }
             else if (((MessageAction ) arg) == MessageAction.POUVOIR) {

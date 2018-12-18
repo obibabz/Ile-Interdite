@@ -124,7 +124,7 @@ public class LIleInterdite {
             }
         }
         */
-        VueAventurier vue1 = new VueAventurier(joueur1.getNomJoueur(), joueur1.getClass().getName(), joueur1.getPion().getCouleur());
+        VueAventurier vue1 = new VueAventurier(joueur1.getNomJoueur(), joueur1.getClass().getName(), joueur1.getPion().getCouleur(), joueur1.getPosition().getNom());
         vue1.afficher();
         
         Controleur controleur = new Controleur();
