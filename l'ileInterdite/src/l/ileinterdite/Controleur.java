@@ -93,6 +93,10 @@ public class Controleur implements Observer{
         System.out.println("Vous avez asséchés la tuile : " +tuile.getNom());
         nbActionsRestantes+=-1;
     }
+    
+    public void gererPouvoir(){
+        
+    }
 
     /**
      * @return the nbActionsRestantes
@@ -160,6 +164,9 @@ public class Controleur implements Observer{
                 VueAventurier vue1 = new VueAventurier(JCourant.getNomJoueur(), JCourant.getClass().getName() , JCourant.getPion().getCouleur());
                 vue1.addObserver(this);
                 vue1.afficher();
+            }
+            else if (((MessageAction ) arg) == MessageAction.POUVOIR) {
+                
             }
         }
     }
