@@ -11,9 +11,7 @@ package l.ileinterdite;
  */
         
 import java.util.ArrayList;
-import javax.security.auth.login.Configuration.Parameters;
 import javax.swing.JOptionPane;
-import java.util.Collections;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.Scanner;
@@ -23,7 +21,7 @@ public class Controleur implements Observer{
     private int nbActionsRestantes;
     private Aventurier JCourant;
     private Grille grille;
-    
+    private ArrayList <Tuile> tuilesAssech;
     /**
      *
      * @param listeTuiles
@@ -82,7 +80,7 @@ public class Controleur implements Observer{
     }
     
     public void gererAssechement(){
-        ArrayList <Tuile> tuilesAssech = JCourant.getTuilesAssechables(grille);
+        tuilesAssech = JCourant.getTuilesAssechables(grille);
         afficherTuiles(tuilesAssech);
         Tuile tuile = choixTuile(tuilesAssech);
         tuile.setEtatTuile(l.ileinterdite.EtatTuile.NORMAL);
@@ -136,8 +134,12 @@ public class Controleur implements Observer{
                 }
             }
             else if (((MessageAction) arg) == MessageAction.ASSECHER) {
-                gererAssechement();
-                finTour(o, nbActionsRestantes);
+                if (tuilesAssech.isEmpty()) {
+                    gererAssechement();
+                    finTour(o, nbActionsRestantes);
+                } else {
+                    System.out.println("Aucune tuile asséchable n'est disponible");
+                }
             }
             else if (((MessageAction ) arg) == MessageAction.PASSER) {
                 
