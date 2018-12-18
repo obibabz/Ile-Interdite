@@ -26,7 +26,6 @@ public class Plongeur extends Aventurier{
        ArrayList <Tuile> tuilesAdjPS = g.getTuilesPasSeches(tuilesAdj);
        
        while(i < tuilesAdjPS.size()){
-           System.out.println(i);
            ArrayList <Tuile> tAdj = g.getTuileAdj(tuilesAdjPS.get(i));
            ArrayList <Tuile> tAdjPC = g.getTuilesNonCoulees(tAdj);
            for(Tuile t2 : tAdjPC){

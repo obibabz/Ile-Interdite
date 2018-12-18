@@ -110,7 +110,6 @@ public class Grille {
                     tuilesPilote.add(grille[i][j]);
 
                 }
-                System.out.println("i : "+i+ "j : "+j);
                 j++;
             }
             i++;
