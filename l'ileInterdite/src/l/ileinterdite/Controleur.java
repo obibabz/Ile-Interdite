@@ -10,6 +10,7 @@ package l.ileinterdite;
  * @author rousstan
  */
         
+import java.awt.Color;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import java.util.Observable;
@@ -33,14 +34,16 @@ public class Controleur implements Observer{
         }*/
 
     public void afficherTuiles(ArrayList<Tuile> listeTuiles){
-        listeTuiles.forEach((t) -> {
-            System.out.println(t.getNom());
-        });
+        for(Tuile t : listeTuiles) {
+            System.out.println(listeTuiles.indexOf(t)+ " : "+t.getNom());
+        }
+        
     }
     
     public Tuile choixTuile(ArrayList<Tuile> listeTuiles){
+         
          Scanner sc = new Scanner(System.in);
-    System.out.println("Veuillez rentrer le nom de la tuile choisie");            
+    System.out.println("Veuillez rentrer le numéro de la tuile choisie");            
     Integer numTuile = sc.nextInt();
     return listeTuiles.get(numTuile);
     
@@ -76,6 +79,7 @@ public class Controleur implements Observer{
         Tuile tuile = choixTuile(tuilesAccess);
         JCourant.getPosition().departJoueur(JCourant);
         JCourant.setPosition(tuile);
+        System.out.println("Vous vous êtes déplacés sur la tuile : " +tuile.getNom());
         nbActionsRestantes+=-1;
     }
     
@@ -84,7 +88,12 @@ public class Controleur implements Observer{
         afficherTuiles(tuilesAssech);
         Tuile tuile = choixTuile(tuilesAssech);
         tuile.setEtatTuile(l.ileinterdite.EtatTuile.NORMAL);
+        System.out.println("Vous avez asséchés la tuile : " +tuile.getNom());
         nbActionsRestantes+=-1;
+    }
+    
+    public void gererPouvoir(){
+        
     }
 
     /**
@@ -118,21 +127,31 @@ public class Controleur implements Observer{
     public void setJCourant(Aventurier JCourant) {
         this.JCourant = JCourant;
     }
-    /*
-    public void joueurSuivant(ArrayList <Aventurier> listeJoueurs){
-        if(listeJoueurs.indexOf(JCourant) < listeJoueurs.size ){
-        setJCourant(listeJoueurs.get(listeJoueurs.indexOf(JCourant)+1 ));
-        }
+
+    public void setListeJoueurs(ArrayList<Aventurier> listeJoueurs) {
+        this.listeJoueurs = listeJoueurs;
     }
-*/
+
+    
+    public void joueurSuivant(ArrayList <Aventurier> listeJoueurs){
+        if(listeJoueurs.indexOf(JCourant) < listeJoueurs.size()-1 ){
+            setJCourant(listeJoueurs.get(listeJoueurs.indexOf(JCourant)+1 ));
+        }
+        else{setJCourant(listeJoueurs.get(0));}
+    }
+     
+    public void setGrille(Grille grille) {
+        this.grille = grille;
+    }
+
     @Override
     public void update(Observable o, Object arg) {
         if (arg instanceof MessageAction) {
             if (((MessageAction) arg) == MessageAction.BOUGER) {
                 gererDeplacement();
                 finTour(o, nbActionsRestantes);
-                }
             }
+        
             else if (((MessageAction) arg) == MessageAction.ASSECHER) {
                 if (tuilesAssech.isEmpty()) {
                     gererAssechement();
@@ -142,8 +161,16 @@ public class Controleur implements Observer{
                 }
             }
             else if (((MessageAction ) arg) == MessageAction.PASSER) {
+                ((VueAventurier) o).close();
+                joueurSuivant(listeJoueurs);
+                VueAventurier vue1 = new VueAventurier(JCourant.getNomJoueur(), JCourant.getClass().getName() , JCourant.getPion().getCouleur());
+                vue1.addObserver(this);
+                vue1.afficher();
+            }
+            else if (((MessageAction ) arg) == MessageAction.POUVOIR) {
                 
             }
+        }
     }
         
     
@@ -154,7 +181,7 @@ public class Controleur implements Observer{
         if (nbActionsRestantes == 0){
                     ((VueAventurier) o).getBtnBouger().setEnabled(false);
                     ((VueAventurier) o).getBtnAutreAction().setEnabled(false);
-                    ((VueAventurier) o).getBtnBouger().setEnabled(false);
+                    ((VueAventurier) o).getBtnAssecher().setEnabled(false);
     }
 }
 }
