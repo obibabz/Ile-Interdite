@@ -102,7 +102,7 @@ public class Controleur implements Observer{
         Tuile tuile = choixTuile(tuilesAccess);
         JCourant.getPosition().departJoueur(JCourant);
         JCourant.setPosition(tuile);
-        System.out.println("Vous avez asséchés la tuile : " +tuile.getNom());
+        System.out.println("Vous vous êtes déplaces sur la tuile : " +tuile.getNom());
         nbActionsRestantes+=-1;
         
     }
@@ -186,6 +186,7 @@ public class Controleur implements Observer{
             }
             else if (((MessageAction ) arg) == MessageAction.POUVOIR) {
                 gererPouvoir();
+                ((VueAventurier) o).getPosition().setText(JCourant.getPosition().getNom());
                 ((VueAventurier) o).getBtnAutreAction().setEnabled(false);
                 
             }
