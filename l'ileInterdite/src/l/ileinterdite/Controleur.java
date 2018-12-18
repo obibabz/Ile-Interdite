@@ -178,6 +178,7 @@ public class Controleur implements Observer{
                     gererAssechement();
                     if(JCourant.getPion().toString()=="Rouge"){
                         gererAssechement();
+                        nbActionsRestantes+=-1;
                     }
                     nbActionsRestantes+=-1;
                     System.out.println(nbActionsRestantes);
