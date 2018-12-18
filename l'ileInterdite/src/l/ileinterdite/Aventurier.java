@@ -52,6 +52,11 @@ public abstract class Aventurier {
         if(position.getEtatTuile() == EtatTuile.INONDEE) {tuilesAssech.add(position);}
         return tuilesAssech;
     }
+    
+    public ArrayList<Tuile> getTuileAccessiblesPouvoir(Grille g){
+    ArrayList <Tuile> tuiles = new ArrayList<>();
+    return tuiles;
+    }
 
     public Pion getPion() {
         return pion;

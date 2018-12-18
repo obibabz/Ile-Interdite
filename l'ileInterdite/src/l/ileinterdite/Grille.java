@@ -106,10 +106,11 @@ public class Grille {
             j = 0;
             while ( j < 5 ){
                 j++;
-            }
-            if (tuile.getNom() != "Void" && tuile.getEtatTuile() != EtatTuile.NOYEE){
-                tuilesPilote.add(tuile);
+            
+                if (tuile.getNom() != "Void" && tuile.getEtatTuile() != EtatTuile.NOYEE){
+                    tuilesPilote.add(grille[i][j]);}
                 i++;
+            
             }
         }
         return tuilesPilote;

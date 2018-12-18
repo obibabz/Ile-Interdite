@@ -93,6 +93,13 @@ public class Controleur implements Observer{
     }
     
     public void gererPouvoir(){
+        ArrayList <Tuile> tuilesAccess = JCourant.getTuileAccessiblesPouvoir(grille);
+        afficherTuiles(tuilesAccess);
+        Tuile tuile = choixTuile(tuilesAccess);
+        JCourant.getPosition().departJoueur(JCourant);
+        JCourant.setPosition(tuile);
+        System.out.println("Vous avez asséchés la tuile : " +tuile.getNom());
+        nbActionsRestantes+=-1;
         
     }
 
@@ -170,6 +177,8 @@ public class Controleur implements Observer{
                 vue1.afficher();
             }
             else if (((MessageAction ) arg) == MessageAction.POUVOIR) {
+                gererPouvoir();
+                ((VueAventurier) o).getBtnAutreAction().setEnabled(false);
                 
             }
         }
