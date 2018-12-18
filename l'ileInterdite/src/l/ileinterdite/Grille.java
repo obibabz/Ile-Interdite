@@ -70,12 +70,14 @@ public class Grille {
         int i = 0;
         int j = 0;
         
-        while (i < 6 && grille[i][j]!= tuile){
+        while (i < 6 && j < 6 && grille[i][j].getNom() != tuile.getNom()){
             j = 0;
-            while ( j <6 && grille[i][j]!=tuile){
+            while ( j <5 && grille[i][j].getNom()!=tuile.getNom()){
                 j++;
             }
+            if(grille[i][j].getNom() != tuile.getNom()){
             i++;
+            }
         }
         
         if ( i != 5 && j !=5 && !"Void".equals(getTuile(i+1, j+1).getNom())){
