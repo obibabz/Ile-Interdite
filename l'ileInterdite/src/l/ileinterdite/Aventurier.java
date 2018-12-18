@@ -48,6 +48,7 @@ public abstract class Aventurier {
     public ArrayList<Tuile> getTuilesAssechables(Grille g) {
         ArrayList<Tuile> tuilesAdj = g.getTuileAdj(position);
         ArrayList<Tuile> tuilesAssech = g.getTuilesInondees(tuilesAdj);
+        tuilesAssech.add(position);
         if(position.getEtatTuile() == EtatTuile.INONDEE) {tuilesAssech.add(position);}
         return tuilesAssech;
     }
