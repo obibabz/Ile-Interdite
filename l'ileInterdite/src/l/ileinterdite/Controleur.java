@@ -168,6 +168,7 @@ public class Controleur implements Observer{
 
                 gererDeplacement();
                 ((VueAventurier) o).getPosition().setText(JCourant.getPosition().getNom());
+                nbActionsRestantes+=-1;
                 System.out.println(nbActionsRestantes);
                 finTour(o, nbActionsRestantes);
 
