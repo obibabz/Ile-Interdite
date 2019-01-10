@@ -9,6 +9,6 @@ package cartes;
  *
  * @author lienardr
  */
-public class CarteInondation extends l.ileinterdite.ObjetIdentifie{
+public class CarteInondation{
     
 }

@@ -9,6 +9,6 @@ package cartes;
  *
  * @author lienardr
  */
-public class CarteTirage extends l.ileinterdite.ObjetIdentifie{
+public class CarteTirage{
     
 }

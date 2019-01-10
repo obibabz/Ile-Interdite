@@ -10,12 +10,13 @@ import l.ileinterdite.EtatTuile;
 import l.ileinterdite.Grille;
 import l.ileinterdite.Pion;
 import l.ileinterdite.Tuile;
+import cartes.CarteTirage;
 
 /**
  *
  * @author rousstan
  */
-public abstract class Aventurier extends l.ileinterdite.ObjetIdentifie{
+public abstract class Aventurier{
  
     
     private String nomJoueur;
@@ -61,8 +62,9 @@ public abstract class Aventurier extends l.ileinterdite.ObjetIdentifie{
     }
     
     public ArrayList<Aventurier> getJoueursCiblables(Grille g){
-        ArrayList <Aventuriers> cibles = new ArrayList<>();
-        this.getPosition().getJoueursSurTuiles();
+        ArrayList <Aventurier> cibles = new ArrayList<>();
+        this.getPosition().getJoueursSurTuile();
+        return cibles;
     }
 
     public Pion getPion() {
