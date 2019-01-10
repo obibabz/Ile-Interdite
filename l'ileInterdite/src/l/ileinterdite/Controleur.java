@@ -19,12 +19,15 @@ import javax.swing.JOptionPane;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.Scanner;
+import cartes.CarteTirage
 
 public class Controleur implements Observer{
     private ArrayList <Aventurier> listeJoueurs;
     private int nbActionsRestantes;
     private Aventurier JCourant;
     private Grille grille;
+    private ArrayList <CarteInondation> piocheInondation;
+    private ArrayList <CarteInondation> defausseInondation;
 
     /**
      *

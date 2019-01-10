@@ -12,10 +12,10 @@ import java.util.ArrayList;
  *
  * @author rousstan
  */
-public class Tuile {
+public class Tuile extends ObjetIdentifie{
     private String nom;
     private EtatTuile etatTuile;
-    private ArrayList<Aventurier> joueursSurGrille = new ArrayList();
+    private ArrayList<Aventurier> joueursSurTuile = new ArrayList();
 
     public Tuile(String nom, EtatTuile etatTuile) {
         this.nom = nom;
@@ -27,8 +27,8 @@ public class Tuile {
         return etatTuile;
     }
 
-    public ArrayList<Aventurier> arriveJoueur() {
-        return joueursSurGrille;
+    public ArrayList<Aventurier> getJoueursSurTuile() {
+        return joueursSurTuile;
     }
 
     public String getNom() {
@@ -40,11 +40,11 @@ public class Tuile {
     }
 
     public void arriveeJoueur(Aventurier joueur) {
-        this.joueursSurGrille.add(joueur);
+        this.joueursSurTuile.add(joueur);
     }
     
     public void departJoueur(Aventurier joueur) {
-        this.joueursSurGrille.remove(joueur);
+        this.joueursSurTuile.remove(joueur);
     }
 
     public Tuile(String nom) {

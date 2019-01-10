@@ -15,12 +15,13 @@ import l.ileinterdite.Tuile;
  *
  * @author rousstan
  */
-public abstract class Aventurier {
+public abstract class Aventurier extends l.ileinterdite.ObjetIdentifie{
  
     
     private String nomJoueur;
     private Tuile position;
     private Pion pion;
+    private ArrayList<CarteTirage> cartesEnMain;
 
     public Aventurier(String nomJoueur, Tuile position, Pion pion) {
         this.nomJoueur = nomJoueur;
@@ -57,6 +58,11 @@ public abstract class Aventurier {
     public ArrayList<Tuile> getTuileAccessiblesPouvoir(Grille g){
     ArrayList <Tuile> tuiles = new ArrayList<>();
     return tuiles;
+    }
+    
+    public ArrayList<Aventurier> getJoueursCiblables(Grille g){
+        ArrayList <Aventuriers> cibles = new ArrayList<>();
+        this.getPosition().getJoueursSurTuiles();
     }
 
     public Pion getPion() {
