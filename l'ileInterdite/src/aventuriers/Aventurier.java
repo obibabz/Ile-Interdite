@@ -11,7 +11,6 @@ import l.ileinterdite.Grille;
 import l.ileinterdite.Pion;
 import l.ileinterdite.Tuile;
 import cartes.CarteTirage;
-
 /**
  *
  * @author rousstan
