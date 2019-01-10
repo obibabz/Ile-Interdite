@@ -11,6 +11,7 @@ import l.ileinterdite.Grille;
 import l.ileinterdite.Pion;
 import l.ileinterdite.Tuile;
 import cartes.CarteTirage;
+import cartes.CarteTresor;
 /**
  *
  * @author rousstan
@@ -63,7 +64,18 @@ public abstract class Aventurier{
     public ArrayList<Aventurier> getJoueursCiblables(Grille g){
         ArrayList <Aventurier> cibles = new ArrayList<>();
         this.getPosition().getJoueursSurTuile();
+        cibles.remove(this);
         return cibles;
+    }
+    
+    public ArrayList<CarteTirage> getCartesTresor(){
+        ArrayList<CarteTirage> cartesDonnables = new ArrayList<>();
+        for(CarteTirage c : this.cartesEnMain){
+            if ("CarteTresor".equals(c.getClass().getSimpleName())){
+                cartesDonnables.add(c);
+            }
+        }
+        return cartesDonnables;
     }
 
     public Pion getPion() {

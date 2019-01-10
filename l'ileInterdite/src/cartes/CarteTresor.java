@@ -4,11 +4,11 @@
  * and open the template in the editor.
  */
 package cartes;
-
+import util.Utils.Tresor;
 /**
  *
  * @author lienardr
  */
-public class Cartetresor extends CarteTirage{
-    
+public class CarteTresor extends CarteTirage{
+    private Tresor tresor;
 }

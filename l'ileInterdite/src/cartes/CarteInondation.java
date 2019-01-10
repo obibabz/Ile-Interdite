@@ -5,10 +5,12 @@
  */
 package cartes;
 
+import l.ileinterdite.Tuile;
+
 /**
  *
  * @author lienardr
  */
 public class CarteInondation{
-    
+    private Tuile tuile;
 }
