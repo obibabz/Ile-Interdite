@@ -10,5 +10,5 @@ package cartes;
  * @author lienardr
  */
 public class CarteHelicoptere extends CarteTirage{
-    
+    private int test = 0;
 }

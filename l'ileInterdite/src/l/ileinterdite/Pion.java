@@ -37,6 +37,7 @@ public enum Pion {
         public Color getCouleur() {
             return this.couleur ;
         }
+        
 
         static Pion getFromName(String name) {
             if (ROUGE.name().equals(name)) return ROUGE ;
