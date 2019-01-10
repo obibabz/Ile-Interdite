@@ -145,8 +145,7 @@ public class Controleur implements Observer{
         return (null);
     
     }
-    
-    
+        
     public void getTuile(){
     
     }
@@ -158,7 +157,6 @@ public class Controleur implements Observer{
     public void setListeJoueurs(ArrayList<Aventurier> listeJoueurs) {
         this.listeJoueurs = listeJoueurs;
     }
-
     
     public void joueurSuivant(ArrayList <Aventurier> listeJoueurs){
         if(listeJoueurs.indexOf(JCourant) < listeJoueurs.size()-1 ){
@@ -213,10 +211,6 @@ public class Controleur implements Observer{
             }
         }
     }
-        
-    
-    
-    
 
     public void finTour(Observable o, int nbActionsRestantes){
         if (nbActionsRestantes == 0){
