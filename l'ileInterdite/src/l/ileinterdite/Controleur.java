@@ -21,6 +21,7 @@ import java.util.Observer;
 import java.util.Scanner;
 import cartes.CarteTirage;
 import cartes.CarteInondation;
+import util.Utils.Tresor;
         
 
 public class Controleur implements Observer{
@@ -30,6 +31,7 @@ public class Controleur implements Observer{
     private Grille grille;
     private ArrayList <CarteInondation> piocheInondation;
     private ArrayList <CarteInondation> defausseInondation;
+    private ArrayList<Tresor> tresorPossede;
 
     /**
      *
@@ -221,6 +223,52 @@ public class Controleur implements Observer{
                     ((VueAventurier) o).getBtnBouger().setEnabled(false);
                     ((VueAventurier) o).getBtnAutreAction().setEnabled(false);
                     ((VueAventurier) o).getBtnAssecher().setEnabled(false);
+        }
+        if (verifVictoire()){
+            System.out.println("FAUT FAIRE LA VUE VICTOIRE VITE ET SUPPRIMER CE MESSAGE");
+        }
     }
-}
+    
+    public boolean verifCarteHelico(Aventurier a){
+        boolean retour = false;
+        String cH = "CarteHelicoptere";
+        for(CarteTirage c : a.getCartesEnMain()){
+            if(c.getClass().getSimpleName().equals(cH)){
+                retour = true;
+            }
+        }
+        return retour;
+    }
+    
+    public boolean verifToutLesTrésors(){
+        return (tresorPossede.size() == 4);
+    }
+    
+    public boolean verifToutLesJoueursSurHeliport(){
+        
+        boolean retour = false;
+        for (int i=0; i<6; i++){
+            for(int j=0; j<6; j++){
+                if(grille.getTuile(i, j).getJoueursSurTuile().size() == listeJoueurs.size()){
+                    retour = true;
+                }
+            }
+        }
+        
+        return retour;
+    }
+    
+    public boolean verifVictoire(){
+        boolean retour = false;
+        if(verifToutLesJoueursSurHeliport()){
+            if(this.verifToutLesTrésors()){
+                for(Aventurier a : listeJoueurs){
+                    if(this.verifCarteHelico(a)){
+                        retour = true;
+                    }
+                }
+            }
+        }
+        return retour;
+    }
 }

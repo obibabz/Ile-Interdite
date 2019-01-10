@@ -28,8 +28,16 @@ public abstract class Aventurier{
         this.nomJoueur = nomJoueur;
         this.position = position;
         this.pion = pion;
+        this.cartesEnMain = new ArrayList();
     }
 
+    public ArrayList<CarteTirage> getCartesEnMain() {
+        return cartesEnMain;
+    }
+    
+    public void addCartesEnMain(CarteTirage c){
+        cartesEnMain.add(c);
+    }
     public String getNomJoueur() {
         return nomJoueur;
     }

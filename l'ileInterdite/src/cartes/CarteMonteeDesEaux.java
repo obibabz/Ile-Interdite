@@ -10,5 +10,5 @@ package cartes;
  * @author lienardr
  */
 public class CarteMonteeDesEaux extends CarteTirage{
-    
+    private int test = 0;
 }
