@@ -5,6 +5,7 @@
  */
 package l.ileinterdite;
 
+import aventuriers.Aventurier;
 import java.util.ArrayList;
 
 /**

@@ -3,7 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package l.ileinterdite;
+package aventuriers;
+
+import aventuriers.Aventurier;
+import l.ileinterdite.Pion;
+import l.ileinterdite.Tuile;
 
 /**
  *

@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import javax.swing.JOptionPane;
-import l.ileinterdite.Aventurier;
+import aventuriers.Aventurier;
 
 /**
  *
@@ -163,7 +163,7 @@ public class Utils {
         return "#"+Integer.toHexString(couleur.getRGB()).substring(2);
     }
     
-    public static ArrayList<l.ileinterdite.Aventurier> melangerAventuriers(ArrayList<l.ileinterdite.Aventurier> arrayList) {
+    public static ArrayList<aventuriers.Aventurier> melangerAventuriers(ArrayList<aventuriers.Aventurier> arrayList) {
         if (Parameters.ALEAS) {
             Collections.shuffle(arrayList);
         }

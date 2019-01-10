@@ -5,6 +5,14 @@
  */
 package l.ileinterdite;
 
+import aventuriers.Navigateur;
+import aventuriers.Plongeur;
+import aventuriers.Ingenieur;
+import aventuriers.Messager;
+import aventuriers.Pilote;
+import aventuriers.Explorateur;
+import aventuriers.Aventurier;
+import vues.VueAventurier;
 import java.awt.Color;
 import java.util.ArrayList;
 import util.Utils;
@@ -124,7 +132,7 @@ public class LIleInterdite {
             }
         }
         */
-        VueAventurier vue1 = new VueAventurier(joueur1.getNomJoueur(), joueur1.getClass().getName(), joueur1.getPion().getCouleur(), joueur1.getPosition().getNom());
+        VueAventurier vue1 = new VueAventurier(joueur1.getNomJoueur(), joueur1.getClass().getSimpleName(), joueur1.getPion().getCouleur(), joueur1.getPosition().getNom());
         vue1.afficher();
         
         Controleur controleur = new Controleur();

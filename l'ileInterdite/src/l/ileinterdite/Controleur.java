@@ -10,6 +10,9 @@ package l.ileinterdite;
  * @author rousstan
  */
         
+import util.MessageAction;
+import aventuriers.Aventurier;
+import vues.VueAventurier;
 import java.awt.Color;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
@@ -190,7 +193,7 @@ public class Controleur implements Observer{
                 ((VueAventurier) o).close();
                 nbActionsRestantes = 3;
                 joueurSuivant(listeJoueurs);
-                VueAventurier vue1 = new VueAventurier(JCourant.getNomJoueur(), JCourant.getClass().getName() , JCourant.getPion().getCouleur(), JCourant.getPosition().getNom());
+                VueAventurier vue1 = new VueAventurier(JCourant.getNomJoueur(), JCourant.getClass().getSimpleName() , JCourant.getPion().getCouleur(), JCourant.getPosition().getNom());
                 vue1.addObserver(this);
                 if(JCourant.getPion().toString()=="Bleu" ){vue1.getBtnAutreAction().setEnabled(true);}
                 vue1.afficher();

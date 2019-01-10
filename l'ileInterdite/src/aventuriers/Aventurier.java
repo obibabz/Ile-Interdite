@@ -3,9 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package l.ileinterdite;
+package aventuriers;
 
 import java.util.ArrayList;
+import l.ileinterdite.EtatTuile;
+import l.ileinterdite.Grille;
+import l.ileinterdite.Pion;
+import l.ileinterdite.Tuile;
 
 /**
  *
