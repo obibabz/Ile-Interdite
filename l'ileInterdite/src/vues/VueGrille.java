@@ -77,4 +77,8 @@ public class VueGrille extends JPanel{
         this.getComponent(85).setBackground(Color.GREEN);
 
     }
+//  public VueGrille getVueGrille(int x) {
+//      return this.getComponent(x).vueTuile;
+//  }
+     
 }
