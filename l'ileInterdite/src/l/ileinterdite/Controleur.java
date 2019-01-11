@@ -39,7 +39,7 @@ public class Controleur implements Observer{
     private ArrayList <CarteInondation> piocheInondation;
     private ArrayList <CarteInondation> defausseInondation;
     private ArrayList<Tresor> tresorPossede;
-    private int niveauInnond;
+    private int niveauInond;
     private ArrayList<CarteTirage> piocheTirage;
     private ArrayList<CarteTirage> defausseTirage;
     private ArrayList<VueAventurier> vuesAventuriers;
@@ -243,6 +243,8 @@ public class Controleur implements Observer{
     }
 
     public void finTour(Observable o, int nbActionsRestantes){
+        tirageCarte();
+        tirageInondation();
         if (nbActionsRestantes == 0){
                     ((VueAventurier) o).getBtnBouger().setEnabled(false);
                     ((VueAventurier) o).getBtnAutreAction().setEnabled(false);
@@ -253,12 +255,68 @@ public class Controleur implements Observer{
         }
     }
     
+    //gestion tirage carte
+    
+    public void tirageCarte(){
+        CarteTirage c = new CarteTirage();
+        c.equals(piocheTirage.get(1));
+        piocheTirage.remove(1);
+        defausseTirage.add(c);
+        if (c.getClass().getSimpleName() == "CarteInondation"){
+            piocheCarteMonteeDesEaux();
+        }else{
+            if(JCourant.getCartesEnMain().size() < 5){
+                JCourant.addCartesEnMain(c);
+            } else {
+                System.out.println("FAUT SUPPRIMER, mais carte enlevee");
+            }
+        }   
+    }
+    
     //Gestion montée des eaux
     
     public void piocheCarteMonteeDesEaux(){
-        
+        niveauInond++;
+        defausseInondation.addAll(piocheInondation);
+        piocheInondation.clear();
+        piocheInondation.addAll(defausseInondation);
+        defausseInondation.clear();
     }
     
+    //nb de carte tirer+tirage effectif
+    
+    public void tirageInondation(){
+        if(niveauInond <3){         //2 carte piochées
+            piocheCarteInondee();
+            piocheCarteInondee();
+        }else if(niveauInond <6){   //3 carte piochées
+            piocheCarteInondee();
+            piocheCarteInondee();
+            piocheCarteInondee();
+        }else if(niveauInond <8){   //4 carte piochées
+            piocheCarteInondee();
+            piocheCarteInondee();
+            piocheCarteInondee();
+            piocheCarteInondee();
+        }else{                      //5 carte piochées
+            piocheCarteInondee();
+            piocheCarteInondee();
+            piocheCarteInondee();
+            piocheCarteInondee();
+            piocheCarteInondee();
+            piocheCarteInondee();
+        }
+    }
+
+    //gestion tirage carte inondee
+    
+    public void piocheCarteInondee(){
+        CarteInondation c = new CarteInondation();
+        c.equals(piocheInondation.get(1));
+        // inondation de la tuile correspondante
+        defausseInondation.add(c);
+        piocheInondation.remove(c);
+    }
     
     // fonction pour les conditions de Victoire et de Defaite
     public boolean ifCarteHelico(Aventurier a){
