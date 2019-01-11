@@ -22,7 +22,7 @@ public class VuePlateau extends Observable {
     private JLabel titre;
     
 
-    public VuePlateau() {
+    public VuePlateau(VueGrille vueGrille) {
         window = new JFrame();
         window.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
         // Définit la taille de la fenêtre en pixels
@@ -36,9 +36,8 @@ public class VuePlateau extends Observable {
         panelPrincipal.add(titre = new JLabel("L'Ile interdite"), BorderLayout.NORTH);
         this.titre.setHorizontalAlignment(JLabel.CENTER);
         
-        vueGrille = new VueGrille();
+        this.vueGrille = vueGrille;
         panelPrincipal.add(vueGrille, BorderLayout.CENTER);
-
 
         /*
             vueGrille.getVueGrille[i].addActionListener(new ActionListener() {
@@ -53,6 +52,7 @@ public class VuePlateau extends Observable {
                 }
             );}
         */
+        this.afficher();
     }
     
     public void afficher() {
@@ -60,12 +60,7 @@ public class VuePlateau extends Observable {
     }
     
   
-public static void main(String[] args) {   
-    
-        VuePlateau vuePlateau = new VuePlateau();
-        vuePlateau.afficher();
-        
-    } 
+
 
 
 }
