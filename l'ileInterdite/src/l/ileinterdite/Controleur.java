@@ -243,6 +243,8 @@ public class Controleur implements Observer{
     }
 
     public void finTour(Observable o, int nbActionsRestantes){
+        tirageCarte();
+        tirageInondation();
         if (nbActionsRestantes == 0){
                     ((VueAventurier) o).getBtnBouger().setEnabled(false);
                     ((VueAventurier) o).getBtnAutreAction().setEnabled(false);
