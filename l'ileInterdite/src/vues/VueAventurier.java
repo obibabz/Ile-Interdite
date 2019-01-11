@@ -176,7 +176,11 @@ public class VueAventurier extends Observable{
             });
         
         if(numJCourant != numJoueur){
-            
+            this.btnBouger.setEnabled(false);
+            this.btnAssecher.setEnabled(false);
+            panelAventurier.setBackground(couleurGrisee);
+            mainPanel.setBorder(BorderFactory.createLineBorder(couleurGrisee, 2)) ;
+            this.panelCentre.setBorder(new MatteBorder(0, 0, 2, 0, couleurGrisee));
         }
 
     }
