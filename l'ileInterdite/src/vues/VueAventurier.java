@@ -20,6 +20,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.MatteBorder;
+import util.Parameters;
 import util.Utils.Commandes;
 
 
@@ -27,7 +28,8 @@ import util.Utils.Commandes;
  *
  * @author rousstan
  */
-public class VueAventurier extends Observable{                                                                                                                                            
+public class VueAventurier extends Observable{    
+    private final JPanel panelBoutonsPere;
     private final JPanel panelBoutons ;
     private final JPanel panelCentre ;
     private final JFrame window;
@@ -42,17 +44,31 @@ public class VueAventurier extends Observable{
     private final JButton btnTerminerTour;
     private JTextField position;
 
-    public VueAventurier(String nomJoueur, String nomAventurier, Color couleur, String pos){
+    public VueAventurier(int numJCourant, int numJoueur, String nomJoueur, String nomAventurier, Color couleur, Color couleurGrisee, String pos){
 
         this.window = new JFrame();
         window.setSize(350, 200);
         //le titre = nom du joueur                                                                                                                                                      
-        window.setTitle(nomJoueur);
+        window.setTitle(nomJoueur);      
         mainPanel = new JPanel(new BorderLayout());
         this.window.add(mainPanel);
-
         mainPanel.setBackground(new Color(230, 230, 230));
         mainPanel.setBorder(BorderFactory.createLineBorder(couleur, 2)) ;
+        
+        switch (numJoueur) {
+            case 0:
+                window.setLocation(0,0);
+                break;
+            case 1:
+                window.setLocation(400,0);
+                break;
+            case 2:
+                window.setLocation(800,0);
+                break;
+            default:
+                window.setLocation(1200,0);
+                break;
+        }
 
         // =================================================================================                                                                                            
         // NORD : le titre = nom de l'aventurier sur la couleurActive du pion                                                                                                           
@@ -77,15 +93,18 @@ public class VueAventurier extends Observable{
 
 
 	// =================================================================================                                                                                            
-        // SUD : les boutons                                                                                                                                                            
-        this.panelBoutons = new JPanel(new GridLayout(2,3));
+        // SUD : les boutons  
+        this.panelBoutonsPere = new JPanel(new BorderLayout());
+        this.panelBoutons = new JPanel(new GridLayout(3,2));
         this.panelBoutons.setOpaque(false);
-	mainPanel.add(this.panelBoutons, BorderLayout.SOUTH);
+	mainPanel.add(this.panelBoutonsPere, BorderLayout.SOUTH);
+        this.panelBoutonsPere.add(this.panelBoutons, BorderLayout.CENTER);
 
         this.btnBouger = new JButton("Bouger") ;
         this.btnAssecher = new JButton( "Assecher");
 	this.btnAutreAction = new JButton("AutreAction") ;
         this.btnTerminerTour = new JButton("Terminer Tour") ;
+        
         this.btnDonnerCarte = new JButton("Donner Carte") ;
         this.btnUtiliserCarte = new JButton("Utiliser Carte") ;
         this.btnRecupTresor = new JButton("Récupérer Trésor") ;
@@ -118,7 +137,35 @@ public class VueAventurier extends Observable{
                     clearChanged();
                 }
             });
-        this.panelBoutons.add(btnTerminerTour);
+        this.panelBoutons.add(btnDonnerCarte); btnDonnerCarte.setEnabled(false);
+        btnDonnerCarte.addActionListener(new ActionListener(){
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    setChanged();
+                    notifyObservers(Commandes.DONNER);
+                    clearChanged();
+                }
+            });
+        this.panelBoutons.add(btnUtiliserCarte); btnUtiliserCarte.setEnabled(false);
+        btnUtiliserCarte.addActionListener(new ActionListener(){
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    setChanged();
+                    notifyObservers(Commandes.CHOISIR_CARTE);
+                    clearChanged();
+                }
+            });
+        this.panelBoutons.add(btnRecupTresor); btnRecupTresor.setEnabled(false);
+        btnRecupTresor.addActionListener(new ActionListener(){
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    setChanged();
+                    notifyObservers(Commandes.RECUPERER_TRESOR);
+                    clearChanged();
+                }
+            });
+        
+        this.panelBoutonsPere.add(btnTerminerTour, BorderLayout.SOUTH);
         btnTerminerTour.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -127,6 +174,10 @@ public class VueAventurier extends Observable{
                     clearChanged();
                 }
             });
+        
+        if(numJCourant != numJoueur){
+            
+        }
 
     }
 

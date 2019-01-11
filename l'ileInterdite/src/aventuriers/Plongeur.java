@@ -8,7 +8,7 @@ package aventuriers;
 import aventuriers.Aventurier;
 import java.util.ArrayList;
 import l.ileinterdite.Grille;
-import l.ileinterdite.Pion;
+import util.Utils.Pion;
 import l.ileinterdite.Tuile;
 
 /**

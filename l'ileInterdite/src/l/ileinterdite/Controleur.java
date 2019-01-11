@@ -23,6 +23,8 @@ import cartes.CarteTirage;
 import cartes.CarteInondation;
 import util.Utils.Tresor;
 import util.Utils.Commandes;
+import vues.VueNiveau;
+import vues.VuePlateau;
         
 
 public class Controleur implements Observer{
@@ -33,6 +35,14 @@ public class Controleur implements Observer{
     private ArrayList <CarteInondation> piocheInondation;
     private ArrayList <CarteInondation> defausseInondation;
     private ArrayList<Tresor> tresorPossede;
+    private int niveauInnond;
+    private ArrayList<CarteTirage> piocheTirage;
+    private ArrayList<CarteTirage> defausseTirage;
+    private ArrayList<VueAventurier> vuesAventuriers;
+    private VueNiveau vueNiveau;
+    private VuePlateau vuePlateau;
+    
+    
 
     /**
      *
@@ -199,7 +209,7 @@ public class Controleur implements Observer{
                 ((VueAventurier) o).close();
                 nbActionsRestantes = 3;
                 joueurSuivant(listeJoueurs);
-                VueAventurier vue1 = new VueAventurier(JCourant.getNomJoueur(), JCourant.getClass().getSimpleName() , JCourant.getPion().getCouleur(), JCourant.getPosition().getNom());
+                VueAventurier vue1 = new VueAventurier(listeJoueurs.indexOf(JCourant), listeJoueurs.indexOf(JCourant), JCourant.getNomJoueur(), JCourant.getClass().getSimpleName() , JCourant.getPion().getCouleur(), JCourant.getPion().getCouleurGrisee(), JCourant.getPosition().getNom());
                 vue1.addObserver(this);
                 if(JCourant.getPion().toString()=="Bleu" ){vue1.getBtnAutreAction().setEnabled(true);}
                 vue1.afficher();
@@ -219,12 +229,20 @@ public class Controleur implements Observer{
                     ((VueAventurier) o).getBtnAutreAction().setEnabled(false);
                     ((VueAventurier) o).getBtnAssecher().setEnabled(false);
         }
-        if (verifVictoire()){
+        if (ifVictoire()){
             System.out.println("FAUT FAIRE LA VUE VICTOIRE VITE ET SUPPRIMER CE MESSAGE");
         }
     }
     
-    public boolean verifCarteHelico(Aventurier a){
+    //Gestion montée des eaux
+    
+    public void piocheCarteMonteeDesEaux(){
+        
+    }
+    
+    
+    // fonction pour les conditions de Victoire et de Defaite
+    public boolean ifCarteHelico(Aventurier a){
         boolean retour = false;
         String cH = "CarteHelicoptere";
         for(CarteTirage c : a.getCartesEnMain()){
@@ -235,17 +253,19 @@ public class Controleur implements Observer{
         return retour;
     }
     
-    public boolean verifToutLesTrésors(){
+    public boolean ifToutLesTrésors(){
         return (tresorPossede.size() == 4);
     }
     
-    public boolean verifToutLesJoueursSurHeliport(){
+    public boolean ifToutLesJoueursSurHeliport(){
         
         boolean retour = false;
         for (int i=0; i<6; i++){
             for(int j=0; j<6; j++){
-                if(grille.getTuile(i, j).getJoueursSurTuile().size() == listeJoueurs.size()){
-                    retour = true;
+                if("Heliport".equals(grille.getTuile(i, j).getNom())){
+                    if(grille.getTuile(i, j).getJoueursSurTuile().size() == listeJoueurs.size()){
+                        retour = true;
+                    }
                 }
             }
         }
@@ -253,12 +273,12 @@ public class Controleur implements Observer{
         return retour;
     }
     
-    public boolean verifVictoire(){
+    public boolean ifVictoire(){
         boolean retour = false;
-        if(verifToutLesJoueursSurHeliport()){
-            if(this.verifToutLesTrésors()){
+        if(ifToutLesJoueursSurHeliport()){
+            if(ifToutLesTrésors()){
                 for(Aventurier a : listeJoueurs){
-                    if(this.verifCarteHelico(a)){
+                    if(ifCarteHelico(a)){
                         retour = true;
                     }
                 }
@@ -266,4 +286,33 @@ public class Controleur implements Observer{
         }
         return retour;
     }
+    
+    
+    /*IF DEFAITE A FAIRE
+    
+    public boolean ifHeliportNoyee(){
+        boolean retour = false;
+        for (int i=0; i<6; i++){
+            for(int j=0; j<6; j++){
+                if("Heliport".equals(grille.getTuile(i, j).getNom())){
+                    if(grille.getTuile(i, j).getEtatTuile() == EtatTuile.NOYEE){
+                        retour=true;
+                    }
+                }
+            }
+        }
+        return retour;
+    }
+    
+    public boolean ifNiveauMax(){
+        return niveauInnond == 10; 
+    }
+    
+    public boolean ifDefaite(){
+        if(ifNiveauMax()){
+           System.out.println("VUE DEFAITE A FAIRE");
+        }else if(ifHeliportNoyee()){
+            
+        }
+    }*/
 }

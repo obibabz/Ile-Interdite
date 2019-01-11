@@ -15,7 +15,7 @@ import aventuriers.Aventurier;
 import vues.VueAventurier;
 import java.awt.Color;
 import java.util.ArrayList;
-import util.Utils;
+import util.Utils.Pion;
 
 /**
  *
@@ -132,8 +132,14 @@ public class LIleInterdite {
             }
         }
         */
-        VueAventurier vue1 = new VueAventurier(joueur1.getNomJoueur(), joueur1.getClass().getSimpleName(), joueur1.getPion().getCouleur(), joueur1.getPosition().getNom());
+        VueAventurier vue1 = new VueAventurier(0, joueursSurGrille.indexOf(joueur1), joueur1.getNomJoueur(), joueur1.getClass().getSimpleName(), joueur1.getPion().getCouleur(), joueur1.getPion().getCouleurGrisee(), joueur1.getPosition().getNom());
+        VueAventurier vue2 = new VueAventurier(0, joueursSurGrille.indexOf(joueur2), joueur2.getNomJoueur(), joueur2.getClass().getSimpleName(), joueur2.getPion().getCouleur(), joueur2.getPion().getCouleurGrisee(), joueur2.getPosition().getNom());
+        VueAventurier vue3 = new VueAventurier(0, joueursSurGrille.indexOf(joueur3), joueur3.getNomJoueur(), joueur3.getClass().getSimpleName(), joueur3.getPion().getCouleur(), joueur3.getPion().getCouleurGrisee(), joueur3.getPosition().getNom());
+        VueAventurier vue4 = new VueAventurier(0, joueursSurGrille.indexOf(joueur4), joueur4.getNomJoueur(), joueur4.getClass().getSimpleName(), joueur4.getPion().getCouleur(), joueur4.getPion().getCouleurGrisee(), joueur4.getPosition().getNom());
         vue1.afficher();
+        vue2.afficher();
+        vue3.afficher();
+        vue4.afficher();
         
         Controleur controleur = new Controleur();
 
