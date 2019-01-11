@@ -9,10 +9,10 @@ import l.ileinterdite.ObjetIdentifie;
 import java.util.ArrayList;
 import l.ileinterdite.EtatTuile;
 import l.ileinterdite.Grille;
-import l.ileinterdite.Pion;
 import l.ileinterdite.Tuile;
 import cartes.CarteTirage;
 import cartes.CarteTresor;
+import util.Utils.Pion;
 /**
  *
  * @author rousstan

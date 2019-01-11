@@ -6,7 +6,7 @@
 package aventuriers;
 
 import aventuriers.Aventurier;
-import l.ileinterdite.Pion;
+import util.Utils.Pion;
 import l.ileinterdite.Tuile;
 
 /**
