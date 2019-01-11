@@ -122,8 +122,8 @@ public class LIleInterdite {
         Aventurier joueur2 = new Explorateur("joueur2", PCu, vert); joueursSurGrille.add(joueur2);
         Aventurier joueur3 = new Plongeur("joueur3", PFe, violet); joueursSurGrille.add(joueur3);
         Aventurier joueur4 = new Pilote("joueur4", H, bleu); joueursSurGrille.add(joueur4);
-        Aventurier joueur5 = new Navigateur("joueur5", POr, jaune); joueursSurGrille.add(joueur5);
-        Aventurier joueur6 = new Messager("joueur6", PAr, orange); joueursSurGrille.add(joueur6);
+        //Aventurier joueur5 = new Navigateur("joueur5", POr, jaune); joueursSurGrille.add(joueur5);
+        //Aventurier joueur6 = new Messager("joueur6", PAr, orange); joueursSurGrille.add(joueur6);
         
         
        /* for (int i = 0; i < 6; i++) {
@@ -153,6 +153,7 @@ public class LIleInterdite {
         controleur.setListeJoueurs(joueursSurGrille);
         controleur.setJCourant(joueur1);
         controleur.setNbActionsRestantes(3);
+        controleur.setVuesAventuriers(vuesAventurier);
         vue1.addObserver(controleur);
         vue2.addObserver(controleur);
         vue3.addObserver(controleur);

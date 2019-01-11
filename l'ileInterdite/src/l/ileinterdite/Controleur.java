@@ -13,7 +13,6 @@ package l.ileinterdite;
 
 import aventuriers.Aventurier;
 import vues.VueAventurier;
-import java.awt.Color;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import java.util.Observable;
@@ -21,6 +20,8 @@ import java.util.Observer;
 import java.util.Scanner;
 import cartes.CarteTirage;
 import cartes.CarteInondation;
+import javax.swing.BorderFactory;
+import javax.swing.border.MatteBorder;
 import util.Utils.Tresor;
 import util.Utils.Commandes;
 import vues.VueNiveau;
@@ -221,8 +222,10 @@ public class Controleur implements Observer{
             else if (((Commandes ) arg) == Commandes.TERMINER) {
                 
                 nbActionsRestantes = 3;
+                setVueJPrecedant(((VueAventurier) o));
                 joueurSuivant(listeJoueurs);
-                ((VueAventurier) o).getMainPanel().revalidate();
+                
+                setVueJCourant(vuesAventuriers.get(listeJoueurs.indexOf(JCourant)));
               
                 
                 
@@ -299,6 +302,29 @@ public class Controleur implements Observer{
             }
         }
         return retour;
+    }
+    
+    public void setVueJCourant(VueAventurier v1){
+        v1.getBtnBouger().setEnabled(true);
+            v1.getBtnAssecher().setEnabled(true);
+            v1.getBtnTerminerTour().setEnabled(true);
+            if("Pilote".equals(JCourant.getClass().getSimpleName())){
+                v1.getBtnAutreAction().setEnabled(true);
+            }
+            v1.getPanelAventurier().setBackground(JCourant.getPion().getCouleur());
+            v1.getMainPanel().setBorder(BorderFactory.createLineBorder(JCourant.getPion().getCouleur(), 2)) ;
+            v1.getPanelCentre().setBorder(new MatteBorder(0, 0, 2, 0, JCourant.getPion().getCouleur()));
+    }
+    public void setVueJPrecedant(VueAventurier v1){
+        v1.getBtnBouger().setEnabled(false);
+            v1.getBtnAssecher().setEnabled(false);
+            v1.getBtnTerminerTour().setEnabled(false);
+            if("Pilote".equals(JCourant.getClass().getSimpleName())){
+                v1.getBtnAutreAction().setEnabled(false);
+            }
+            v1.getPanelAventurier().setBackground(JCourant.getPion().getCouleurGrisee());
+            v1.getMainPanel().setBorder(BorderFactory.createLineBorder(JCourant.getPion().getCouleurGrisee(), 2)) ;
+            v1.getPanelCentre().setBorder(new MatteBorder(0, 0, 2, 0, JCourant.getPion().getCouleurGrisee()));
     }
     
     

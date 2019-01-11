@@ -181,6 +181,7 @@ public class VueAventurier extends Observable{
             panelAventurier.setBackground(couleurGrisee);
             mainPanel.setBorder(BorderFactory.createLineBorder(couleurGrisee, 2)) ;
             this.panelCentre.setBorder(new MatteBorder(0, 0, 2, 0, couleurGrisee));
+            this.btnTerminerTour.setEnabled(false);
         }
 
     }
@@ -188,6 +189,39 @@ public class VueAventurier extends Observable{
     public JButton getBtnBouger() {
         return btnBouger;
     }
+
+    public JPanel getPanelBoutonsPere() {
+        return panelBoutonsPere;
+    }
+
+    public JPanel getPanelBoutons() {
+        return panelBoutons;
+    }
+
+    public JPanel getPanelCentre() {
+        return panelCentre;
+    }
+
+    public JFrame getWindow() {
+        return window;
+    }
+
+    public JPanel getPanelAventurier() {
+        return panelAventurier;
+    }
+
+    public JButton getBtnDonnerCarte() {
+        return btnDonnerCarte;
+    }
+
+    public JButton getBtnUtiliserCarte() {
+        return btnUtiliserCarte;
+    }
+
+    public JButton getBtnRecupTresor() {
+        return btnRecupTresor;
+    }
+    
 
     public JButton getBtnAssecher() {
         return btnAssecher;
