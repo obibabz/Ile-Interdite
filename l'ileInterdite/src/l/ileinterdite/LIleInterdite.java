@@ -141,6 +141,12 @@ public class LIleInterdite {
         vue3.afficher();
         vue4.afficher();
         
+        ArrayList<VueAventurier> vuesAventurier = new ArrayList<>();
+        vuesAventurier.add(vue1);
+        vuesAventurier.add(vue2);
+        vuesAventurier.add(vue3);
+        vuesAventurier.add(vue4);
+        
         Controleur controleur = new Controleur();
 
         controleur.setGrille(grid);
@@ -148,6 +154,10 @@ public class LIleInterdite {
         controleur.setJCourant(joueur1);
         controleur.setNbActionsRestantes(3);
         vue1.addObserver(controleur);
+        vue2.addObserver(controleur);
+        vue3.addObserver(controleur);
+        vue4.addObserver(controleur);
+       
     }
     
 }
