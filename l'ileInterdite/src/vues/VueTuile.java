@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridLayout;
 import java.util.ArrayList;
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -11,13 +12,13 @@ import util.Utils.EtatTuile;
 
 public class VueTuile extends JPanel {
     private final JButton tuile;
-    private final ArrayList<JLabel> casesJoueurs;
+    private final ArrayList<JPanel> casesJoueurs;
     
     
     public VueTuile(String nomTuile, String tresor, String etat, ArrayList<Color> joueursSurTuile) {
         super();
         this.setLayout(new BorderLayout());
-        
+        this.setBorder(BorderFactory.createLineBorder(Color.black, 1));
         //Affichage du Tresor
         if(tresor != null){
             JLabel labelTresor = new JLabel(tresor);
@@ -39,18 +40,31 @@ public class VueTuile extends JPanel {
         //Affichage des joueurs sur la tuile
         JPanel panelBas = new JPanel(new GridLayout(1,4));
         this.add(panelBas, BorderLayout.SOUTH);
-        int i = 0;
-        casesJoueurs = new ArrayList<>();
-        JLabel case1 = new JLabel();
-        casesJoueurs.add(case1);
-        JLabel case2 = new JLabel();
-        casesJoueurs.add(case2);
-        JLabel case3 = new JLabel();
-        casesJoueurs.add(case3);
-        JLabel case4 = new JLabel();
-        casesJoueurs.add(case4);
         
+        casesJoueurs = new ArrayList<>();
+        JPanel case1 = new JPanel();
+        
+        case1.setBorder(BorderFactory.createLineBorder(Color.black, 1));
+        casesJoueurs.add(case1);
+        JPanel case2 = new JPanel();
+        case2.setBorder(BorderFactory.createLineBorder(Color.black, 1));
+        casesJoueurs.add(case2);
+        JPanel case3 = new JPanel();
+        case3.setBorder(BorderFactory.createLineBorder(Color.black, 1));
+        casesJoueurs.add(case3);
+        JPanel case4 = new JPanel();
+        case4.setBorder(BorderFactory.createLineBorder(Color.black, 1));
+        casesJoueurs.add(case4);
+        panelBas.add(case1);
+        panelBas.add(case2);
+        panelBas.add(case3);
+        panelBas.add(case4);
+        
+        int i = 0;
         while(i <= joueursSurTuile.size()-1){
+            System.out.println(i);
+            System.out.println(joueursSurTuile.get(i).toString());
+            System.out.println(casesJoueurs.get(i).toString());
             casesJoueurs.get(i).setBackground(joueursSurTuile.get(i));
             i++;
         }
@@ -62,7 +76,7 @@ public class VueTuile extends JPanel {
         return tuile;
     }
 
-    public ArrayList<JLabel> getCasesJoueurs() {
+    public ArrayList<JPanel> getCasesJoueurs() {
         return casesJoueurs;
     }
     

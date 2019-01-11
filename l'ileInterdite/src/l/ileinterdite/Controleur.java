@@ -370,11 +370,25 @@ public class Controleur implements Observer{
         
         VueTuile vT;
         ArrayList<Color> couleurs = new ArrayList<>();
-        for(Aventurier a : listeJoueurs){
+        for(Aventurier a : t.getJoueursSurTuile()){
             couleurs.add(a.getPion().getCouleur());
         }
-        vT = new VueTuile(t.getNom(), t.getTresor().toString(), t.getEtatTuile().toString(), couleurs);
-        System.out.println(t.getEtatTuile().toString());
+        String tresor;
+        tresor = null;
+        if("La Caverne des Ombres".equals(t.getNom()) || "La Caverne du Brasier".equals(t.getNom())){
+            tresor = Tresor.CRISTAL.toString();
+        }
+        else if("Le Palais de Corail".equals(t.getNom()) || "Le Palais des Marées".equals(t.getNom())){
+            tresor = Tresor.CALICE.toString();
+        }
+        else if("Le Temple de la Lune".equals(t.getNom()) || "Le Temple du Soleil".equals(t.getNom())){
+            tresor = Tresor.PIERRE.toString();
+        }
+        else if("Le Jardin des Murmures".equals(t.getNom()) || "Le Jardin des Hurlements".equals(t.getNom())){
+            tresor = Tresor.ZEPHYR.toString();
+        }
+        vT = new VueTuile(t.getNom(), tresor, t.getEtatTuile().toString(), couleurs);
+        
         return vT;
     }
     

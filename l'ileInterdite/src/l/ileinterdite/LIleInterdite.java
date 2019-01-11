@@ -20,6 +20,7 @@ import vues.VueGrille;
 import vues.VuePlateau;
 import vues.VueTuile;
 import util.Utils.EtatTuile;
+import util.Utils.Tresor;
 
 /**
  *
@@ -48,29 +49,29 @@ public class LIleInterdite {
         Tuile V11 = new Tuile("Void", EtatTuile.ASSECHEE); V11.setEtatTuile(null);
         Tuile V12 = new Tuile("Void", EtatTuile.ASSECHEE); V12.setEtatTuile(null);
         Tuile PAb = new Tuile("Le Pont des Abîmes", EtatTuile.ASSECHEE); 
-        Tuile PBr = new Tuile("La Porte de Bronze", EtatTuile.INONDEE);
-        Tuile COm = new Tuile("La Caverne des Ombres", EtatTuile.ASSECHEE);
+        Tuile PBr = new Tuile("La Porte de Bronze", EtatTuile.INONDEE); 
+        Tuile COm = new Tuile("La Caverne des Ombres", EtatTuile.ASSECHEE); COm.setTresor(Tresor.CRISTAL);
         Tuile PFe = new Tuile("La Porte de Fer", EtatTuile.ASSECHEE);
         Tuile POr = new Tuile("La Porte d'Or", EtatTuile.ASSECHEE);
         Tuile FOu = new Tuile("Les Falaises de l'Oubli", EtatTuile.ASSECHEE);
-        Tuile PCo = new Tuile("Le Palais de Corail", EtatTuile.ASSECHEE);
+        Tuile PCo = new Tuile("Le Palais de Corail", EtatTuile.ASSECHEE); PCo.setTresor(Tresor.CALICE);
         Tuile PAr = new Tuile("La Porte d'Argent", EtatTuile.ASSECHEE);
         Tuile DIl = new Tuile("Les Dunes de l'Illusion", EtatTuile.COULEE);
         Tuile H = new Tuile("Heliport", EtatTuile.ASSECHEE);
         Tuile PCu = new Tuile("La Porte de Cuivre", EtatTuile.ASSECHEE);
-        Tuile JHu = new Tuile("Le Jardin des Hurlements", EtatTuile.ASSECHEE);
+        Tuile JHu = new Tuile("Le Jardin des Hurlements", EtatTuile.ASSECHEE); JHu.setTresor(Tresor.ZEPHYR);
         Tuile FPo = new Tuile("La Forêt Pourpre", EtatTuile.ASSECHEE);
         Tuile LPe = new Tuile("Le Lagon Perdu", EtatTuile.INONDEE);
         Tuile MBr = new Tuile("Le Marais Brumeux", EtatTuile.COULEE);
         Tuile O = new Tuile("Observatoire", EtatTuile.INONDEE);
         Tuile RFa = new Tuile("Le Rocher Fantôme", EtatTuile.COULEE);
-        Tuile CBr = new Tuile("La Caverne du Brasier", EtatTuile.INONDEE);
-        Tuile TSo = new Tuile("Le Temple du Soleil", EtatTuile.ASSECHEE);
-        Tuile TLu = new Tuile("Le Temple de la Lune", EtatTuile.COULEE);
-        Tuile PMa = new Tuile("Le Palais des Marées", EtatTuile.ASSECHEE);
+        Tuile CBr = new Tuile("La Caverne du Brasier", EtatTuile.INONDEE); CBr.setTresor(Tresor.CRISTAL);
+        Tuile TSo = new Tuile("Le Temple du Soleil", EtatTuile.ASSECHEE); TSo.setTresor(Tresor.PIERRE);
+        Tuile TLu = new Tuile("Le Temple de la Lune", EtatTuile.COULEE); TLu.setTresor(Tresor.PIERRE);
+        Tuile PMa = new Tuile("Le Palais des Marées", EtatTuile.ASSECHEE); PMa.setTresor(Tresor.CALICE);
         Tuile VCr = new Tuile("Le Val du Crépuscule", EtatTuile.ASSECHEE);
         Tuile TGu = new Tuile("La Tour du Guet", EtatTuile.ASSECHEE);
-        Tuile JMu = new Tuile("Le Jardin des Murmures", EtatTuile.INONDEE);
+        Tuile JMu = new Tuile("Le Jardin des Murmures", EtatTuile.INONDEE); JMu.setTresor(Tresor.ZEPHYR);
         
         ArrayList<Tuile> listeTuiles = new ArrayList<>();
         listeTuiles.add(PAb);
@@ -147,10 +148,10 @@ public class LIleInterdite {
         
         
         ArrayList<Aventurier> joueursSurGrille = new ArrayList<Aventurier>();
-        Aventurier joueur1 = new Ingenieur("joueur1", PBr, rouge); joueursSurGrille.add(joueur1);
-        Aventurier joueur2 = new Explorateur("joueur2", PCu, vert); joueursSurGrille.add(joueur2);
-        Aventurier joueur3 = new Plongeur("joueur3", PFe, violet); joueursSurGrille.add(joueur3);
-        Aventurier joueur4 = new Pilote("joueur4", H, bleu); joueursSurGrille.add(joueur4);
+        Aventurier joueur1 = new Ingenieur("joueur1", PBr, rouge); joueursSurGrille.add(joueur1);PBr.arriveeJoueur(joueur1);
+        Aventurier joueur2 = new Explorateur("joueur2", PCu, vert); joueursSurGrille.add(joueur2);PCu.arriveeJoueur(joueur2);
+        Aventurier joueur3 = new Plongeur("joueur3", PFe, violet); joueursSurGrille.add(joueur3);PFe.arriveeJoueur(joueur3);
+        Aventurier joueur4 = new Pilote("joueur4", H, bleu); joueursSurGrille.add(joueur4);H.arriveeJoueur(joueur4);
         //Aventurier joueur5 = new Navigateur("joueur5", POr, jaune); joueursSurGrille.add(joueur5);
         //Aventurier joueur6 = new Messager("joueur6", PAr, orange); joueursSurGrille.add(joueur6);
         
@@ -189,18 +190,18 @@ public class LIleInterdite {
         vue4.addObserver(controleur);
         
         // INNITIALISATION PLATEAU
-        System.out.println("zaezaeza");
+        
         ArrayList<VueTuile> vuesTuiles= new ArrayList<>();
         for(Tuile t : listeTuiles){
             VueTuile vT = controleur.initVueTuile(t);
             
             vuesTuiles.add(vT);
         }
-        System.out.println("zaezaeza");
+        
         VueGrille vG = new VueGrille(vuesTuiles);
         VuePlateau vP = new VuePlateau(vG);
         vP.afficher();
-        System.out.println("zaezaeza");
+        
     }
     
 }

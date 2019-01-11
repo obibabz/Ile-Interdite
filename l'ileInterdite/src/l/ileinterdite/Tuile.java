@@ -23,7 +23,7 @@ public class Tuile extends ObjetIdentifie{
     public Tuile(String nom, EtatTuile etatTuile) {
         this.nom = nom;
         this.etatTuile = etatTuile;
-        this.tresor = Tresor.CALICE;
+        
         
     }
 
@@ -42,6 +42,15 @@ public class Tuile extends ObjetIdentifie{
     public Tresor getTresor() {
         return tresor;
     }
+
+    public void setJoueursSurTuile(ArrayList<Aventurier> joueursSurTuile) {
+        this.joueursSurTuile = joueursSurTuile;
+    }
+
+    public void setTresor(Tresor tresor) {
+        this.tresor = tresor;
+    }
+    
 
     public void setEtatTuile(EtatTuile etatTuile) {
         this.etatTuile = etatTuile;
