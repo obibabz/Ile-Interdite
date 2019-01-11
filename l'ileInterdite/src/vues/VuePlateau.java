@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Toolkit;
+import java.util.ArrayList;
 import java.util.Observable;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -20,6 +21,12 @@ public class VuePlateau extends Observable {
     private JFrame window;
     private VueGrille vueGrille;
     private JLabel titre;
+    private ArrayList<VueAventurier> listeeVuesJoueurs;
+    
+    private JPanel panelPrincipal;
+    
+    //private JPanel panelGauche;
+    //private JPanel panelDroite;
     
 
     public VuePlateau(VueGrille vueGrille) {
@@ -30,11 +37,11 @@ public class VuePlateau extends Observable {
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         window.setLocation(dim.width/2-window.getSize().width/2, dim.height/2-window.getSize().height/2);
         
-        JPanel panelPrincipal = new JPanel(new BorderLayout());
+        panelPrincipal = new JPanel(new BorderLayout());
         window.add(panelPrincipal);
         
-        panelPrincipal.add(titre = new JLabel("L'Ile interdite"), BorderLayout.NORTH);
-        this.titre.setHorizontalAlignment(JLabel.CENTER);
+        
+        
         
         this.vueGrille = vueGrille;
         panelPrincipal.add(vueGrille, BorderLayout.CENTER);

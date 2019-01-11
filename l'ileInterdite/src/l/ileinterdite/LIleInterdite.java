@@ -15,12 +15,14 @@ import aventuriers.Aventurier;
 import vues.VueAventurier;
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.Arrays;
 import util.Utils.Pion;
 import vues.VueGrille;
 import vues.VuePlateau;
 import vues.VueTuile;
 import util.Utils.EtatTuile;
 import util.Utils.Tresor;
+import vues.VueNiveau;
 
 /**
  *
@@ -198,7 +200,8 @@ public class LIleInterdite {
             vuesTuiles.add(vT);
         }
         
-        VueGrille vG = new VueGrille(vuesTuiles);
+        ArrayList<String> tresors = new ArrayList<>(Arrays.asList( "Le Cristal Ardent", "La Pierre Sacrée"));
+        VueGrille vG = new VueGrille(vuesTuiles, new VueNiveau(2), tresors);
         VuePlateau vP = new VuePlateau(vG);
         vP.afficher();
         
