@@ -23,6 +23,8 @@ import cartes.CarteTirage;
 import cartes.CarteInondation;
 import util.Utils.Tresor;
 import util.Utils.Commandes;
+import vues.VueNiveau;
+import vues.VuePlateau;
         
 
 public class Controleur implements Observer{
@@ -34,6 +36,13 @@ public class Controleur implements Observer{
     private ArrayList <CarteInondation> defausseInondation;
     private ArrayList<Tresor> tresorPossede;
     private int niveauInnond;
+    private ArrayList<CarteTirage> piocheTirage;
+    private ArrayList<CarteTirage> defausseTirage;
+    private ArrayList<VueAventurier> vuesAventuriers;
+    private VueNiveau vueNiveau;
+    private VuePlateau vuePlateau;
+    
+    
 
     /**
      *
@@ -225,6 +234,14 @@ public class Controleur implements Observer{
         }
     }
     
+    //Gestion montée des eaux
+    
+    public void piocheCarteMonteeDesEaux(){
+        
+    }
+    
+    
+    // fonction pour les conditions de Victoire et de Defaite
     public boolean ifCarteHelico(Aventurier a){
         boolean retour = false;
         String cH = "CarteHelicoptere";
