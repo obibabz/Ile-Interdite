@@ -4,11 +4,11 @@
  * and open the template in the editor.
  */
 package cartes;
-
+import l.ileinterdite.ObjetIdentifie;
 /**
  *
  * @author lienardr
  */
-public class CarteTirage{
+public class CarteTirage extends ObjetIdentifie{
     
 }
