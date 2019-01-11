@@ -6,11 +6,12 @@
 package cartes;
 
 import l.ileinterdite.Tuile;
+import l.ileinterdite.ObjetIdentifie;
 
 /**
  *
  * @author lienardr
  */
-public class CarteInondation{
+public class CarteInondation extends ObjetIdentifie{
     private Tuile tuile;
 }

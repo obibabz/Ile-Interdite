@@ -10,7 +10,7 @@ package l.ileinterdite;
  * @author rousstan
  */
         
-import util.MessageAction;
+
 import aventuriers.Aventurier;
 import vues.VueAventurier;
 import java.awt.Color;
@@ -22,6 +22,7 @@ import java.util.Scanner;
 import cartes.CarteTirage;
 import cartes.CarteInondation;
 import util.Utils.Tresor;
+import util.Utils.Commandes;
         
 
 public class Controleur implements Observer{
@@ -171,8 +172,8 @@ public class Controleur implements Observer{
 
     @Override
     public void update(Observable o, Object arg) {
-        if (arg instanceof MessageAction) {
-            if (((MessageAction) arg) == MessageAction.BOUGER) { 
+        if (arg instanceof Commandes) {
+            if (((Commandes) arg) == Commandes.BOUGER) { 
 
                 gererDeplacement();
                 ((VueAventurier) o).getPosition().setText(JCourant.getPosition().getNom());
@@ -182,7 +183,7 @@ public class Controleur implements Observer{
 
             }
         
-            else if (((MessageAction) arg) == MessageAction.ASSECHER) {
+            else if (((Commandes) arg) == Commandes.ASSECHER) {
                
                     gererAssechement();
                     if(JCourant.getPion().toString()=="Rouge"){
@@ -194,7 +195,7 @@ public class Controleur implements Observer{
                     finTour(o, nbActionsRestantes);
                 
             }
-            else if (((MessageAction ) arg) == MessageAction.PASSER) {
+            else if (((Commandes ) arg) == Commandes.TERMINER) {
                 ((VueAventurier) o).close();
                 nbActionsRestantes = 3;
                 joueurSuivant(listeJoueurs);
@@ -203,7 +204,7 @@ public class Controleur implements Observer{
                 if(JCourant.getPion().toString()=="Bleu" ){vue1.getBtnAutreAction().setEnabled(true);}
                 vue1.afficher();
             }
-            else if (((MessageAction ) arg) == MessageAction.POUVOIR) {
+            else if (((Commandes ) arg) == Commandes.POUVOIR) {
                 gererPouvoir();
                 ((VueAventurier) o).getPosition().setText(JCourant.getPosition().getNom());
                 ((VueAventurier) o).getBtnAutreAction().setEnabled(false);

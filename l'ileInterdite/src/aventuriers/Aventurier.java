@@ -5,6 +5,7 @@
  */
 package aventuriers;
 
+import l.ileinterdite.ObjetIdentifie;
 import java.util.ArrayList;
 import l.ileinterdite.EtatTuile;
 import l.ileinterdite.Grille;
@@ -16,7 +17,7 @@ import cartes.CarteTresor;
  *
  * @author rousstan
  */
-public abstract class Aventurier{
+public abstract class Aventurier extends ObjetIdentifie{
  
     
     private String nomJoueur;

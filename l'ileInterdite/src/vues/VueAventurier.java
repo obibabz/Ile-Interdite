@@ -20,7 +20,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.MatteBorder;
-import util.MessageAction;
+import util.Utils.Commandes;
 
 
 /**
@@ -36,6 +36,9 @@ public class VueAventurier extends Observable{
     private final JButton btnBouger  ;
     private final JButton btnAssecher;
     private final JButton btnAutreAction;
+    private final JButton btnDonnerCarte;
+    private final JButton btnUtiliserCarte;
+    private final JButton btnRecupTresor;
     private final JButton btnTerminerTour;
     private JTextField position;
 
@@ -75,7 +78,7 @@ public class VueAventurier extends Observable{
 
 	// =================================================================================                                                                                            
         // SUD : les boutons                                                                                                                                                            
-        this.panelBoutons = new JPanel(new GridLayout(2,2));
+        this.panelBoutons = new JPanel(new GridLayout(2,3));
         this.panelBoutons.setOpaque(false);
 	mainPanel.add(this.panelBoutons, BorderLayout.SOUTH);
 
@@ -83,13 +86,17 @@ public class VueAventurier extends Observable{
         this.btnAssecher = new JButton( "Assecher");
 	this.btnAutreAction = new JButton("AutreAction") ;
         this.btnTerminerTour = new JButton("Terminer Tour") ;
-
+        this.btnDonnerCarte = new JButton("Donner Carte") ;
+        this.btnUtiliserCarte = new JButton("Utiliser Carte") ;
+        this.btnRecupTresor = new JButton("Récupérer Trésor") ;
+        
+        
         this.panelBoutons.add(btnBouger);
         btnBouger.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     setChanged();
-                    notifyObservers(MessageAction.BOUGER);
+                    notifyObservers(Commandes.BOUGER);
                     clearChanged();
                 }
             });
@@ -98,7 +105,7 @@ public class VueAventurier extends Observable{
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     setChanged();
-                    notifyObservers(MessageAction.ASSECHER);
+                    notifyObservers(Commandes.ASSECHER);
                     clearChanged();
                 }
             });
@@ -107,7 +114,7 @@ public class VueAventurier extends Observable{
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     setChanged();
-                    notifyObservers(MessageAction.POUVOIR);
+                    notifyObservers(Commandes.POUVOIR);
                     clearChanged();
                 }
             });
@@ -116,7 +123,7 @@ public class VueAventurier extends Observable{
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     setChanged();
-                    notifyObservers(MessageAction.PASSER);
+                    notifyObservers(Commandes.TERMINER);
                     clearChanged();
                 }
             });

@@ -12,7 +12,7 @@ import java.util.ArrayList;
  *
  * @author rousstan
  */
-public class Tuile {
+public class Tuile extends ObjetIdentifie{
     private String nom;
     private EtatTuile etatTuile;
     private ArrayList<Aventurier> joueursSurTuile = new ArrayList();
