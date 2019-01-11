@@ -33,6 +33,7 @@ public class Controleur implements Observer{
     private ArrayList <CarteInondation> piocheInondation;
     private ArrayList <CarteInondation> defausseInondation;
     private ArrayList<Tresor> tresorPossede;
+    private int niveauInnond;
 
     /**
      *
@@ -219,12 +220,12 @@ public class Controleur implements Observer{
                     ((VueAventurier) o).getBtnAutreAction().setEnabled(false);
                     ((VueAventurier) o).getBtnAssecher().setEnabled(false);
         }
-        if (verifVictoire()){
+        if (ifVictoire()){
             System.out.println("FAUT FAIRE LA VUE VICTOIRE VITE ET SUPPRIMER CE MESSAGE");
         }
     }
     
-    public boolean verifCarteHelico(Aventurier a){
+    public boolean ifCarteHelico(Aventurier a){
         boolean retour = false;
         String cH = "CarteHelicoptere";
         for(CarteTirage c : a.getCartesEnMain()){
@@ -235,17 +236,19 @@ public class Controleur implements Observer{
         return retour;
     }
     
-    public boolean verifToutLesTrésors(){
+    public boolean ifToutLesTrésors(){
         return (tresorPossede.size() == 4);
     }
     
-    public boolean verifToutLesJoueursSurHeliport(){
+    public boolean ifToutLesJoueursSurHeliport(){
         
         boolean retour = false;
         for (int i=0; i<6; i++){
             for(int j=0; j<6; j++){
-                if(grille.getTuile(i, j).getJoueursSurTuile().size() == listeJoueurs.size()){
-                    retour = true;
+                if("Heliport".equals(grille.getTuile(i, j).getNom())){
+                    if(grille.getTuile(i, j).getJoueursSurTuile().size() == listeJoueurs.size()){
+                        retour = true;
+                    }
                 }
             }
         }
@@ -253,12 +256,12 @@ public class Controleur implements Observer{
         return retour;
     }
     
-    public boolean verifVictoire(){
+    public boolean ifVictoire(){
         boolean retour = false;
-        if(verifToutLesJoueursSurHeliport()){
-            if(this.verifToutLesTrésors()){
+        if(ifToutLesJoueursSurHeliport()){
+            if(ifToutLesTrésors()){
                 for(Aventurier a : listeJoueurs){
-                    if(this.verifCarteHelico(a)){
+                    if(ifCarteHelico(a)){
                         retour = true;
                     }
                 }
@@ -266,4 +269,33 @@ public class Controleur implements Observer{
         }
         return retour;
     }
+    
+    
+    /*IF DEFAITE A FAIRE
+    
+    public boolean ifHeliportNoyee(){
+        boolean retour = false;
+        for (int i=0; i<6; i++){
+            for(int j=0; j<6; j++){
+                if("Heliport".equals(grille.getTuile(i, j).getNom())){
+                    if(grille.getTuile(i, j).getEtatTuile() == EtatTuile.NOYEE){
+                        retour=true;
+                    }
+                }
+            }
+        }
+        return retour;
+    }
+    
+    public boolean ifNiveauMax(){
+        return niveauInnond == 10; 
+    }
+    
+    public boolean ifDefaite(){
+        if(ifNiveauMax()){
+           System.out.println("VUE DEFAITE A FAIRE");
+        }else if(ifHeliportNoyee()){
+            
+        }
+    }*/
 }

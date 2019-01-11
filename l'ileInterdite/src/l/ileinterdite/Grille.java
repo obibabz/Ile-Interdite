@@ -6,6 +6,8 @@
 package l.ileinterdite;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import util.Utils.Tresor;
 
 /**
  *
@@ -146,4 +148,15 @@ public class Grille {
         }
         return tuilesPasSeches;
     }
+/*    
+    public HashMap<Tresor, Integer> getTresorInondee(){
+        HashMap<Tresor, Integer> listeTresorInondee = new HashMap();
+        for(int i=0; i<6; i++){
+            for(int j=0; j<6; j++){
+                if(grille[i][j].getClass().getSimpleName().equals("Tresor")){
+                   
+                }
+            }
+        }
+    }*/
 }
