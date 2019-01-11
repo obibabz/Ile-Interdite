@@ -28,18 +28,19 @@ public class VueGrille extends JPanel{
         this.setLayout(new GridLayout(6,6));
         int i= 0;
         int j=0;
-        JLabel vide = new JLabel();
-        vide.setBackground(Color.black);
-        ArrayList<Integer> liste = new ArrayList<>(Arrays.asList(0,1,4,5,6,7,24,29,30,31));
+        
+        ArrayList<Integer> liste = new ArrayList<>(Arrays.asList(0,1,4,5,6,11,24,29,30,31,34,35));
         
         while(i <= 35 ){
-            System.out.print("i : "+i);
-            System.out.println("j : "+j);
                 if(liste.contains(i)){
+                    
+                    JLabel vide = new JLabel();
                     this.add(vide);
                 }
                 else{
                    this.add(listeTuiles.get(j));
+                   //JLabel vide = new JLabel("i :"+i+" "+"j : "+j+" pasvide");
+                    //this.add(vide);
                    if (j !=23){
                     j++;
                    }

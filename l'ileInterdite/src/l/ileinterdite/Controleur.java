@@ -28,6 +28,7 @@ import util.Utils.Commandes;
 import vues.VueNiveau;
 import vues.VuePlateau;
 import vues.VueTuile;
+import util.Utils.EtatTuile;
 
         
 
@@ -119,7 +120,7 @@ public class Controleur implements Observer{
         }else{
             afficherTuiles(tuilesAssech);
             Tuile tuile = choixTuile(tuilesAssech);
-            tuile.setEtatTuile(l.ileinterdite.EtatTuile.NORMAL);
+            tuile.setEtatTuile(EtatTuile.ASSECHEE);
             System.out.println("Vous avez asséché la tuile : " +tuile.getNom());
             nbActionsRestantes+=-1;
         }
@@ -373,7 +374,7 @@ public class Controleur implements Observer{
             couleurs.add(a.getPion().getCouleur());
         }
         vT = new VueTuile(t.getNom(), t.getTresor().toString(), t.getEtatTuile().toString(), couleurs);
-        
+        System.out.println(t.getEtatTuile().toString());
         return vT;
     }
     

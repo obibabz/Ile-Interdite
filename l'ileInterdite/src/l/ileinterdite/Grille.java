@@ -8,6 +8,7 @@ package l.ileinterdite;
 import java.util.ArrayList;
 import java.util.HashMap;
 import util.Utils.Tresor;
+import util.Utils.EtatTuile;
 
 /**
  *
@@ -108,7 +109,7 @@ public class Grille {
             j = 0;
             while ( j < 6 ){
 
-                if (grille[i][j].getNom() != "Void" && grille[i][j].getEtatTuile() != EtatTuile.NOYEE && tuile.getNom() != grille[i][j].getNom()){
+                if (grille[i][j].getNom() != "Void" && grille[i][j].getEtatTuile() != EtatTuile.COULEE && tuile.getNom() != grille[i][j].getNom()){
                     tuilesPilote.add(grille[i][j]);
 
                 }
@@ -132,7 +133,7 @@ public class Grille {
     public ArrayList<Tuile> getTuilesPasSeches(ArrayList<Tuile> tuiles){
         ArrayList<Tuile> tuilesPasSeches = new ArrayList();
         for(Tuile tuile : tuiles){
-            if (tuile.getEtatTuile() != EtatTuile.NORMAL){
+            if (tuile.getEtatTuile() != EtatTuile.ASSECHEE){
                 tuilesPasSeches.add(tuile);
             }
         }
@@ -142,7 +143,7 @@ public class Grille {
     public ArrayList<Tuile> getTuilesNonCoulees(ArrayList<Tuile> tuiles){
         ArrayList<Tuile> tuilesPasSeches = new ArrayList();
         for(Tuile tuile : tuiles){
-            if (tuile.getEtatTuile() != EtatTuile.NOYEE){
+            if (tuile.getEtatTuile() != EtatTuile.COULEE){
                 tuilesPasSeches.add(tuile);
             }
         }

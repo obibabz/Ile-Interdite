@@ -19,6 +19,7 @@ import util.Utils.Pion;
 import vues.VueGrille;
 import vues.VuePlateau;
 import vues.VueTuile;
+import util.Utils.EtatTuile;
 
 /**
  *
@@ -34,42 +35,42 @@ public class LIleInterdite {
         
         
         
-        Tuile V1 = new Tuile("Void", l.ileinterdite.EtatTuile.NORMAL); V1.setEtatTuile(null);
-        Tuile V2 = new Tuile("Void", l.ileinterdite.EtatTuile.NORMAL); V2.setEtatTuile(null);
-        Tuile V3 = new Tuile("Void", l.ileinterdite.EtatTuile.NORMAL); V3.setEtatTuile(null);
-        Tuile V4 = new Tuile("Void", l.ileinterdite.EtatTuile.NORMAL); V4.setEtatTuile(null);
-        Tuile V5 = new Tuile("Void", l.ileinterdite.EtatTuile.NORMAL); V5.setEtatTuile(null);
-        Tuile V6 = new Tuile("Void", l.ileinterdite.EtatTuile.NORMAL); V6.setEtatTuile(null);
-        Tuile V7 = new Tuile("Void", l.ileinterdite.EtatTuile.NORMAL); V7.setEtatTuile(null);
-        Tuile V8 = new Tuile("Void", l.ileinterdite.EtatTuile.NORMAL); V8.setEtatTuile(null);
-        Tuile V9 = new Tuile("Void", l.ileinterdite.EtatTuile.NORMAL); V9.setEtatTuile(null);
-        Tuile V10 = new Tuile("Void", l.ileinterdite.EtatTuile.NORMAL); V10.setEtatTuile(null);
-        Tuile V11 = new Tuile("Void", l.ileinterdite.EtatTuile.NORMAL); V11.setEtatTuile(null);
-        Tuile V12 = new Tuile("Void", l.ileinterdite.EtatTuile.NORMAL); V12.setEtatTuile(null);
-        Tuile PAb = new Tuile("Le Pont des Abîmes", l.ileinterdite.EtatTuile.NORMAL); 
-        Tuile PBr = new Tuile("La Porte de Bronze", l.ileinterdite.EtatTuile.INONDEE);
-        Tuile COm = new Tuile("La Caverne des Ombres", l.ileinterdite.EtatTuile.NORMAL);
-        Tuile PFe = new Tuile("La Porte de Fer", l.ileinterdite.EtatTuile.NORMAL);
-        Tuile POr = new Tuile("La Porte d'Or", l.ileinterdite.EtatTuile.NORMAL);
-        Tuile FOu = new Tuile("Les Falaises de l'Oubli", l.ileinterdite.EtatTuile.NORMAL);
-        Tuile PCo = new Tuile("Le Palais de Corail", l.ileinterdite.EtatTuile.NORMAL);
-        Tuile PAr = new Tuile("La Porte d'Argent", l.ileinterdite.EtatTuile.NORMAL);
-        Tuile DIl = new Tuile("Les Dunes de l'Illusion", l.ileinterdite.EtatTuile.NOYEE);
-        Tuile H = new Tuile("Heliport", l.ileinterdite.EtatTuile.NORMAL);
-        Tuile PCu = new Tuile("La Porte de Cuivre", l.ileinterdite.EtatTuile.NORMAL);
-        Tuile JHu = new Tuile("Le Jardin des Hurlements", l.ileinterdite.EtatTuile.NORMAL);
-        Tuile FPo = new Tuile("La Forêt Pourpre", l.ileinterdite.EtatTuile.NORMAL);
-        Tuile LPe = new Tuile("Le Lagon Perdu", l.ileinterdite.EtatTuile.INONDEE);
-        Tuile MBr = new Tuile("Le Marais Brumeux", l.ileinterdite.EtatTuile.NOYEE);
-        Tuile O = new Tuile("Observatoire", l.ileinterdite.EtatTuile.INONDEE);
-        Tuile RFa = new Tuile("Le Rocher Fantôme", l.ileinterdite.EtatTuile.NOYEE);
-        Tuile CBr = new Tuile("La Caverne du Brasier", l.ileinterdite.EtatTuile.INONDEE);
-        Tuile TSo = new Tuile("Le Temple du Soleil", l.ileinterdite.EtatTuile.NORMAL);
-        Tuile TLu = new Tuile("Le Temple de la Lune", l.ileinterdite.EtatTuile.NOYEE);
-        Tuile PMa = new Tuile("Le Palais des Marées", l.ileinterdite.EtatTuile.NORMAL);
-        Tuile VCr = new Tuile("Le Val du Crépuscule", l.ileinterdite.EtatTuile.NORMAL);
-        Tuile TGu = new Tuile("La Tour du Guet", l.ileinterdite.EtatTuile.NORMAL);
-        Tuile JMu = new Tuile("Le Jardin des Murmures", l.ileinterdite.EtatTuile.INONDEE);
+        Tuile V1 = new Tuile("Void", EtatTuile.ASSECHEE); V1.setEtatTuile(null);
+        Tuile V2 = new Tuile("Void", EtatTuile.ASSECHEE); V2.setEtatTuile(null);
+        Tuile V3 = new Tuile("Void", EtatTuile.ASSECHEE); V3.setEtatTuile(null);
+        Tuile V4 = new Tuile("Void", EtatTuile.ASSECHEE); V4.setEtatTuile(null);
+        Tuile V5 = new Tuile("Void", EtatTuile.ASSECHEE); V5.setEtatTuile(null);
+        Tuile V6 = new Tuile("Void", EtatTuile.ASSECHEE); V6.setEtatTuile(null);
+        Tuile V7 = new Tuile("Void", EtatTuile.ASSECHEE); V7.setEtatTuile(null);
+        Tuile V8 = new Tuile("Void", EtatTuile.ASSECHEE); V8.setEtatTuile(null);
+        Tuile V9 = new Tuile("Void", EtatTuile.ASSECHEE); V9.setEtatTuile(null);
+        Tuile V10 = new Tuile("Void", EtatTuile.ASSECHEE); V10.setEtatTuile(null);
+        Tuile V11 = new Tuile("Void", EtatTuile.ASSECHEE); V11.setEtatTuile(null);
+        Tuile V12 = new Tuile("Void", EtatTuile.ASSECHEE); V12.setEtatTuile(null);
+        Tuile PAb = new Tuile("Le Pont des Abîmes", EtatTuile.ASSECHEE); 
+        Tuile PBr = new Tuile("La Porte de Bronze", EtatTuile.INONDEE);
+        Tuile COm = new Tuile("La Caverne des Ombres", EtatTuile.ASSECHEE);
+        Tuile PFe = new Tuile("La Porte de Fer", EtatTuile.ASSECHEE);
+        Tuile POr = new Tuile("La Porte d'Or", EtatTuile.ASSECHEE);
+        Tuile FOu = new Tuile("Les Falaises de l'Oubli", EtatTuile.ASSECHEE);
+        Tuile PCo = new Tuile("Le Palais de Corail", EtatTuile.ASSECHEE);
+        Tuile PAr = new Tuile("La Porte d'Argent", EtatTuile.ASSECHEE);
+        Tuile DIl = new Tuile("Les Dunes de l'Illusion", EtatTuile.COULEE);
+        Tuile H = new Tuile("Heliport", EtatTuile.ASSECHEE);
+        Tuile PCu = new Tuile("La Porte de Cuivre", EtatTuile.ASSECHEE);
+        Tuile JHu = new Tuile("Le Jardin des Hurlements", EtatTuile.ASSECHEE);
+        Tuile FPo = new Tuile("La Forêt Pourpre", EtatTuile.ASSECHEE);
+        Tuile LPe = new Tuile("Le Lagon Perdu", EtatTuile.INONDEE);
+        Tuile MBr = new Tuile("Le Marais Brumeux", EtatTuile.COULEE);
+        Tuile O = new Tuile("Observatoire", EtatTuile.INONDEE);
+        Tuile RFa = new Tuile("Le Rocher Fantôme", EtatTuile.COULEE);
+        Tuile CBr = new Tuile("La Caverne du Brasier", EtatTuile.INONDEE);
+        Tuile TSo = new Tuile("Le Temple du Soleil", EtatTuile.ASSECHEE);
+        Tuile TLu = new Tuile("Le Temple de la Lune", EtatTuile.COULEE);
+        Tuile PMa = new Tuile("Le Palais des Marées", EtatTuile.ASSECHEE);
+        Tuile VCr = new Tuile("Le Val du Crépuscule", EtatTuile.ASSECHEE);
+        Tuile TGu = new Tuile("La Tour du Guet", EtatTuile.ASSECHEE);
+        Tuile JMu = new Tuile("Le Jardin des Murmures", EtatTuile.INONDEE);
         
         ArrayList<Tuile> listeTuiles = new ArrayList<>();
         listeTuiles.add(PAb);

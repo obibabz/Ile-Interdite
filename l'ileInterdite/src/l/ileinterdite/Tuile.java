@@ -8,6 +8,7 @@ package l.ileinterdite;
 import aventuriers.Aventurier;
 import java.util.ArrayList;
 import util.Utils.Tresor;
+import util.Utils.EtatTuile;
 
 /**
  *
