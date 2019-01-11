@@ -52,9 +52,18 @@ public class VueTuile extends JPanel {
         
         while(i <= joueursSurTuile.size()-1){
             casesJoueurs.get(i).setBackground(joueursSurTuile.get(i));
+            i++;
         }
         
         
+    }
+
+    public JButton getTuile() {
+        return tuile;
+    }
+
+    public ArrayList<JLabel> getCasesJoueurs() {
+        return casesJoueurs;
     }
     
 }

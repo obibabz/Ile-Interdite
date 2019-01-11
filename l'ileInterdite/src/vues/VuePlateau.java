@@ -26,7 +26,7 @@ public class VuePlateau extends Observable {
         window = new JFrame();
         window.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
         // Définit la taille de la fenêtre en pixels
-        window.setSize(750, 500);
+        window.setSize(1000, 750);
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         window.setLocation(dim.width/2-window.getSize().width/2, dim.height/2-window.getSize().height/2);
         
@@ -52,7 +52,7 @@ public class VuePlateau extends Observable {
                 }
             );}
         */
-        this.afficher();
+        
     }
     
     public void afficher() {

@@ -16,6 +16,8 @@ import vues.VueAventurier;
 import java.awt.Color;
 import java.util.ArrayList;
 import util.Utils.Pion;
+import vues.VueGrille;
+import vues.VuePlateau;
 import vues.VueTuile;
 
 /**
@@ -69,6 +71,31 @@ public class LIleInterdite {
         Tuile TGu = new Tuile("La Tour du Guet", l.ileinterdite.EtatTuile.NORMAL);
         Tuile JMu = new Tuile("Le Jardin des Murmures", l.ileinterdite.EtatTuile.INONDEE);
         
+        ArrayList<Tuile> listeTuiles = new ArrayList<>();
+        listeTuiles.add(PAb);
+        listeTuiles.add(PBr);
+        listeTuiles.add(COm);
+        listeTuiles.add(PFe);
+        listeTuiles.add(POr);
+        listeTuiles.add(FOu);
+        listeTuiles.add(PCo);
+        listeTuiles.add(PAr);
+        listeTuiles.add(DIl);
+        listeTuiles.add(H);
+        listeTuiles.add(PCu);
+        listeTuiles.add(JHu);
+        listeTuiles.add(FPo);
+        listeTuiles.add(LPe);
+        listeTuiles.add(MBr);
+        listeTuiles.add(O);
+        listeTuiles.add(RFa);
+        listeTuiles.add(CBr);
+        listeTuiles.add(TSo);
+        listeTuiles.add(TLu);
+        listeTuiles.add(PMa);
+        listeTuiles.add(VCr);
+        listeTuiles.add(TGu);
+        listeTuiles.add(JMu);
         Tuile[][] grille = new Tuile[6][6];
 
         grille[0][0] = V1;
@@ -161,8 +188,18 @@ public class LIleInterdite {
         vue4.addObserver(controleur);
         
         // INNITIALISATION PLATEAU
+        System.out.println("zaezaeza");
         ArrayList<VueTuile> vuesTuiles= new ArrayList<>();
-       VueTuile vPAb = controleur.initVueTuile(PAb); vuesTuiles.add(vPAb);
+        for(Tuile t : listeTuiles){
+            VueTuile vT = controleur.initVueTuile(t);
+            
+            vuesTuiles.add(vT);
+        }
+        System.out.println("zaezaeza");
+        VueGrille vG = new VueGrille(vuesTuiles);
+        VuePlateau vP = new VuePlateau(vG);
+        vP.afficher();
+        System.out.println("zaezaeza");
     }
     
 }

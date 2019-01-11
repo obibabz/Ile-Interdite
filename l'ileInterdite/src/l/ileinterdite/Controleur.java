@@ -315,6 +315,7 @@ public class Controleur implements Observer{
             couleurs.add(a.getPion().getCouleur());
         }
         vT = new VueTuile(t.getNom(), t.getTresor().toString(), t.getEtatTuile().toString(), couleurs);
+        
         return vT;
     }
     

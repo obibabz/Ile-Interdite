@@ -22,6 +22,7 @@ public class Tuile extends ObjetIdentifie{
     public Tuile(String nom, EtatTuile etatTuile) {
         this.nom = nom;
         this.etatTuile = etatTuile;
+        this.tresor = Tresor.CALICE;
         
     }
 

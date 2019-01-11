@@ -8,6 +8,7 @@ package vues;
 import java.awt.Color;
 import java.awt.GridLayout;
 import java.util.ArrayList;
+import java.util.Arrays;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -22,21 +23,31 @@ public class VueGrille extends JPanel{
     
      public VueGrille(ArrayList<VueTuile> listeTuiles) {
     
-        super();
+        
         this.listeTuiles = listeTuiles;
         this.setLayout(new GridLayout(6,6));
         int i= 0;
+        int j=0;
+        JLabel vide = new JLabel();
+        vide.setBackground(Color.black);
+        ArrayList<Integer> liste = new ArrayList<>(Arrays.asList(0,1,4,5,6,7,24,29,30,31));
         
-        while(i <= 35){
-            switch(i) {
-                case 0: case 1: case 4: case 5: case 6: case 11: case 24: case 29: case 30: case 31: case 34: case 35:
-                    JLabel vide = new JLabel();
-                    vide.setBackground(Color.black);
+        while(i <= 35 ){
+            System.out.print("i : "+i);
+            System.out.println("j : "+j);
+                if(liste.contains(i)){
                     this.add(vide);
-                case 2: case 3: case 7 : case 8: case 9: case 10: case 12: case 13: case 14: case 15: case 16: case 17: case 18: case 19: case 20: case 21: case 22: case 23: case 25: case 26: case 27: case 28: case 32: case 33:
-                    this.add(listeTuiles.get(i));
-                
+                }
+                else{
+                   this.add(listeTuiles.get(j));
+                   if (j !=23){
+                    j++;
+                   }
+                }
+                i++;
             }
+            
+            
         }
         /*
         this.setLayout(new GridLayout(10,10));
@@ -100,4 +111,4 @@ public class VueGrille extends JPanel{
 //      return this.getComponent(x).vueTuile;
 //  }
      
-}
+
