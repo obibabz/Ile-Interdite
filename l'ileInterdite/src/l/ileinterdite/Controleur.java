@@ -20,12 +20,15 @@ import java.util.Observer;
 import java.util.Scanner;
 import cartes.CarteTirage;
 import cartes.CarteInondation;
+import java.awt.Color;
 import javax.swing.BorderFactory;
 import javax.swing.border.MatteBorder;
 import util.Utils.Tresor;
 import util.Utils.Commandes;
 import vues.VueNiveau;
 import vues.VuePlateau;
+import vues.VueTuile;
+
         
 
 public class Controleur implements Observer{
@@ -323,6 +326,18 @@ public class Controleur implements Observer{
             }
         }
         return retour;
+    }
+    // GESTION DE VUES
+    
+    public VueTuile initVueTuile(Tuile t){
+        
+        VueTuile vT;
+        ArrayList<Color> couleurs = new ArrayList<>();
+        for(Aventurier a : listeJoueurs){
+            couleurs.add(a.getPion().getCouleur());
+        }
+        vT = new VueTuile(t.getNom(), t.getTresor().toString(), t.getEtatTuile().toString(), couleurs);
+        return vT;
     }
     
     public void setVueJCourant(VueAventurier v1){

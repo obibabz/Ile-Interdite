@@ -16,6 +16,7 @@ import vues.VueAventurier;
 import java.awt.Color;
 import java.util.ArrayList;
 import util.Utils.Pion;
+import vues.VueTuile;
 
 /**
  *
@@ -158,7 +159,10 @@ public class LIleInterdite {
         vue2.addObserver(controleur);
         vue3.addObserver(controleur);
         vue4.addObserver(controleur);
-       
+        
+        // INNITIALISATION PLATEAU
+        ArrayList<VueTuile> vuesTuiles= new ArrayList<>();
+       VueTuile vPAb = controleur.initVueTuile(PAb); vuesTuiles.add(vPAb);
     }
     
 }

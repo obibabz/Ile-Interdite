@@ -7,6 +7,7 @@ package l.ileinterdite;
 
 import aventuriers.Aventurier;
 import java.util.ArrayList;
+import util.Utils.Tresor;
 
 /**
  *
@@ -16,6 +17,7 @@ public class Tuile extends ObjetIdentifie{
     private String nom;
     private EtatTuile etatTuile;
     private ArrayList<Aventurier> joueursSurTuile = new ArrayList();
+    private Tresor tresor;
 
     public Tuile(String nom, EtatTuile etatTuile) {
         this.nom = nom;
@@ -33,6 +35,10 @@ public class Tuile extends ObjetIdentifie{
 
     public String getNom() {
         return nom;
+    }
+
+    public Tresor getTresor() {
+        return tresor;
     }
 
     public void setEtatTuile(EtatTuile etatTuile) {
