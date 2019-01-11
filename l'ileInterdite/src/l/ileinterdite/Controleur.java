@@ -36,7 +36,7 @@ public class Controleur implements Observer{
     private ArrayList <CarteInondation> piocheInondation;
     private ArrayList <CarteInondation> defausseInondation;
     private ArrayList<Tresor> tresorPossede;
-    private int niveauInnond;
+    private int niveauInond;
     private ArrayList<CarteTirage> piocheTirage;
     private ArrayList<CarteTirage> defausseTirage;
     private ArrayList<VueAventurier> vuesAventuriers;
@@ -250,10 +250,32 @@ public class Controleur implements Observer{
         }
     }
     
+    //gestion tirage carte
+    
+    public void tirageCarte(){
+        CarteTirage c = new CarteTirage();
+        c.equals(piocheTirage.get(1));
+        piocheTirage.remove(1);
+        defausseTirage.add(c);
+        if (c.getClass().getSimpleName() == "CarteInondation"){
+            piocheCarteMonteeDesEaux();
+        }else{
+            if(JCourant.getCartesEnMain().size() < 5){
+                JCourant.addCartesEnMain(c);
+            } else {
+                System.out.println("FAUT SUPPRIMER, mais carte enlevee");
+            }
+        }   
+    }
+    
     //Gestion montée des eaux
     
     public void piocheCarteMonteeDesEaux(){
-        
+        niveauInond++;
+        defausseInondation.addAll(piocheInondation);
+        piocheInondation.clear();
+        piocheInondation.addAll(defausseInondation);
+        defausseInondation.clear();
     }
     
     
