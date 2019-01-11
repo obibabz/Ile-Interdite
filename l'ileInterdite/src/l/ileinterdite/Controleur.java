@@ -281,6 +281,40 @@ public class Controleur implements Observer{
         defausseInondation.clear();
     }
     
+    //nb de carte tirer+tirage effectif
+    
+    public void tirageInondation(){
+        if(niveauInond <3){         //2 carte piochées
+            piocheCarteInondee();
+            piocheCarteInondee();
+        }else if(niveauInond <6){   //3 carte piochées
+            piocheCarteInondee();
+            piocheCarteInondee();
+            piocheCarteInondee();
+        }else if(niveauInond <8){   //4 carte piochées
+            piocheCarteInondee();
+            piocheCarteInondee();
+            piocheCarteInondee();
+            piocheCarteInondee();
+        }else{                      //5 carte piochées
+            piocheCarteInondee();
+            piocheCarteInondee();
+            piocheCarteInondee();
+            piocheCarteInondee();
+            piocheCarteInondee();
+            piocheCarteInondee();
+        }
+
+
+    //gestion tirage carte inondee
+    
+    public void piocheCarteInondee(){
+        CarteInondation c = new CarteInondation();
+        c.equals(piocheInondation.get(1));
+        // inondation de la tuile correspondante
+        defausseInondation.add(c);
+        piocheInondation.remove(c);
+    }
     
     // fonction pour les conditions de Victoire et de Defaite
     public boolean ifCarteHelico(Aventurier a){
