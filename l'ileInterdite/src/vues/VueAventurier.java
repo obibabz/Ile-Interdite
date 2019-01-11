@@ -20,7 +20,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.MatteBorder;
-import util.MessageAction;
+import util.Utils.Commandes;
 
 
 /**
@@ -96,7 +96,7 @@ public class VueAventurier extends Observable{
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     setChanged();
-                    notifyObservers(MessageAction.BOUGER);
+                    notifyObservers(Commandes.BOUGER);
                     clearChanged();
                 }
             });
@@ -105,7 +105,7 @@ public class VueAventurier extends Observable{
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     setChanged();
-                    notifyObservers(MessageAction.ASSECHER);
+                    notifyObservers(Commandes.ASSECHER);
                     clearChanged();
                 }
             });
@@ -114,7 +114,7 @@ public class VueAventurier extends Observable{
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     setChanged();
-                    notifyObservers(MessageAction.POUVOIR);
+                    notifyObservers(Commandes.POUVOIR);
                     clearChanged();
                 }
             });
@@ -123,7 +123,7 @@ public class VueAventurier extends Observable{
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     setChanged();
-                    notifyObservers(MessageAction.PASSER);
+                    notifyObservers(Commandes.TERMINER);
                     clearChanged();
                 }
             });
