@@ -96,7 +96,7 @@ public class Controleur implements Observer{
     }
  
     
-    
+    //methode de déplacement et decrementation de nbActionRestante
     
     public void gererDeplacement(){
         ArrayList <Tuile>  tuilesAccess = JCourant.getTuilesAccessibles(grille);
@@ -109,18 +109,19 @@ public class Controleur implements Observer{
         JCourant.getPosition().departJoueur(JCourant);
         JCourant.setPosition(tuile);
         System.out.println("Vous vous êtes déplacé sur la tuile : " +tuile.getNom());
+        nbActionsRestantes+=-1;
     }
     
     public void gererAssechement(){
         ArrayList <Tuile> tuilesAssech = JCourant.getTuilesAssechables(grille);
         if(tuilesAssech.isEmpty()){
             System.out.println("Il n'y a pas de tuile asséchable disponible");
-            nbActionsRestantes+=1;
         }else{
             afficherTuiles(tuilesAssech);
             Tuile tuile = choixTuile(tuilesAssech);
             tuile.setEtatTuile(l.ileinterdite.EtatTuile.NORMAL);
             System.out.println("Vous avez asséché la tuile : " +tuile.getNom());
+            nbActionsRestantes+=-1;
         }
         
     }
@@ -128,14 +129,11 @@ public class Controleur implements Observer{
     public void gererPouvoir(){
         ArrayList <Tuile> tuilesAccess = JCourant.getTuileAccessiblesPouvoir(grille);
         afficherTuiles(tuilesAccess);
-        if(tuilesAccess.isEmpty()){
-            System.out.println("Il n'y a pas de tuile asséchable disponible");
-            nbActionsRestantes+=1;
-        }
         Tuile tuile = choixTuile(tuilesAccess);
         JCourant.getPosition().departJoueur(JCourant);
         JCourant.setPosition(tuile);
-        System.out.println("Vous vous êtes déplacé sur la tuile : " +tuile.getNom());        
+        System.out.println("Vous vous êtes déplacé sur la tuile : " +tuile.getNom());
+        nbActionsRestantes+=-1;
     }
 
     /**
@@ -204,7 +202,6 @@ public class Controleur implements Observer{
 
                 gererDeplacement();
                 ((VueAventurier) o).getPosition().setText(JCourant.getPosition().getNom());
-                nbActionsRestantes+=-1;
                 System.out.println(nbActionsRestantes);
                 finTour(o, nbActionsRestantes);
 
@@ -213,11 +210,13 @@ public class Controleur implements Observer{
             else if (((Commandes) arg) == Commandes.ASSECHER) {
                
                     gererAssechement();
-                    if(JCourant.getPion().toString()=="Rouge"){
+                    
+                    //Gestion ingenieur (on relance gerer assechement, puis on incrémente nb action restantes)
+                    
+                    if(JCourant.getPion().toString()=="Rouge"){                 
                         gererAssechement();
-                        nbActionsRestantes+=-1;
+                        nbActionsRestantes+=1;
                     }
-                    nbActionsRestantes+=-1;
                     System.out.println(nbActionsRestantes);
                     finTour(o, nbActionsRestantes);
                 
