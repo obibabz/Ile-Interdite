@@ -40,6 +40,19 @@ public class VuePlateau extends Observable {
         panelPrincipal.add(vueGrille, BorderLayout.CENTER);
 
 
+        /*
+            vueGrille.getVueGrille[i].addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    Message message = new Message(num, TypeMessage.typeCase);
+                    setChanged();
+                    notifyObservers(message);
+                    clearChanged();
+                    
+                    }
+                }
+            );}
+        */
     }
     
     public void afficher() {

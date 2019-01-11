@@ -25,7 +25,7 @@ public class VueTuile extends JPanel {
         JPanel pion4 = new JPanel();
         pion4.setBackground(Color.yellow);
         JPanel tresor = new JPanel();
-        tresor.setBackground(Color.magenta);
+        tresor.setBackground(Color.magenta);//couleurs de test
         panelBas.add(pion1);
         panelBas.add(pion2);
         panelBas.add(pion3);
