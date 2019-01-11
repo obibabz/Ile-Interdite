@@ -304,7 +304,7 @@ public class Controleur implements Observer{
             piocheCarteInondee();
             piocheCarteInondee();
         }
-
+    }
 
     //gestion tirage carte inondee
     
