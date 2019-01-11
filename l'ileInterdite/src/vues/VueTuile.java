@@ -14,7 +14,7 @@ public class VueTuile extends JPanel {
     private final ArrayList<JLabel> casesJoueurs;
     
     
-    public VueTuile(String nomTuile, String tresor, EtatTuile etat, ArrayList<Color> joueursSurTuile) {
+    public VueTuile(String nomTuile, String tresor, String etat, ArrayList<Color> joueursSurTuile) {
         super();
         this.setLayout(new BorderLayout());
         
@@ -28,10 +28,10 @@ public class VueTuile extends JPanel {
         tuile = new JButton(nomTuile);
         this.add(tuile, BorderLayout.CENTER);
         
-        if (etat == EtatTuile.ASSECHEE){
+        if (etat == EtatTuile.ASSECHEE.toString()){
             this.tuile.setBackground(Color.lightGray);
         }
-        else if (etat == EtatTuile.COULEE){
+        else if (etat == EtatTuile.COULEE.toString()){
             this.tuile.setBackground(Color.BLUE);
         }
         else{this.tuile.setBackground(Color.cyan);}
