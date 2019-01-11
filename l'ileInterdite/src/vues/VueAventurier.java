@@ -201,6 +201,10 @@ public class VueAventurier extends Observable{
         return position;
     }
 
+    public JPanel getMainPanel() {
+        return mainPanel;
+    }
+
     public JButton getBtnTerminerTour() {
         return btnTerminerTour;
     }

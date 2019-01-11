@@ -161,6 +161,19 @@ public class Controleur implements Observer{
     
     }
 
+    public void setVuesAventuriers(ArrayList<VueAventurier> vuesAventuriers) {
+        this.vuesAventuriers = vuesAventuriers;
+    }
+
+    public void setVueNiveau(VueNiveau vueNiveau) {
+        this.vueNiveau = vueNiveau;
+    }
+
+    public void setVuePlateau(VuePlateau vuePlateau) {
+        this.vuePlateau = vuePlateau;
+    }
+    
+
     public void setJCourant(Aventurier JCourant) {
         this.JCourant = JCourant;
     }
@@ -206,13 +219,14 @@ public class Controleur implements Observer{
                 
             }
             else if (((Commandes ) arg) == Commandes.TERMINER) {
-                ((VueAventurier) o).close();
+                
                 nbActionsRestantes = 3;
                 joueurSuivant(listeJoueurs);
-                VueAventurier vue1 = new VueAventurier(listeJoueurs.indexOf(JCourant), listeJoueurs.indexOf(JCourant), JCourant.getNomJoueur(), JCourant.getClass().getSimpleName() , JCourant.getPion().getCouleur(), JCourant.getPion().getCouleurGrisee(), JCourant.getPosition().getNom());
-                vue1.addObserver(this);
-                if(JCourant.getPion().toString()=="Bleu" ){vue1.getBtnAutreAction().setEnabled(true);}
-                vue1.afficher();
+                ((VueAventurier) o).getMainPanel().revalidate();
+              
+                
+                
+                
             }
             else if (((Commandes ) arg) == Commandes.POUVOIR) {
                 gererPouvoir();
