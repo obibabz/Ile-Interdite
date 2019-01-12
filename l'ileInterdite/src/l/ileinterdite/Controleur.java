@@ -327,8 +327,8 @@ public class Controleur implements Observer{
     public boolean ifCarteHelico(Aventurier a){
         boolean retour = false;
         String cH = "CarteHelicoptere";
-        for(CarteTirage c : a.getCartesEnMain()){
-            if(c.getClass().getSimpleName().equals(cH)){
+        for(Integer key : a.getCartesEnMain().keySet()){
+            if(a.getCartesEnMain().get(key).getClass().getSimpleName().equals(cH)){
                 retour = true;
             }
         }

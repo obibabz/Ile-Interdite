@@ -44,7 +44,8 @@ public class VuePlateau extends Observable {
         // Définit la taille de la fenêtre en pixels
         //window.setSize(1000, 750);
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-        window.setLocation(dim.width/2-window.getSize().width/2, dim.height/2-window.getSize().height/2);
+        //window.setLocation(0,0);
+        //window.setLocation(dim.width/2-window.getSize().width/2, dim.height/2-window.getSize().height/2);
         window.setSize(dim.width, dim.height);
         panelPrincipal = new JPanel(new BorderLayout());
         window.add(panelPrincipal);
@@ -56,9 +57,9 @@ public class VuePlateau extends Observable {
         panelPrincipal.add(vueGrille, BorderLayout.CENTER);
         
         //ACTION LISTENER CASES DE JEU
-        int i =0;
-        while(i<=23){
-            vueGrille.getListeTuiles().get(i).getBtnTuile().addActionListener(new ActionListener() {
+        
+         for(Integer key : vueGrille.getListeTuiles().keySet()){
+            vueGrille.getListeTuiles().get(key).getBtnTuile().addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     setChanged();
@@ -66,7 +67,7 @@ public class VuePlateau extends Observable {
                     clearChanged();
                 }
             });
-            i++;
+            
         }this.listeVuesJoueurs=listeVuesJoueurs;
         
         

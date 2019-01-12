@@ -7,10 +7,12 @@ package vues;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.FlowLayout;
 import static javax.swing.SwingConstants.CENTER;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.HashMap;
 import java.util.Observable;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -35,7 +37,9 @@ public class VueAventurier extends JPanel{
     private final Color couleurGrisee;
     private final JPanel panelBoutonsPere;
     private final JPanel panelBoutons ;
-    private final JPanel panelCentre ;
+    private final JPanel panelPosition ;
+    private final JPanel panelCentre;
+    private final JPanel panelCartes;
     //private final JFrame window;
     private final JPanel panelAventurier;
     private final JPanel mainPanel;
@@ -47,8 +51,9 @@ public class VueAventurier extends JPanel{
     private final JButton btnRecupTresor;
     private final JButton btnTerminerTour;
     private final JTextField position;
+    private final HashMap<Integer,VueCarte> cartesEnMain;
 
-    public VueAventurier(int id, int numJCourant, int numJoueur, String nomJoueur, String nomAventurier, Color couleur, Color couleurGrisee, String pos){
+    public VueAventurier(int id, int numJCourant, int numJoueur, String nomJoueur, String nomAventurier, Color couleur, Color couleurGrisee, String pos, HashMap<Integer, VueCarte> cartesEnMain){
 
         //this.window = new JFrame();
         //window.setSize(350, 200);
@@ -62,6 +67,7 @@ public class VueAventurier extends JPanel{
         this.nomAventurier = nomAventurier;
         this.couleur = couleur;
         this.couleurGrisee= couleurGrisee;
+        this.cartesEnMain=cartesEnMain;
 
         // =================================================================================                                                                                            
         // NORD : le titre = nom de l'aventurier sur la couleurActive du pion                                                                                                           
@@ -72,19 +78,24 @@ public class VueAventurier extends JPanel{
         mainPanel.add(panelAventurier, BorderLayout.NORTH);
 
         // =================================================================================                                                                                            
-        // CENTRE : 1 ligne pour position courante                                                                                                                                      
-        this.panelCentre = new JPanel(new GridLayout(2, 1));
-        this.panelCentre.setOpaque(false);
-        this.panelCentre.setBorder(new MatteBorder(0, 0, 2, 0, couleur));
-        mainPanel.add(this.panelCentre, BorderLayout.CENTER);
+        // CENTRE : 1 ligne pour position courante puis les cartes en main      
+        panelCentre = new JPanel(new GridLayout(2,1));
+        mainPanel.add(panelCentre, BorderLayout.CENTER);
+        this.panelPosition = new JPanel(new GridLayout(2, 1));
+        this.panelPosition.setOpaque(false);
+        this.panelPosition.setBorder(new MatteBorder(0, 0, 2, 0, couleur));
+        panelCentre.add(this.panelPosition);
 
-        panelCentre.add(new JLabel ("Position", SwingConstants.CENTER));
+        panelPosition.add(new JLabel ("Position", SwingConstants.CENTER));
         position = new  JTextField(30);
         position.setText(pos);
 	position.setHorizontalAlignment(CENTER);
-        panelCentre.add(position);
+        panelPosition.add(position);
 
-
+        panelCartes = new JPanel(new FlowLayout());
+        for(Integer key : this.cartesEnMain.keySet()){
+            panelCartes.add(cartesEnMain.get(key));
+        }
 	// =================================================================================                                                                                            
         // SUD : les boutons  
         this.panelBoutonsPere = new JPanel(new BorderLayout());
@@ -104,27 +115,27 @@ public class VueAventurier extends JPanel{
         
         
         this.panelBoutons.add(btnBouger);
-        /*btnBouger.*/
+        
 	this.panelBoutons.add(btnAssecher);
-        /*btnAssecher.*/
+        
         this.panelBoutons.add(btnAutreAction); btnAutreAction.setEnabled(false);
-        /*btnAutreAction.*/
+        
         this.panelBoutons.add(btnDonnerCarte); btnDonnerCarte.setEnabled(false);
-        /*btnDonnerCarte.*/
+        
         this.panelBoutons.add(btnUtiliserCarte); btnUtiliserCarte.setEnabled(false);
-        /*btnUtiliserCarte.*/
+        
         this.panelBoutons.add(btnRecupTresor); btnRecupTresor.setEnabled(false);
-        /*btnRecupTresor*/
+        
         
         this.panelBoutonsPere.add(btnTerminerTour, BorderLayout.SOUTH);
-        /*btnTerminerTour*/
+        
         
         if(numJCourant != numJoueur){
             this.btnBouger.setEnabled(false);
             this.btnAssecher.setEnabled(false);
             panelAventurier.setBackground(couleurGrisee);
             mainPanel.setBorder(BorderFactory.createLineBorder(couleurGrisee, 2)) ;
-            this.panelCentre.setBorder(new MatteBorder(0, 0, 2, 0, couleurGrisee));
+            this.panelPosition.setBorder(new MatteBorder(0, 0, 2, 0, couleurGrisee));
             this.btnTerminerTour.setEnabled(false);
         }
 
@@ -166,7 +177,7 @@ public class VueAventurier extends JPanel{
     }
 
     public JPanel getPanelCentre() {
-        return panelCentre;
+        return panelPosition;
     }
 /*
     public JFrame getWindow() {

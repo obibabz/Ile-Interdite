@@ -71,6 +71,10 @@ public class VueTuile extends JPanel {
         
     }
 
+    public Integer getIdVueTuile() {
+        return idVueTuile;
+    }
+
     public JButton getBtnTuile() {
         return btnTuile;
     }

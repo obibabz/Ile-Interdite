@@ -11,4 +11,16 @@ package cartes;
  */
 public class CarteHelicoptere extends CarteTirage{
     private int test = 0;
+    private final String nom ="Hélicoptère";
+
+    public CarteHelicoptere() {
+    }
+
+    public int getTest() {
+        return test;
+    }
+
+    public String getNom() {
+        return nom;
+    }
 }

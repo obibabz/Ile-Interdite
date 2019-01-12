@@ -11,6 +11,7 @@ import l.ileinterdite.Grille;
 import l.ileinterdite.Tuile;
 import cartes.CarteTirage;
 import cartes.CarteTresor;
+import java.util.HashMap;
 import util.Utils.Pion;
 import util.Utils.EtatTuile;
 /**
@@ -23,21 +24,24 @@ public abstract class Aventurier extends ObjetIdentifie{
     private String nomJoueur;
     private Tuile position;
     private Pion pion;
-    private ArrayList<CarteTirage> cartesEnMain;
+    private HashMap<Integer, CarteTirage> cartesEnMain;
 
     public Aventurier(String nomJoueur, Tuile position, Pion pion) {
         this.nomJoueur = nomJoueur;
         this.position = position;
         this.pion = pion;
-        this.cartesEnMain = new ArrayList();
+        this.cartesEnMain = new HashMap();
     }
 
-    public ArrayList<CarteTirage> getCartesEnMain() {
+    public HashMap<Integer,CarteTirage> getCartesEnMain() {
         return cartesEnMain;
     }
     
     public void addCartesEnMain(CarteTirage c){
-        cartesEnMain.add(c);
+        cartesEnMain.put(c.getId(),c);
+    }
+    public void retirerCarte(Integer id){
+        cartesEnMain.remove(id);
     }
     public String getNomJoueur() {
         return nomJoueur;
@@ -77,11 +81,11 @@ public abstract class Aventurier extends ObjetIdentifie{
         return cibles;
     }
     
-    public ArrayList<CarteTirage> getCartesTresor(){
-        ArrayList<CarteTirage> cartesDonnables = new ArrayList<>();
-        for(CarteTirage c : this.cartesEnMain){
-            if ("CarteTresor".equals(c.getClass().getSimpleName())){
-                cartesDonnables.add(c);
+    public HashMap<Integer,CarteTirage> getCartesTresor(){
+        HashMap<Integer, CarteTirage> cartesDonnables = new HashMap<>();
+        for(Integer key : cartesEnMain.keySet()){
+            if ("CarteTresor".equals(cartesEnMain.get(key).getClass().getSimpleName())){
+                cartesDonnables.put(key, cartesEnMain.get(key));
             }
         }
         return cartesDonnables;

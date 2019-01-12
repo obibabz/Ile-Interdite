@@ -12,6 +12,7 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
@@ -22,9 +23,10 @@ import javax.swing.JPanel;
  * @author rousstan
  */
 public class VueGrille extends JPanel{
-    private final ArrayList<VueTuile> listeTuiles;
+    private final HashMap<Integer,VueTuile> listeTuiles;
     private final JPanel panelNord;
     private final JPanel panelEst;
+    private final JPanel panelSud;
     private final VueNiveau vueNiveau;
     private JLabel piocheInondation;
     private JLabel defausseInondation;
@@ -33,7 +35,7 @@ public class VueGrille extends JPanel{
     private final ArrayList<JLabel> labelsTresors;
     
     
-     public VueGrille(ArrayList<VueTuile> listeTuiles, VueNiveau vueNiveau, ArrayList<String> tresorsPossedes) {
+     public VueGrille(HashMap<Integer,VueTuile> listeTuiles, VueNiveau vueNiveau, ArrayList<String> tresorsPossedes) {
     
         this.vueNiveau = vueNiveau;
         this.listeTuiles = listeTuiles;
@@ -44,44 +46,21 @@ public class VueGrille extends JPanel{
         int i= 0;
         int j=0;
         this.add(panelGrille, BorderLayout.CENTER);
-        ArrayList<Integer> liste = new ArrayList<>(Arrays.asList(6,11,24,29,30,31,34,35));
-        
+        ArrayList<Integer> liste = new ArrayList<>(Arrays.asList(0,1,4,5,6,11,24,29,30,31,34,35));
+        ArrayList<Integer> listeid = new ArrayList<>();
+        for(Integer key : listeTuiles.keySet()){
+            listeid.add(key);
+            
+        }
         while(i <= 35 ){
                 if(liste.contains(i)){
                     
                     JLabel vide = new JLabel();
                     panelGrille.add(vide);
                 }
-                else if(i ==0){
-                    piocheTresor = new JLabel("Pioche Carte Tresor");
-                    piocheTresor.setForeground(Color.red);
-                    piocheTresor.setPreferredSize(new Dimension(75, 50));
-                    piocheTresor.setBorder(BorderFactory.createLineBorder(Color.red, 1));
-                    panelGrille.add(piocheTresor);
-                }
-                else if( i == 1){
-                defausseTresor = new JLabel("Defausse Carte Tresor");
-                defausseTresor.setForeground(Color.red);
-                defausseTresor.setPreferredSize(new Dimension(75, 50));
-                defausseTresor.setBorder(BorderFactory.createLineBorder(Color.red, 1));
-                panelGrille.add(defausseTresor);
-                }
-                else if (i == 4){
-                piocheInondation = new JLabel("Pioche Carte Inondation");
-                piocheInondation.setForeground(Color.blue);
-                piocheInondation.setPreferredSize(new Dimension(75, 50));
-                piocheInondation.setBorder(BorderFactory.createLineBorder(Color.blue, 1));
-                panelGrille.add(piocheInondation);
-                }
-                else if (i ==5){
-                defausseInondation = new JLabel("Defausse Carte Inoendation");
-                defausseInondation.setForeground(Color.blue);
-                defausseInondation.setPreferredSize(new Dimension(75, 50));
-                defausseInondation.setBorder(BorderFactory.createLineBorder(Color.blue, 1));
-                panelGrille.add(defausseInondation);
-                }
+                
                 else{
-                   panelGrille.add(listeTuiles.get(j));
+                   panelGrille.add(listeTuiles.get(listeid.get(j)));
                    //JLabel vide = new JLabel("i :"+i+" "+"j : "+j+" pasvide");
                     //this.add(vide);
                    if (j !=23){
@@ -113,9 +92,36 @@ public class VueGrille extends JPanel{
                 labelsTresors.add(labelVide);
                 k++;
         }
+        //AFFICHAHE PIOCHE/DEFAUSSE CARTES TRESOR ET INONDATION
+        panelSud = new JPanel(new FlowLayout());
+        this.add(panelSud, BorderLayout.SOUTH);
         
-        
-        
+        piocheTresor = new JLabel("Pioche Carte Tresor");
+        piocheTresor.setForeground(Color.red);
+        piocheTresor.setPreferredSize(new Dimension(75, 50));
+        piocheTresor.setBorder(BorderFactory.createLineBorder(Color.red, 1));
+        panelSud.add(piocheTresor);
+               
+        defausseTresor = new JLabel("Defausse Carte Tresor");
+        defausseTresor.setForeground(Color.red);
+        defausseTresor.setPreferredSize(new Dimension(75, 50));
+        defausseTresor.setBorder(BorderFactory.createLineBorder(Color.red, 1));
+        panelSud.add(defausseTresor);
+                
+                
+        piocheInondation = new JLabel("Pioche Carte Inondation");
+        piocheInondation.setForeground(Color.blue);
+        piocheInondation.setPreferredSize(new Dimension(75, 50));
+        piocheInondation.setBorder(BorderFactory.createLineBorder(Color.blue, 1));
+        panelSud.add(piocheInondation);
+                
+                
+        defausseInondation = new JLabel("Defausse Carte Inoendation");
+        defausseInondation.setForeground(Color.blue);
+        defausseInondation.setPreferredSize(new Dimension(75, 50));
+        defausseInondation.setBorder(BorderFactory.createLineBorder(Color.blue, 1));
+        panelSud.add(defausseInondation);
+                
         
         
         
@@ -131,7 +137,7 @@ public class VueGrille extends JPanel{
     }
      
 
-    public ArrayList<VueTuile> getListeTuiles() {
+    public HashMap<Integer,VueTuile> getListeTuiles() {
         return listeTuiles;
     }
 

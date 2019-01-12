@@ -16,6 +16,7 @@ import vues.VueAventurier;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import util.Utils.Pion;
 import vues.VueGrille;
 import vues.VuePlateau;
@@ -185,17 +186,23 @@ public class LIleInterdite {
      
         // INNITIALISATION PLATEAU
         
-        ArrayList<VueTuile> vuesTuiles= new ArrayList<>();
+        HashMap<Integer, VueTuile> vuesTuiles= new HashMap<>();
         for(Tuile t : listeTuiles){
             
             VueTuile vT = controleur.initVueTuile(t);
-            
-            vuesTuiles.add(vT);
+                       
+
+            vuesTuiles.put(vT.getIdVueTuile(), vT);
+                        
+
         }
         
         ArrayList<String> tresors = new ArrayList<>(Arrays.asList( "Le Cristal Ardent", "La Pierre Sacrée"));
+        
         VueGrille vG = new VueGrille(vuesTuiles, new VueNiveau(2), tresors);
+        
         VuePlateau vP = new VuePlateau(vG, vuesAventurier);
+        
         vP.addObserver(controleur);
         vP.afficher();
         
