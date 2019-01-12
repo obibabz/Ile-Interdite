@@ -11,12 +11,13 @@ import javax.swing.JPanel;
 import util.Utils.EtatTuile;
 
 public class VueTuile extends JPanel {
-    private final JButton tuile;
+    private final Integer idVueTuile;
+    private final JButton btnTuile;
     private final ArrayList<JPanel> casesJoueurs;
     
     
-    public VueTuile(String nomTuile, String tresor, String etat, ArrayList<Color> joueursSurTuile) {
-        super();
+    public VueTuile(Integer id, String nomTuile, String tresor, String etat, ArrayList<Color> joueursSurTuile) {
+        this.idVueTuile = id;
         this.setLayout(new BorderLayout());
         this.setBorder(BorderFactory.createLineBorder(Color.black, 1));
         //Affichage du Tresor
@@ -26,16 +27,16 @@ public class VueTuile extends JPanel {
         }
         
         //Affichage du bouton central
-        tuile = new JButton(nomTuile);
-        this.add(tuile, BorderLayout.CENTER);
+        btnTuile = new JButton(nomTuile);
+        this.add(btnTuile, BorderLayout.CENTER);
         
         if (etat == EtatTuile.ASSECHEE.toString()){
-            this.tuile.setBackground(Color.lightGray);
+            this.btnTuile.setBackground(Color.lightGray);
         }
         else if (etat == EtatTuile.COULEE.toString()){
-            this.tuile.setBackground(Color.BLUE);
+            this.btnTuile.setBackground(Color.BLUE);
         }
-        else{this.tuile.setBackground(Color.cyan);}
+        else{this.btnTuile.setBackground(Color.cyan);}
         
         //Affichage des joueurs sur la tuile
         JPanel panelBas = new JPanel(new GridLayout(1,4));
@@ -62,9 +63,7 @@ public class VueTuile extends JPanel {
         
         int i = 0;
         while(i <= joueursSurTuile.size()-1){
-            System.out.println(i);
-            System.out.println(joueursSurTuile.get(i).toString());
-            System.out.println(casesJoueurs.get(i).toString());
+            
             casesJoueurs.get(i).setBackground(joueursSurTuile.get(i));
             i++;
         }
@@ -72,8 +71,8 @@ public class VueTuile extends JPanel {
         
     }
 
-    public JButton getTuile() {
-        return tuile;
+    public JButton getBtnTuile() {
+        return btnTuile;
     }
 
     public ArrayList<JPanel> getCasesJoueurs() {

@@ -23,14 +23,14 @@ import javax.swing.JPanel;
  */
 public class VueGrille extends JPanel{
     private final ArrayList<VueTuile> listeTuiles;
-    private JPanel panelNord;
-    private JPanel panelEst;
-    private VueNiveau vueNiveau;
+    private final JPanel panelNord;
+    private final JPanel panelEst;
+    private final VueNiveau vueNiveau;
     private JLabel piocheInondation;
     private JLabel defausseInondation;
     private JLabel piocheTresor;
     private JLabel defausseTresor;
-    private ArrayList<JLabel> labelsTresors;
+    private final ArrayList<JLabel> labelsTresors;
     
     
      public VueGrille(ArrayList<VueTuile> listeTuiles, VueNiveau vueNiveau, ArrayList<String> tresorsPossedes) {
@@ -44,13 +44,41 @@ public class VueGrille extends JPanel{
         int i= 0;
         int j=0;
         this.add(panelGrille, BorderLayout.CENTER);
-        ArrayList<Integer> liste = new ArrayList<>(Arrays.asList(0,1,4,5,6,11,24,29,30,31,34,35));
+        ArrayList<Integer> liste = new ArrayList<>(Arrays.asList(6,11,24,29,30,31,34,35));
         
         while(i <= 35 ){
                 if(liste.contains(i)){
                     
                     JLabel vide = new JLabel();
                     panelGrille.add(vide);
+                }
+                else if(i ==0){
+                    piocheTresor = new JLabel("Pioche Carte Tresor");
+                    piocheTresor.setForeground(Color.red);
+                    piocheTresor.setPreferredSize(new Dimension(75, 50));
+                    piocheTresor.setBorder(BorderFactory.createLineBorder(Color.red, 1));
+                    panelGrille.add(piocheTresor);
+                }
+                else if( i == 1){
+                defausseTresor = new JLabel("Defausse Carte Tresor");
+                defausseTresor.setForeground(Color.red);
+                defausseTresor.setPreferredSize(new Dimension(75, 50));
+                defausseTresor.setBorder(BorderFactory.createLineBorder(Color.red, 1));
+                panelGrille.add(defausseTresor);
+                }
+                else if (i == 4){
+                piocheInondation = new JLabel("Pioche Carte Inondation");
+                piocheInondation.setForeground(Color.blue);
+                piocheInondation.setPreferredSize(new Dimension(75, 50));
+                piocheInondation.setBorder(BorderFactory.createLineBorder(Color.blue, 1));
+                panelGrille.add(piocheInondation);
+                }
+                else if (i ==5){
+                defausseInondation = new JLabel("Defausse Carte Inoendation");
+                defausseInondation.setForeground(Color.blue);
+                defausseInondation.setPreferredSize(new Dimension(75, 50));
+                defausseInondation.setBorder(BorderFactory.createLineBorder(Color.blue, 1));
+                panelGrille.add(defausseInondation);
                 }
                 else{
                    panelGrille.add(listeTuiles.get(j));
@@ -85,100 +113,59 @@ public class VueGrille extends JPanel{
                 labelsTresors.add(labelVide);
                 k++;
         }
-        piocheTresor = new JLabel("Pioche Carte Tresor");
-        piocheTresor.setForeground(Color.red);
-        piocheTresor.setPreferredSize(new Dimension(75, 50));
-        piocheTresor.setBorder(BorderFactory.createLineBorder(Color.red, 1));
-        
-        panelNord.add(piocheTresor);
-        
-        defausseTresor = new JLabel("Defausse Carte Tresor");
-        defausseTresor.setForeground(Color.red);
-        defausseTresor.setPreferredSize(new Dimension(75, 50));
-        defausseTresor.setBorder(BorderFactory.createLineBorder(Color.red, 1));
-        panelNord.add(defausseTresor);
         
         
-        piocheInondation = new JLabel("Pioche Carte Inondation");
-        piocheInondation.setForeground(Color.blue);
-        piocheInondation.setPreferredSize(new Dimension(75, 50));
-        piocheInondation.setBorder(BorderFactory.createLineBorder(Color.blue, 1));
-        panelNord.add(piocheInondation);
         
-        defausseInondation = new JLabel("Defausse Carte Inoendation");
-        defausseInondation.setForeground(Color.blue);
-        defausseInondation.setPreferredSize(new Dimension(75, 50));
-        defausseInondation.setBorder(BorderFactory.createLineBorder(Color.blue, 1));
-        panelNord.add(defausseInondation);
+        
+        
+        
+        
+        
         
         //AFFICHAGE VUE NIVEAU
         panelEst = new JPanel();
         this.add(panelEst, BorderLayout.EAST);
-        
-        
-        
-        
-        
+      
         panelEst.add(vueNiveau);
+        
     }
      
-        /*
-        this.setLayout(new GridLayout(10,10));
 
-        int i = 0;
-        while (i<100) {
-            this.add(new JPanel());
-            i++;
-        }
+    public ArrayList<VueTuile> getListeTuiles() {
+        return listeTuiles;
+    }
 
-        int j = 0;
-        while (j<100) {
-        this.getComponent(j).setBackground(Color.BLUE);
-        this.add(new VueTuile());
-        j++;
-        }
+    public JPanel getPanelNord() {
+        return panelNord;
+    }
 
-        this.getComponent(14).setBackground(Color.GREEN);
-        this.getComponent(15).setBackground(Color.GREEN);
-        this.getComponent(23).setBackground(Color.GREEN);
-        this.getComponent(24).setBackground(Color.GREEN);
-        this.getComponent(25).setBackground(Color.GREEN);
-        this.getComponent(26).setBackground(Color.GREEN);
-        this.getComponent(32).setBackground(Color.GREEN);
-        this.getComponent(33).setBackground(Color.GREEN);
-        this.getComponent(34).setBackground(Color.GREEN);
-        this.getComponent(35).setBackground(Color.GREEN);
-        this.getComponent(36).setBackground(Color.GREEN);
-        this.getComponent(37).setBackground(Color.GREEN);
-        this.getComponent(41).setBackground(Color.GREEN);
-        this.getComponent(42).setBackground(Color.GREEN);
-        this.getComponent(43).setBackground(Color.GREEN);
-        this.getComponent(44).setBackground(Color.GREEN);
-        this.getComponent(45).setBackground(Color.GREEN);
-        this.getComponent(46).setBackground(Color.GREEN);
-        this.getComponent(47).setBackground(Color.GREEN);
-        this.getComponent(48).setBackground(Color.GREEN);
-        this.getComponent(51).setBackground(Color.GREEN);
-        this.getComponent(52).setBackground(Color.GREEN);
-        this.getComponent(53).setBackground(Color.GREEN);
-        this.getComponent(54).setBackground(Color.GREEN);
-        this.getComponent(55).setBackground(Color.GREEN);
-        this.getComponent(56).setBackground(Color.GREEN);
-        this.getComponent(57).setBackground(Color.GREEN);
-        this.getComponent(58).setBackground(Color.GREEN);
-        this.getComponent(62).setBackground(Color.GREEN);
-        this.getComponent(63).setBackground(Color.GREEN);
-        this.getComponent(64).setBackground(Color.GREEN);
-        this.getComponent(65).setBackground(Color.GREEN);
-        this.getComponent(66).setBackground(Color.GREEN);
-        this.getComponent(67).setBackground(Color.GREEN);
-        this.getComponent(73).setBackground(Color.GREEN);
-        this.getComponent(74).setBackground(Color.GREEN);
-        this.getComponent(75).setBackground(Color.GREEN);
-        this.getComponent(76).setBackground(Color.GREEN);
-        this.getComponent(84).setBackground(Color.GREEN);
-        this.getComponent(85).setBackground(Color.GREEN);
-*/
+    public JPanel getPanelEst() {
+        return panelEst;
+    }
+
+    public VueNiveau getVueNiveau() {
+        return vueNiveau;
+    }
+
+    public JLabel getPiocheInondation() {
+        return piocheInondation;
+    }
+
+    public JLabel getDefausseInondation() {
+        return defausseInondation;
+    }
+
+    public JLabel getPiocheTresor() {
+        return piocheTresor;
+    }
+
+    public JLabel getDefausseTresor() {
+        return defausseTresor;
+    }
+
+    public ArrayList<JLabel> getLabelsTresors() {
+        return labelsTresors;
+    }
 }
 //  public VueGrille getVueGrille(int x) {
 //      return this.getComponent(x).vueTuile;

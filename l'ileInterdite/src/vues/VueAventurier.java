@@ -28,11 +28,15 @@ import util.Utils.Commandes;
  *
  * @author rousstan
  */
-public class VueAventurier extends Observable{    
+public class VueAventurier extends JPanel{
+    private final Integer idVueAventurier;
+    private final String nomAventurier;
+    private final Color couleur;
+    private final Color couleurGrisee;
     private final JPanel panelBoutonsPere;
     private final JPanel panelBoutons ;
     private final JPanel panelCentre ;
-    private final JFrame window;
+    //private final JFrame window;
     private final JPanel panelAventurier;
     private final JPanel mainPanel;
     private final JButton btnBouger  ;
@@ -42,33 +46,22 @@ public class VueAventurier extends Observable{
     private final JButton btnUtiliserCarte;
     private final JButton btnRecupTresor;
     private final JButton btnTerminerTour;
-    private JTextField position;
+    private final JTextField position;
 
-    public VueAventurier(int numJCourant, int numJoueur, String nomJoueur, String nomAventurier, Color couleur, Color couleurGrisee, String pos){
+    public VueAventurier(int id, int numJCourant, int numJoueur, String nomJoueur, String nomAventurier, Color couleur, Color couleurGrisee, String pos){
 
-        this.window = new JFrame();
-        window.setSize(350, 200);
+        //this.window = new JFrame();
+        //window.setSize(350, 200);
         //le titre = nom du joueur                                                                                                                                                      
-        window.setTitle(nomJoueur);      
+        //window.setTitle(nomJoueur);      
         mainPanel = new JPanel(new BorderLayout());
-        this.window.add(mainPanel);
+        this.add(mainPanel);
         mainPanel.setBackground(new Color(230, 230, 230));
         mainPanel.setBorder(BorderFactory.createLineBorder(couleur, 2)) ;
-        
-        switch (numJoueur) {
-            case 0:
-                window.setLocation(0,0);
-                break;
-            case 1:
-                window.setLocation(400,0);
-                break;
-            case 2:
-                window.setLocation(800,0);
-                break;
-            default:
-                window.setLocation(1200,0);
-                break;
-        }
+        this.idVueAventurier = id;
+        this.nomAventurier = nomAventurier;
+        this.couleur = couleur;
+        this.couleurGrisee= couleurGrisee;
 
         // =================================================================================                                                                                            
         // NORD : le titre = nom de l'aventurier sur la couleurActive du pion                                                                                                           
@@ -111,69 +104,20 @@ public class VueAventurier extends Observable{
         
         
         this.panelBoutons.add(btnBouger);
-        btnBouger.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    setChanged();
-                    notifyObservers(Commandes.BOUGER);
-                    clearChanged();
-                }
-            });
+        /*btnBouger.*/
 	this.panelBoutons.add(btnAssecher);
-        btnAssecher.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    setChanged();
-                    notifyObservers(Commandes.ASSECHER);
-                    clearChanged();
-                }
-            });
+        /*btnAssecher.*/
         this.panelBoutons.add(btnAutreAction); btnAutreAction.setEnabled(false);
-        btnAutreAction.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    setChanged();
-                    notifyObservers(Commandes.POUVOIR);
-                    clearChanged();
-                }
-            });
+        /*btnAutreAction.*/
         this.panelBoutons.add(btnDonnerCarte); btnDonnerCarte.setEnabled(false);
-        btnDonnerCarte.addActionListener(new ActionListener(){
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    setChanged();
-                    notifyObservers(Commandes.DONNER);
-                    clearChanged();
-                }
-            });
+        /*btnDonnerCarte.*/
         this.panelBoutons.add(btnUtiliserCarte); btnUtiliserCarte.setEnabled(false);
-        btnUtiliserCarte.addActionListener(new ActionListener(){
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    setChanged();
-                    notifyObservers(Commandes.CHOISIR_CARTE);
-                    clearChanged();
-                }
-            });
+        /*btnUtiliserCarte.*/
         this.panelBoutons.add(btnRecupTresor); btnRecupTresor.setEnabled(false);
-        btnRecupTresor.addActionListener(new ActionListener(){
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    setChanged();
-                    notifyObservers(Commandes.RECUPERER_TRESOR);
-                    clearChanged();
-                }
-            });
+        /*btnRecupTresor*/
         
         this.panelBoutonsPere.add(btnTerminerTour, BorderLayout.SOUTH);
-        btnTerminerTour.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    setChanged();
-                    notifyObservers(Commandes.TERMINER);
-                    clearChanged();
-                }
-            });
+        /*btnTerminerTour*/
         
         if(numJCourant != numJoueur){
             this.btnBouger.setEnabled(false);
@@ -184,6 +128,29 @@ public class VueAventurier extends Observable{
             this.btnTerminerTour.setEnabled(false);
         }
 
+    }
+    public void setVueJPrecedant(){
+        this.getBtnBouger().setEnabled(false);
+            this.getBtnAssecher().setEnabled(false);
+            this.getBtnTerminerTour().setEnabled(false);
+            if("Pilote".equals(nomAventurier)){
+                this.getBtnAutreAction().setEnabled(false);
+            }
+            this.getPanelAventurier().setBackground(couleurGrisee);
+            this.getMainPanel().setBorder(BorderFactory.createLineBorder(couleurGrisee, 2)) ;
+            this.getPanelCentre().setBorder(new MatteBorder(0, 0, 2, 0, couleurGrisee));
+    }
+    
+    public void setVueJCourant(){
+        this.getBtnBouger().setEnabled(true);
+            this.getBtnAssecher().setEnabled(true);
+            this.getBtnTerminerTour().setEnabled(true);
+            if("Pilote".equals(nomAventurier)){
+                this.getBtnAutreAction().setEnabled(true);
+            }
+            this.getPanelAventurier().setBackground(couleur);
+            this.getMainPanel().setBorder(BorderFactory.createLineBorder(couleur, 2)) ;
+            this.getPanelCentre().setBorder(new MatteBorder(0, 0, 2, 0, couleur));
     }
 
     public JButton getBtnBouger() {
@@ -201,11 +168,11 @@ public class VueAventurier extends Observable{
     public JPanel getPanelCentre() {
         return panelCentre;
     }
-
+/*
     public JFrame getWindow() {
         return window;
     }
-
+*/
     public JPanel getPanelAventurier() {
         return panelAventurier;
     }
@@ -242,11 +209,11 @@ public class VueAventurier extends Observable{
     public JButton getBtnTerminerTour() {
         return btnTerminerTour;
     }
+
+    public Integer getIdVueAventurier() {
+        return idVueAventurier;
+    }
+ 
+
     
-    public void afficher() {
-        this.window.setVisible(true);
-    }
-       public void close() {
-        this.window.dispose();
-    }
 }

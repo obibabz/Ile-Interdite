@@ -21,8 +21,10 @@ import java.util.Scanner;
 import cartes.CarteTirage;
 import cartes.CarteInondation;
 import java.awt.Color;
+import java.util.Objects;
 import javax.swing.BorderFactory;
 import javax.swing.border.MatteBorder;
+import util.Message;
 import util.Utils.Tresor;
 import util.Utils.Commandes;
 import vues.VueNiveau;
@@ -198,17 +200,19 @@ public class Controleur implements Observer{
 
     @Override
     public void update(Observable o, Object arg) {
-        if (arg instanceof Commandes) {
-            if (((Commandes) arg) == Commandes.BOUGER) { 
-
+        if (arg instanceof Message) {
+            System.out.println("00");
+            int id =((Message) arg).getIdAventurier();
+            if (((Message) arg).getCommande() == Commandes.BOUGER) { 
+                
                 gererDeplacement();
-                ((VueAventurier) o).getPosition().setText(JCourant.getPosition().getNom());
+                ((VuePlateau) o).getVueJoueur(id).getPosition().setText(JCourant.getPosition().getNom());
                 System.out.println(nbActionsRestantes);
                 finTour(o, nbActionsRestantes);
 
             }
         
-            else if (((Commandes) arg) == Commandes.ASSECHER) {
+            else if (((Message) arg).getCommande() == Commandes.ASSECHER) {
                
                     gererAssechement();
                     
@@ -222,22 +226,22 @@ public class Controleur implements Observer{
                     finTour(o, nbActionsRestantes);
                 
             }
-            else if (((Commandes ) arg) == Commandes.TERMINER) {
-                
+            else if (((Message ) arg).getCommande() == Commandes.TERMINER) {
+                System.out.println("0");
                 nbActionsRestantes = 3;
-                setVueJPrecedant(((VueAventurier) o));
+                ((VuePlateau) o).getVueJoueur(id).setVueJPrecedant();
                 joueurSuivant(listeJoueurs);
-                
-                setVueJCourant(vuesAventuriers.get(listeJoueurs.indexOf(JCourant)));
-              
+                System.out.println("1");
+                getVueJoueur(JCourant.getId()).setVueJCourant();
+                System.out.println("2");
                 
                 
                 
             }
-            else if (((Commandes ) arg) == Commandes.POUVOIR) {
+            else if (((Message ) arg).getCommande() == Commandes.POUVOIR) {
                 gererPouvoir();
-                ((VueAventurier) o).getPosition().setText(JCourant.getPosition().getNom());
-                ((VueAventurier) o).getBtnAutreAction().setEnabled(false);
+                //((VueAventurier) o).getPosition().setText(JCourant.getPosition().getNom());
+                //((VueAventurier) o).getBtnAutreAction().setEnabled(false);
                 
             }
         }
@@ -247,9 +251,9 @@ public class Controleur implements Observer{
         tirageCarte();
         tirageInondation();
         if (nbActionsRestantes == 0){
-                    ((VueAventurier) o).getBtnBouger().setEnabled(false);
-                    ((VueAventurier) o).getBtnAutreAction().setEnabled(false);
-                    ((VueAventurier) o).getBtnAssecher().setEnabled(false);
+        //            ((VueAventurier) o).getBtnBouger().setEnabled(false);
+          //          ((VueAventurier) o).getBtnAutreAction().setEnabled(false);
+            //        ((VueAventurier) o).getBtnAssecher().setEnabled(false);
         }
         if (ifVictoire()){
             System.out.println("FAUT FAIRE LA VUE VICTOIRE VITE ET SUPPRIMER CE MESSAGE");
@@ -387,34 +391,21 @@ public class Controleur implements Observer{
         else if("Le Jardin des Murmures".equals(t.getNom()) || "Le Jardin des Hurlements".equals(t.getNom())){
             tresor = Tresor.ZEPHYR.toString();
         }
-        vT = new VueTuile(t.getNom(), tresor, t.getEtatTuile().toString(), couleurs);
+        vT = new VueTuile(t.getId(), t.getNom(), tresor, t.getEtatTuile().toString(), couleurs);
         
         return vT;
     }
     
-    public void setVueJCourant(VueAventurier v1){
-        v1.getBtnBouger().setEnabled(true);
-            v1.getBtnAssecher().setEnabled(true);
-            v1.getBtnTerminerTour().setEnabled(true);
-            if("Pilote".equals(JCourant.getClass().getSimpleName())){
-                v1.getBtnAutreAction().setEnabled(true);
-            }
-            v1.getPanelAventurier().setBackground(JCourant.getPion().getCouleur());
-            v1.getMainPanel().setBorder(BorderFactory.createLineBorder(JCourant.getPion().getCouleur(), 2)) ;
-            v1.getPanelCentre().setBorder(new MatteBorder(0, 0, 2, 0, JCourant.getPion().getCouleur()));
-    }
-    public void setVueJPrecedant(VueAventurier v1){
-        v1.getBtnBouger().setEnabled(false);
-            v1.getBtnAssecher().setEnabled(false);
-            v1.getBtnTerminerTour().setEnabled(false);
-            if("Pilote".equals(JCourant.getClass().getSimpleName())){
-                v1.getBtnAutreAction().setEnabled(false);
-            }
-            v1.getPanelAventurier().setBackground(JCourant.getPion().getCouleurGrisee());
-            v1.getMainPanel().setBorder(BorderFactory.createLineBorder(JCourant.getPion().getCouleurGrisee(), 2)) ;
-            v1.getPanelCentre().setBorder(new MatteBorder(0, 0, 2, 0, JCourant.getPion().getCouleurGrisee()));
-    }
     
+    
+    public VueAventurier getVueJoueur(Integer id){
+        for(VueAventurier va : this.vuesAventuriers){
+            if(Objects.equals(va.getIdVueAventurier(), id)){
+                return va;
+            }
+        }
+        return this.vuesAventuriers.get(0);
+    }
     
     /*IF DEFAITE A FAIRE
     

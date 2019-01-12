@@ -164,15 +164,11 @@ public class LIleInterdite {
             }
         }
         */
-        VueAventurier vue1 = new VueAventurier(0, joueursSurGrille.indexOf(joueur1), joueur1.getNomJoueur(), joueur1.getClass().getSimpleName(), joueur1.getPion().getCouleur(), joueur1.getPion().getCouleurGrisee(), joueur1.getPosition().getNom());
-        VueAventurier vue2 = new VueAventurier(0, joueursSurGrille.indexOf(joueur2), joueur2.getNomJoueur(), joueur2.getClass().getSimpleName(), joueur2.getPion().getCouleur(), joueur2.getPion().getCouleurGrisee(), joueur2.getPosition().getNom());
-        VueAventurier vue3 = new VueAventurier(0, joueursSurGrille.indexOf(joueur3), joueur3.getNomJoueur(), joueur3.getClass().getSimpleName(), joueur3.getPion().getCouleur(), joueur3.getPion().getCouleurGrisee(), joueur3.getPosition().getNom());
-        VueAventurier vue4 = new VueAventurier(0, joueursSurGrille.indexOf(joueur4), joueur4.getNomJoueur(), joueur4.getClass().getSimpleName(), joueur4.getPion().getCouleur(), joueur4.getPion().getCouleurGrisee(), joueur4.getPosition().getNom());
-        vue1.afficher();
-        vue2.afficher();
-        vue3.afficher();
-        vue4.afficher();
-        
+        VueAventurier vue1 = new VueAventurier(joueur1.getId(), 0, joueursSurGrille.indexOf(joueur1), joueur1.getNomJoueur(), joueur1.getClass().getSimpleName(), joueur1.getPion().getCouleur(), joueur1.getPion().getCouleurGrisee(), joueur1.getPosition().getNom());
+        VueAventurier vue2 = new VueAventurier(joueur2.getId(), 0, joueursSurGrille.indexOf(joueur2), joueur2.getNomJoueur(), joueur2.getClass().getSimpleName(), joueur2.getPion().getCouleur(), joueur2.getPion().getCouleurGrisee(), joueur2.getPosition().getNom());
+        VueAventurier vue3 = new VueAventurier(joueur3.getId(), 0, joueursSurGrille.indexOf(joueur3), joueur3.getNomJoueur(), joueur3.getClass().getSimpleName(), joueur3.getPion().getCouleur(), joueur3.getPion().getCouleurGrisee(), joueur3.getPosition().getNom());
+        VueAventurier vue4 = new VueAventurier(joueur4.getId(), 0, joueursSurGrille.indexOf(joueur4), joueur4.getNomJoueur(), joueur4.getClass().getSimpleName(), joueur4.getPion().getCouleur(), joueur4.getPion().getCouleurGrisee(), joueur4.getPosition().getNom());
+     
         ArrayList<VueAventurier> vuesAventurier = new ArrayList<>();
         vuesAventurier.add(vue1);
         vuesAventurier.add(vue2);
@@ -186,15 +182,12 @@ public class LIleInterdite {
         controleur.setJCourant(joueur1);
         controleur.setNbActionsRestantes(3);
         controleur.setVuesAventuriers(vuesAventurier);
-        vue1.addObserver(controleur);
-        vue2.addObserver(controleur);
-        vue3.addObserver(controleur);
-        vue4.addObserver(controleur);
-        
+     
         // INNITIALISATION PLATEAU
         
         ArrayList<VueTuile> vuesTuiles= new ArrayList<>();
         for(Tuile t : listeTuiles){
+            
             VueTuile vT = controleur.initVueTuile(t);
             
             vuesTuiles.add(vT);
@@ -202,8 +195,10 @@ public class LIleInterdite {
         
         ArrayList<String> tresors = new ArrayList<>(Arrays.asList( "Le Cristal Ardent", "La Pierre Sacrée"));
         VueGrille vG = new VueGrille(vuesTuiles, new VueNiveau(2), tresors);
-        VuePlateau vP = new VuePlateau(vG);
+        VuePlateau vP = new VuePlateau(vG, vuesAventurier);
+        vP.addObserver(controleur);
         vP.afficher();
+        
         
     }
     
