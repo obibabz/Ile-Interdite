@@ -16,7 +16,7 @@ import vues.VueAventurier;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import util.Utils.Pion;
 import vues.VueGrille;
 import vues.VuePlateau;
@@ -186,14 +186,14 @@ public class LIleInterdite {
      
         // INNITIALISATION PLATEAU
         
-        HashMap<Integer, VueTuile> vuesTuiles= new HashMap<>();
+        LinkedHashMap<Integer, VueTuile> vuesTuiles= new LinkedHashMap<>();
         for(Tuile t : listeTuiles){
             
             VueTuile vT = controleur.initVueTuile(t);
                        
 
             vuesTuiles.put(vT.getIdVueTuile(), vT);
-                        
+                       
 
         }
         

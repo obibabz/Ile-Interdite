@@ -39,7 +39,7 @@ public class VueAventurier extends JPanel{
     private final JPanel panelBoutons ;
     private final JPanel panelPosition ;
     private final JPanel panelCentre;
-    private final JPanel panelCartes;
+    //private final JPanel panelCartes;
     //private final JFrame window;
     private final JPanel panelAventurier;
     private final JPanel mainPanel;
@@ -51,9 +51,9 @@ public class VueAventurier extends JPanel{
     private final JButton btnRecupTresor;
     private final JButton btnTerminerTour;
     private final JTextField position;
-    private final HashMap<Integer,VueCarte> cartesEnMain;
+    //private final HashMap<Integer,VueCarte> cartesEnMain;
 
-    public VueAventurier(int id, int numJCourant, int numJoueur, String nomJoueur, String nomAventurier, Color couleur, Color couleurGrisee, String pos, HashMap<Integer, VueCarte> cartesEnMain){
+    public VueAventurier(int id, int numJCourant, int numJoueur, String nomJoueur, String nomAventurier, Color couleur, Color couleurGrisee, String pos/*, HashMap<Integer, VueCarte> cartesEnMain*/){
 
         //this.window = new JFrame();
         //window.setSize(350, 200);
@@ -67,7 +67,7 @@ public class VueAventurier extends JPanel{
         this.nomAventurier = nomAventurier;
         this.couleur = couleur;
         this.couleurGrisee= couleurGrisee;
-        this.cartesEnMain=cartesEnMain;
+        //this.cartesEnMain=cartesEnMain;
 
         // =================================================================================                                                                                            
         // NORD : le titre = nom de l'aventurier sur la couleurActive du pion                                                                                                           
@@ -91,11 +91,11 @@ public class VueAventurier extends JPanel{
         position.setText(pos);
 	position.setHorizontalAlignment(CENTER);
         panelPosition.add(position);
-
+/*
         panelCartes = new JPanel(new FlowLayout());
         for(Integer key : this.cartesEnMain.keySet()){
             panelCartes.add(cartesEnMain.get(key));
-        }
+        }*/
 	// =================================================================================                                                                                            
         // SUD : les boutons  
         this.panelBoutonsPere = new JPanel(new BorderLayout());

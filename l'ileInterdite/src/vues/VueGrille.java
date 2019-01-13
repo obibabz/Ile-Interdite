@@ -12,7 +12,7 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
@@ -23,7 +23,7 @@ import javax.swing.JPanel;
  * @author rousstan
  */
 public class VueGrille extends JPanel{
-    private final HashMap<Integer,VueTuile> listeTuiles;
+    private final LinkedHashMap<Integer,VueTuile> listeTuiles;
     private final JPanel panelNord;
     private final JPanel panelEst;
     private final JPanel panelSud;
@@ -35,7 +35,7 @@ public class VueGrille extends JPanel{
     private final ArrayList<JLabel> labelsTresors;
     
     
-     public VueGrille(HashMap<Integer,VueTuile> listeTuiles, VueNiveau vueNiveau, ArrayList<String> tresorsPossedes) {
+     public VueGrille(LinkedHashMap<Integer,VueTuile> listeTuiles, VueNiveau vueNiveau, ArrayList<String> tresorsPossedes) {
     
         this.vueNiveau = vueNiveau;
         this.listeTuiles = listeTuiles;
@@ -50,8 +50,9 @@ public class VueGrille extends JPanel{
         ArrayList<Integer> listeid = new ArrayList<>();
         for(Integer key : listeTuiles.keySet()){
             listeid.add(key);
-            
-        }
+            //System.out.println(key);
+            System.out.println(listeTuiles.get(key).getBtnTuile().getText());
+            }
         while(i <= 35 ){
                 if(liste.contains(i)){
                     
@@ -61,6 +62,7 @@ public class VueGrille extends JPanel{
                 
                 else{
                    panelGrille.add(listeTuiles.get(listeid.get(j)));
+                   //System.out.println(listeTuiles.get(listeid.get(j)).getBtnTuile().getText());
                    //JLabel vide = new JLabel("i :"+i+" "+"j : "+j+" pasvide");
                     //this.add(vide);
                    if (j !=23){
@@ -137,7 +139,7 @@ public class VueGrille extends JPanel{
     }
      
 
-    public HashMap<Integer,VueTuile> getListeTuiles() {
+    public LinkedHashMap<Integer,VueTuile> getListeTuiles() {
         return listeTuiles;
     }
 
