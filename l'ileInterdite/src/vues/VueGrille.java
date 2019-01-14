@@ -118,7 +118,7 @@ public class VueGrille extends JPanel{
         panelSud.add(piocheInondation);
                 
                 
-        defausseInondation = new JLabel("Defausse Carte Inoendation");
+        defausseInondation = new JLabel("Defausse Carte Inondation");
         defausseInondation.setForeground(Color.blue);
         defausseInondation.setPreferredSize(new Dimension(75, 50));
         defausseInondation.setBorder(BorderFactory.createLineBorder(Color.blue, 1));
