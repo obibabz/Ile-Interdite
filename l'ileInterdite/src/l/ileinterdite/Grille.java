@@ -35,9 +35,9 @@ public class Grille {
             j =0;
             while (j<=5){
                 
-                System.out.println("i : "+i);
-                System.out.println("j : "+j);
-                if(!(casesNonAccess.contains(i) || casesNonAccess.contains(j)) && (i==1 && j==1) && (i==1 && j==4) && (i==4 && j==1) && (i==4 && j==4)){
+                //System.out.println("i : "+i);
+                //System.out.println("j : "+j);
+                if(casesAccess.contains(i) || casesAccess.contains(j) || (i==1 && j==1) || (i==1 && j==4) || (i==4 && j==1) || (i==4 && j==4)){
                     grille[i][j] = listeTuiles.get(listeIdTuiles.get(k));
                     k++;
                    System.out.println("case assignée : " + grille[i][j].getId() + " = " + listeIdTuiles.get(k-1));
@@ -67,13 +67,19 @@ public class Grille {
         int iTuile =0;
         int jTuile =0;
         
+        System.out.println(grille[0][3].getId());
         //On cherche la tuile passée en parametre via son id
         for(int i = 0; i<6; i++){
             for(int j = 0; j<6; j++){
-                if(casesAccess.contains(i) || casesAccess.contains(j)){
+                System.out.println("i="+i+", j="+j);
+                        System.out.println("id recherché : "+ idTuile);
+                if(!(casesNonAccess.contains(i) || casesNonAccess.contains(j)) || (i==1 && j==1) || (i==1 && j==4) || (i==4 && j==1) || (i==4 && j==4)){
                     if(grille[i][j].getId() == idTuile){
                         iTuile = i;
                         jTuile = j;
+                        System.out.println("i="+i+", j="+j);
+                        System.out.println("id actuel : "+grille[i][j].getId());
+                        System.out.println("id recherché : "+ idTuile);
                     }
                 }
             }
