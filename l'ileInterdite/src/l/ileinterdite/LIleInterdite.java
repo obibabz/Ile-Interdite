@@ -165,7 +165,7 @@ public class LIleInterdite {
         VueGrille vG = new VueGrille(vuesTuiles, new VueNiveau(2), tresors);
         
         VuePlateau vP = new VuePlateau(vG, vuesAventurier);
-        
+        controleur.setVuePlateau(vP);
         vP.addObserver(controleur);
         vP.afficher();
         

@@ -133,9 +133,12 @@ public class Controleur implements Observer{
         ArrayList<Integer> listeId = new ArrayList<>();
         for(Integer key : this.listeJoueurs.keySet()){
             listeId.add(key);
+            
         }
         if(listeId.indexOf(JCourant.getId()) < listeId.size()-1 ){
-            setJCourant(listeJoueurs.get(listeId.indexOf(JCourant.getId())+1 ));
+            
+            setJCourant(listeJoueurs.get(listeId.get(listeId.indexOf(JCourant.getId())+1 )));
+            
         }
         else{setJCourant(listeJoueurs.get(listeId.get(0)));}
     }
@@ -147,12 +150,15 @@ public class Controleur implements Observer{
     @Override
     public void update(Observable o, Object arg) {
         if (arg instanceof Message) {
-            System.out.println("00");
+            
             int idJoueur =((Message) arg).getIdAventurier();
             
             
             if (((Message) arg).getCommande() == Commandes.BOUGER) { 
                 ArrayList<Integer> listeIdTuiles = listeJoueurs.get(idJoueur).getTuilesAccessibles(grille);
+                for(Integer key : listeJoueurs.keySet()){
+                    System.out.println(key);
+                }
                 this.vuePlateau.setTuilesDeplacement(listeIdTuiles, idJoueur, listeJoueurs.get(idJoueur).getPion().getCouleurSelectionAssechee(), listeJoueurs.get(idJoueur).getPion().getCouleurSelectionInondee());
                 
           
@@ -182,6 +188,7 @@ public class Controleur implements Observer{
                 ((VuePlateau) o).getListeVuesJoueurs().get((idJoueur)).setVueJPrecedant();
                 joueurSuivant();
                 System.out.println("1");
+                System.out.println(JCourant.getId());
                 vuePlateau.getListeVuesJoueurs().get(JCourant.getId()).setVueJCourant();
                 System.out.println("2");
                 

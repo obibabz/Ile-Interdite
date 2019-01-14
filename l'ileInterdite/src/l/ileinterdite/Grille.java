@@ -32,7 +32,11 @@ public class Grille {
         int k =0;
 
         while(i<=5){
+            j =0;
             while (j<=5){
+                
+                System.out.println("i : "+i);
+                System.out.println("j : "+j);
                 if(!(casesNonAccess.contains(i) && casesNonAccess.contains(j))){
                     grille[i][j] = listeTuiles.get(listeIdTuiles.get(k));
                     k++;
@@ -55,35 +59,37 @@ public class Grille {
         return grille[i][j];
     }
     
-    public ArrayList<Integer> getTuileAdj(Integer tuile){
+    public ArrayList<Integer> getTuileAdj(Integer idTuile){
         
         ArrayList<Integer> liste = new ArrayList();
+        int iTuile =0;
+        int jTuile =0;
         
-        int i = 0;
-        int j = 0;
+        for(int i = 0; i<6; i++){
+            for(int j = 0; j<6; j++){
+                if(casesAccess.contains(i) || casesAccess.contains(j)){
+                    //System.out.println("i : "+i);
+                    //System.out.println("j : "+j);
+                    if(grille[i][j].getId() == idTuile){
+                        iTuile =i;
+                        jTuile = j;
+                    }
+                }
+            }
         
-        while (i < 6 &&  casesAccess.contains(i) && grille[i][j].getId() !=tuile){
-            j = 0;
-            while ( j < 5 && casesAccess.contains(j) && grille[i][j].getId() !=tuile){
-                System.out.println(listeTuiles.get(grille[i][j].getId()));
-                j++; 
-            }
-            if(grille[i][j].getId() != tuile){
-            i++;
-            }
         }
 
-        if (j != 5 && grille[i][j+1] != null){
-            liste.add(getTuile(i,j+1).getId());
+        if (iTuile != 5 && grille[iTuile][jTuile+1] != null){
+            liste.add(getTuile(iTuile,jTuile+1).getId());
         }
-        if (j != 0 && grille[i][j-1] != null){
-            liste.add(getTuile(i,j-1).getId());
+        if (jTuile != 0 && grille[iTuile][jTuile-1] != null){
+            liste.add(getTuile(iTuile,jTuile-1).getId());
         }
-        if (i != 0 && grille[i-1][j]!= null){
-            liste.add(getTuile(i-1,j).getId());
+        if (iTuile != 0 && grille[iTuile-1][jTuile]!= null){
+            liste.add(getTuile(iTuile-1,jTuile).getId());
         }
-        if (i != 5 && grille[i+1][j] != null){
-            liste.add(getTuile(i+1,j).getId());
+        if (iTuile != 5 && grille[iTuile+1][jTuile] != null){
+            liste.add(getTuile(iTuile+1,jTuile).getId());
         }
         
         return liste;
