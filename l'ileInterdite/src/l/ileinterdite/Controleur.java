@@ -74,53 +74,28 @@ public class Controleur implements Observer{
         System.out.println("\tréponse : " + (reponse == JOptionPane.YES_OPTION ? "Oui" : "Non"));
         return reponse == JOptionPane.YES_OPTION;
     }    
-    
-    /**
-     * Permet d'afficher un message d'information avec un bouton OK
-     * @param message Message à afficher 
-     */
-    public static void afficherInformation(String message) {
-        JOptionPane.showMessageDialog(null, message, "Information", JOptionPane.OK_OPTION);
-    }
- 
-    
-    //methode de déplacement et decrementation de nbActionRestante
 
- 
-    /**
-     * @return the nbActionsRestantes
-     */
     public int getNbActionsRestantes() {
         return nbActionsRestantes;
     }
 
-    /**
-     * @param nbActionsRestantes the nbActionsRestantes to set
-     */
     public void setNbActionsRestantes(int nbActionsRestantes) {
         this.nbActionsRestantes = nbActionsRestantes;
     }
- 
-    /**
-     *
-     * @return
-     */
+
     public Grille getGrille(){
         return (null);
-    
     }
-        
-    public void getTuile(){
-    
+         
+    public void setGrille(Grille grille) {
+        this.grille = grille;
     }
 
-   
 
     public void setVuePlateau(VuePlateau vuePlateau) {
         this.vuePlateau = vuePlateau;
     }
     
-
     public void setJCourant(Aventurier JCourant) {
         this.JCourant = JCourant;
     }
@@ -133,18 +108,11 @@ public class Controleur implements Observer{
         ArrayList<Integer> listeId = new ArrayList<>();
         for(Integer key : this.listeJoueurs.keySet()){
             listeId.add(key);
-            
         }
-        if(listeId.indexOf(JCourant.getId()) < listeId.size()-1 ){
-            
+        if(listeId.indexOf(JCourant.getId()) < listeId.size()-1 ){   
             setJCourant(listeJoueurs.get(listeId.get(listeId.indexOf(JCourant.getId())+1 )));
-            
         }
         else{setJCourant(listeJoueurs.get(listeId.get(0)));}
-    }
-     
-    public void setGrille(Grille grille) {
-        this.grille = grille;
     }
 
     @Override
@@ -157,13 +125,14 @@ public class Controleur implements Observer{
             if (((Message) arg).getCommande() == Commandes.BOUGER) { 
                 ArrayList<Integer> listeIdTuiles = listeJoueurs.get(idJoueur).getTuilesAccessibles(grille);
                 this.vuePlateau.setTuilesDeplacement(listeIdTuiles, idJoueur, listeJoueurs.get(idJoueur).getPion().getCouleurSelectionAssechee(), listeJoueurs.get(idJoueur).getPion().getCouleurSelectionInondee());
-                
+                vuePlateau.getMessageBox().displayMessage("Vous pouvez vous déplacer vers : <br/>" +listeIdTuilesToString(listeIdTuiles), listeJoueurs.get(idJoueur).getPion().getCouleur(), Boolean.TRUE, Boolean.TRUE);
           
             }
             else if (((Message) arg).getCommande() == Commandes.ASSECHER) {
                     //Gestion ingenieur (on relance gerer assechement, puis on incrémente nb action restantes)
                     ArrayList<Integer>listeIdTuiles = listeJoueurs.get(idJoueur).getTuilesAssechables(grille);
                     this.vuePlateau.setTuilesAssechement(listeIdTuiles, idJoueur, listeJoueurs.get(idJoueur).getPion().getCouleurSelectionAssechee(), listeJoueurs.get(idJoueur).getPion().getCouleurSelectionInondee());
+                    vuePlateau.getMessageBox().displayMessage("Vous pouvez assécher : <br/>" +listeIdTuilesToString(listeIdTuiles), listeJoueurs.get(idJoueur).getPion().getCouleur(), Boolean.TRUE, Boolean.TRUE);
                     
                     //finTour(o, nbActionsRestantes);
                 
@@ -173,6 +142,7 @@ public class Controleur implements Observer{
                 ArrayList<Integer> listeIdTuiles = listeJoueurs.get(idJoueur).getTuilesAccessibles(grille);
                 this.vuePlateau.setTuilesDefaut(listeIdTuiles);
                 gererDeplacement(idTuile, idJoueur);
+                vuePlateau.getMessageBox().displayMessage("Vous vous êtes déplacés sur : <br/>" +JCourant.getPosition().getNom(), listeJoueurs.get(idJoueur).getPion().getCouleur(), Boolean.TRUE, Boolean.TRUE);
                 //finTour(o, nbActionsRestantes);
                 
             }
@@ -182,6 +152,7 @@ public class Controleur implements Observer{
                 this.vuePlateau.setTuilesDefaut(listeIdTuiles);
                 gererAssechement(idTuile, idJoueur);
                 listeIdTuiles = listeJoueurs.get(idJoueur).getTuilesAssechables(grille);
+                vuePlateau.getMessageBox().displayMessage("Vous avez asséché : <br/>" +grille.getListeTuiles().get(idTuile).getNom(), listeJoueurs.get(idJoueur).getPion().getCouleur(), Boolean.TRUE, Boolean.TRUE);
                 if("Ingenieur".equals(listeJoueurs.get(idJoueur).getClass().getSimpleName()) && !listeIdTuiles.isEmpty() && listeJoueurs.get(idJoueur).getNbAssech() <2){
                     System.out.println("00");
                     
@@ -194,13 +165,8 @@ public class Controleur implements Observer{
                 nbActionsRestantes = 3;
                 ((VuePlateau) o).getListeVuesJoueurs().get((idJoueur)).setVueJPrecedant();
                 joueurSuivant();
-                
-                
                 vuePlateau.getListeVuesJoueurs().get(JCourant.getId()).setVueJCourant();
-                
-                
-                
-                
+                vuePlateau.getMessageBox().displayMessage("C'est à  : <br/>" +JCourant.getClass().getSimpleName()+" de jouer.", JCourant.getPion().getCouleur(), Boolean.TRUE, Boolean.TRUE);
             }
             else if (((Message ) arg).getCommande() == Commandes.POUVOIR) {
                 
@@ -386,7 +352,15 @@ public class Controleur implements Observer{
         return vT;
     }
     
-    
+    public String listeIdTuilesToString(ArrayList<Integer> listeTuiles){
+        String res ="";
+        for(Integer key : listeTuiles){
+            res+=this.grille.getListeTuiles().get(key).getNom();
+            
+            res += " ";
+        }
+        return res;
+    }
     
     
     

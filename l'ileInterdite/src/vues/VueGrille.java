@@ -17,6 +17,7 @@ import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import util.MessageBox;
 
 /**
  *
@@ -24,23 +25,20 @@ import javax.swing.JPanel;
  */
 public class VueGrille extends JPanel{
     private final LinkedHashMap<Integer,VueTuile> listeTuiles;
-    private final JPanel panelNord;
-    private final JPanel panelEst;
+
     private final JPanel panelSud;
-    private final VueNiveau vueNiveau;
     private JLabel piocheInondation;
     private JLabel defausseInondation;
     private JLabel piocheTresor;
     private JLabel defausseTresor;
-    private final ArrayList<JLabel> labelsTresors;
     
     
-     public VueGrille(LinkedHashMap<Integer,VueTuile> listeTuiles, VueNiveau vueNiveau, ArrayList<String> tresorsPossedes) {
     
-        this.vueNiveau = vueNiveau;
+     public VueGrille(LinkedHashMap<Integer,VueTuile> listeTuiles) {
+
         this.listeTuiles = listeTuiles;
         this.setLayout(new BorderLayout());
-        labelsTresors = new ArrayList<>();
+        
         //AFFICHAGE GRILLE
         JPanel panelGrille = new JPanel(new GridLayout(6,6));
         int i= 0;
@@ -62,9 +60,6 @@ public class VueGrille extends JPanel{
                 
                 else{
                    panelGrille.add(listeTuiles.get(listeid.get(j)));
-                   //System.out.println(listeTuiles.get(listeid.get(j)).getBtnTuile().getText());
-                   //JLabel vide = new JLabel("i :"+i+" "+"j : "+j+" pasvide");
-                    //this.add(vide);
                    if (j !=23){
                     j++;
                    }
@@ -72,29 +67,9 @@ public class VueGrille extends JPanel{
                 i++;
             }
             int k = 0;
-            // AFFICHAGE TRESORS ET PIOCHE/DEFAUSSE CARTES TRESOR  ET PIOCHE/DEFAUSSE CARTES INONDATION
-        panelNord = new JPanel(new FlowLayout());
-        this.add(panelNord, BorderLayout.NORTH);
-        ArrayList<String> tresors = new ArrayList<>(Arrays.asList("La Statue du Zéphyr", "Le Calice de l'Onde", "Le Cristal Ardent", "La Pierre Sacrée"));
-        for(String tresor : tresorsPossedes){
-            if (tresors.contains(tresor)){
-                JLabel labelT = new JLabel(tresor);
-                panelNord.add(labelT);
-                labelT.setPreferredSize(new Dimension(100,100));
-                labelT.setBorder(BorderFactory.createLineBorder(Color.blue, 1));
-                labelsTresors.add(labelT);
-                k++;
-            }
-        }
-        while(k<=3){
-            JLabel labelVide = new JLabel("Tresor pas encore récupéré");
-                panelNord.add(labelVide);
-                labelVide.setPreferredSize(new Dimension(100, 100));
-                labelVide.setBorder(BorderFactory.createLineBorder(Color.blue, 1));
-                labelsTresors.add(labelVide);
-                k++;
-        }
+
         //AFFICHAGE PIOCHE/DEFAUSSE CARTES TRESOR ET INONDATION
+        /*
         panelSud = new JPanel(new FlowLayout());
         this.add(panelSud, BorderLayout.SOUTH);
         
@@ -123,36 +98,14 @@ public class VueGrille extends JPanel{
         defausseInondation.setPreferredSize(new Dimension(75, 50));
         defausseInondation.setBorder(BorderFactory.createLineBorder(Color.blue, 1));
         panelSud.add(defausseInondation);
-                
-        
-        
-        
-        
-        
-        
-        //AFFICHAGE VUE NIVEAU
-        panelEst = new JPanel();
-        this.add(panelEst, BorderLayout.EAST);
-      
-        panelEst.add(vueNiveau);
-        
+                */
+        this.panelSud=new JPanel();
+ 
     }
      
 
     public LinkedHashMap<Integer,VueTuile> getListeTuiles() {
         return listeTuiles;
-    }
-
-    public JPanel getPanelNord() {
-        return panelNord;
-    }
-
-    public JPanel getPanelEst() {
-        return panelEst;
-    }
-
-    public VueNiveau getVueNiveau() {
-        return vueNiveau;
     }
 
     public JLabel getPiocheInondation() {
@@ -170,13 +123,6 @@ public class VueGrille extends JPanel{
     public JLabel getDefausseTresor() {
         return defausseTresor;
     }
-
-    public ArrayList<JLabel> getLabelsTresors() {
-        return labelsTresors;
-    }
 }
-//  public VueGrille getVueGrille(int x) {
-//      return this.getComponent(x).vueTuile;
-//  }
      
 

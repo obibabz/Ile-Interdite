@@ -19,8 +19,8 @@ import util.Utils;
  *
  * @author IUT2-Dept Info
  */
-public class MessageBox {
-    private final JFrame window ;
+public class MessageBox extends JPanel{
+    //private final JFrame window ;
     private final JEditorPane html ;
     private final JScrollPane scrollPane;
     String texte ;
@@ -30,15 +30,15 @@ public class MessageBox {
     private final JPanel panelPierre;
     
     public MessageBox() {
-        window = new JFrame() ;
+       /* window = new JFrame() ;
         window.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
         window.setLocation(940, Parameters.TOP_AUTRES_VUES);
         window.setSize(310, Parameters.HAUTEUR_AUTRES_VUES);
         window.setUndecorated(Parameters.UNDECORATED);
-        window.setResizable(Parameters.RESIZABLE);
+        window.setResizable(Parameters.RESIZABLE);*/
         
         JPanel mainPanel = new JPanel(new BorderLayout());
-        window.add(mainPanel);
+        this.add(mainPanel);
         
         JPanel panelTresors = new JPanel(new GridLayout(1,4));
         mainPanel.add(panelTresors, BorderLayout.NORTH);
@@ -82,7 +82,7 @@ public class MessageBox {
         html.setText("<html><h1 style=\"text-align:center; color:blue;\">Bienvenue dans<br>l'Île Interdite</h1></html>");
         mainPanel.add(scrollPane, BorderLayout.CENTER) ;
         
-        window.setVisible(true);
+        //window.setVisible(true);
         
         this.texte = "" ;
     }

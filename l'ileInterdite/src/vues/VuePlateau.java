@@ -3,6 +3,7 @@ package vues;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -16,6 +17,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import util.Message;
+import util.MessageBox;
 import util.Utils;
 import util.Utils.Commandes;
 
@@ -29,16 +31,13 @@ public class VuePlateau extends Observable {
     private final VueGrille vueGrille;
     private JLabel titre;
     private final LinkedHashMap<Integer, VueAventurier> listeVuesJoueurs;
-    private final JPanel panelGauche;
-    private final JPanel panelDroite;
-    
+    private final JPanel panelSud;
+    private VueNiveau vueNiveau;
+    private MessageBox messageBox;
+    private final JPanel mainPanel;
     private final JPanel panelPrincipal;
-    
-    //private JPanel panelGauche;
-    //private JPanel panelDroite;
-    
 
-    public VuePlateau(VueGrille vueGrille, LinkedHashMap<Integer, VueAventurier> listeVuesJoueurs) {
+    public VuePlateau(VueGrille vueGrille, LinkedHashMap<Integer, VueAventurier> listeVuesJoueurs, MessageBox mb, VueNiveau vn) {
         window = new JFrame();
         window.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
         window.setTitle("L'ile Interdite");
@@ -47,9 +46,11 @@ public class VuePlateau extends Observable {
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         //window.setLocation(0,0);
         //window.setLocation(dim.width/2-window.getSize().width/2, dim.height/2-window.getSize().height/2);
-        window.setSize(dim.width, dim.height*2/3);
+        window.setSize(dim.width, dim.height*4/5);
         panelPrincipal = new JPanel(new BorderLayout());
-        window.add(panelPrincipal);
+        mainPanel = new JPanel(new BorderLayout());
+        mainPanel.add(panelPrincipal, BorderLayout.CENTER);
+        window.add(mainPanel);
         
         
         
@@ -126,25 +127,17 @@ public class VuePlateau extends Observable {
         for(Integer key : listeVuesJoueurs.keySet()){
             listeId.add(key);
         }
-        //PANNEAUX AVENTURIERS DE GAUCHE
-        panelGauche = new JPanel(new GridLayout(2,1));
-        panelPrincipal.add(panelGauche, BorderLayout.WEST);
-        if(listeVuesJoueurs.size()>=1){
-            panelGauche.add(listeVuesJoueurs.get(listeId.get(0)));
-        }
-        if(listeVuesJoueurs.size()>=2){
-            panelGauche.add(listeVuesJoueurs.get(listeId.get(1)));
+        //PANNEAUX AVENTURIERS
+        this.messageBox = mb;
+        this.vueNiveau = vn;
+        mainPanel.add(vn, BorderLayout.EAST);
+        panelSud = new JPanel(new GridLayout(1,4));
+        panelPrincipal.add(mb,BorderLayout.WEST);
+        panelPrincipal.add(panelSud, BorderLayout.SOUTH);
+        for(Integer key : this.listeVuesJoueurs.keySet()){
+            panelSud.add(listeVuesJoueurs.get(key));
         }
         
-        //PANNEAUX AVENTURIERS DE DROITE
-        panelDroite = new JPanel(new GridLayout(2,1));
-        panelPrincipal.add(panelDroite, BorderLayout.EAST);
-        if(listeVuesJoueurs.size()>=1){
-            panelDroite.add(listeVuesJoueurs.get(listeId.get(2)));
-        }
-        if(listeVuesJoueurs.size()>=2){
-            panelDroite.add(listeVuesJoueurs.get(listeId.get(3)));
-        }
     }
     public void setTuilesAssechement(ArrayList<Integer> listeIdTuiles, Integer idJoueur, Color couleur, Color couleur2){
         for (Integer idTuile : listeIdTuiles){
@@ -192,16 +185,16 @@ public class VuePlateau extends Observable {
         return titre;
     }
 
+    public VueNiveau getVueNiveau() {
+        return vueNiveau;
+    }
+
+    public MessageBox getMessageBox() {
+        return messageBox;
+    }
+
     public LinkedHashMap<Integer, VueAventurier> getListeVuesJoueurs() {
         return listeVuesJoueurs;
-    }
-
-    public JPanel getPanelGauche() {
-        return panelGauche;
-    }
-
-    public JPanel getPanelDroite() {
-        return panelDroite;
     }
 
     public JPanel getPanelPrincipal() {

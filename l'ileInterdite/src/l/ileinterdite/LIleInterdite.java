@@ -162,14 +162,15 @@ public class LIleInterdite {
         }
         
         ArrayList<String> tresors = new ArrayList<>(Arrays.asList( "Le Cristal Ardent", "La Pierre Sacrée"));
+        MessageBox mb = new MessageBox();
+        VueGrille vG = new VueGrille(vuesTuiles);
+        //mb.setCaliceVisible();
         
-        VueGrille vG = new VueGrille(vuesTuiles, new VueNiveau(2), tresors);
-        
-        VuePlateau vP = new VuePlateau(vG, vuesAventurier);
+        VuePlateau vP = new VuePlateau(vG, vuesAventurier, mb, new VueNiveau(2));
         controleur.setVuePlateau(vP);
         vP.addObserver(controleur);
         vP.afficher();
-       
+        
         
     }
     
