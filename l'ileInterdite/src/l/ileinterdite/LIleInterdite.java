@@ -73,7 +73,7 @@ public class LIleInterdite {
         Tuile TSo = new Tuile("Le Temple du Soleil", EtatTuile.ASSECHEE); TSo.setTresor(Tresor.PIERRE);
         Tuile TLu = new Tuile("Le Temple de la Lune", EtatTuile.COULEE); TLu.setTresor(Tresor.PIERRE);
         Tuile PMa = new Tuile("Le Palais des Marées", EtatTuile.ASSECHEE); PMa.setTresor(Tresor.CALICE);
-        Tuile VCr = new Tuile("Le Val du Crépuscule", EtatTuile.ASSECHEE);
+        Tuile VCr = new Tuile("Le Val du Crépuscule", EtatTuile.INONDEE);
         Tuile TGu = new Tuile("La Tour du Guet", EtatTuile.ASSECHEE);
         Tuile JMu = new Tuile("Le Jardin des Murmures", EtatTuile.INONDEE); JMu.setTresor(Tresor.ZEPHYR);
         
@@ -121,14 +121,7 @@ public class LIleInterdite {
         Aventurier joueur4 = new Pilote("joueur4", H, bleu); joueursSurGrille.put(joueur4.getId(), joueur4);H.arriveeJoueur(joueur4);
         //Aventurier joueur5 = new Navigateur("joueur5", POr, jaune); joueursSurGrille.add(joueur5);
         //Aventurier joueur6 = new Messager("joueur6", PAr, orange); joueursSurGrille.add(joueur6);
-        
-        
-       /* for (int i = 0; i < 6; i++) {
-            for (int j = 0; j < 6; j++) {
-                System.out.println(grille[j][i].getNom());  
-            }
-        }
-        */
+
         VueAventurier vue1 = new VueAventurier(joueur1.getId(),  joueur1.getNomJoueur(), joueur1.getClass().getSimpleName(), joueur1.getPion().getCouleur(), joueur1.getPion().getCouleurGrisee(), joueur1.getPosition().getNom()); vue1.setVueJCourant();
         VueAventurier vue2 = new VueAventurier(joueur2.getId(),  joueur2.getNomJoueur(), joueur2.getClass().getSimpleName(), joueur2.getPion().getCouleur(), joueur2.getPion().getCouleurGrisee(), joueur2.getPosition().getNom());
         VueAventurier vue3 = new VueAventurier(joueur3.getId(),  joueur3.getNomJoueur(), joueur3.getClass().getSimpleName(), joueur3.getPion().getCouleur(), joueur3.getPion().getCouleurGrisee(), joueur3.getPosition().getNom());
@@ -152,19 +145,13 @@ public class LIleInterdite {
         
         LinkedHashMap<Integer, VueTuile> vuesTuiles= new LinkedHashMap<>();
         for(Integer key : listeTuiles.keySet()){
-            
             VueTuile vT = controleur.initVueTuile(listeTuiles.get(key));
-                       
-
             vuesTuiles.put(vT.getIdVueTuile(), vT);
-                       
-
         }
-        
-        ArrayList<String> tresors = new ArrayList<>(Arrays.asList( "Le Cristal Ardent", "La Pierre Sacrée"));
+      
         MessageBox mb = new MessageBox();
         VueGrille vG = new VueGrille(vuesTuiles);
-        //mb.setCaliceVisible();
+        
         
         VuePlateau vP = new VuePlateau(vG, vuesAventurier, mb, new VueNiveau(2));
         controleur.setVuePlateau(vP);

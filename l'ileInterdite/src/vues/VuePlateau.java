@@ -50,9 +50,13 @@ public class VuePlateau extends Observable {
         panelPrincipal = new JPanel(new BorderLayout());
         mainPanel = new JPanel(new BorderLayout());
         mainPanel.add(panelPrincipal, BorderLayout.CENTER);
+        
+        //AFFICHAGE VUE NIVEAU ET MESSAGE BOX
         window.add(mainPanel);
-        
-        
+        this.messageBox = mb;
+        this.vueNiveau = vn;
+        mainPanel.add(vn, BorderLayout.EAST);
+        panelPrincipal.add(mb,BorderLayout.WEST);
         
         
         this.vueGrille = vueGrille;
@@ -128,11 +132,9 @@ public class VuePlateau extends Observable {
             listeId.add(key);
         }
         //PANNEAUX AVENTURIERS
-        this.messageBox = mb;
-        this.vueNiveau = vn;
-        mainPanel.add(vn, BorderLayout.EAST);
+
         panelSud = new JPanel(new GridLayout(1,4));
-        panelPrincipal.add(mb,BorderLayout.WEST);
+
         panelPrincipal.add(panelSud, BorderLayout.SOUTH);
         for(Integer key : this.listeVuesJoueurs.keySet()){
             panelSud.add(listeVuesJoueurs.get(key));
@@ -152,6 +154,7 @@ public class VuePlateau extends Observable {
             this.vueGrille.getListeTuiles().get(idTuile).setCouleurCliquable(couleur, couleur2);
         }
     }
+  
     public void setTuilesDeplacement(ArrayList<Integer> listeIdTuiles, Integer idJoueur, Color couleur, Color couleur2){
         for(Integer idTuile : listeIdTuiles){
             this.vueGrille.getListeTuiles().get(idTuile).getBtnTuile().addActionListener(new ActionListener(){
@@ -165,6 +168,7 @@ public class VuePlateau extends Observable {
             this.vueGrille.getListeTuiles().get(idTuile).setCouleurCliquable(couleur, couleur2);
         }
     }
+    //REMISE PAR DEFAUT DE L'AFFICHAGE DES TUILES APRES UN DEPLACEMENT OU UN ASSECHEMENT
     public void setTuilesDefaut(ArrayList<Integer> listeIdTuiles){
         for(Integer idTuile : listeIdTuiles){
             JButton btnTuile = this.vueGrille.getListeTuiles().get(idTuile).getBtnTuile();

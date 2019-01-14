@@ -57,12 +57,10 @@ public class Tuile extends ObjetIdentifie{
     }
 
     public void arriveeJoueur(Aventurier joueur) {
-        System.out.println("Arrivée sur la tuile"+this.nom);
         this.joueursSurTuile.add(joueur);
     }
     
     public void departJoueur(Aventurier joueur) {
-        System.out.println("Départ de la tuile"+this.nom);
         this.joueursSurTuile.remove(joueur);
     }
 

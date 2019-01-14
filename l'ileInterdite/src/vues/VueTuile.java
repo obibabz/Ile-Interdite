@@ -34,7 +34,7 @@ public class VueTuile extends JPanel {
         }
         
         //Affichage du bouton central
-        btnTuile = new JButton(id.toString());
+        btnTuile = new JButton(nomTuile);
         this.add(btnTuile, BorderLayout.CENTER);
         this.setCouleurDefaut();
         

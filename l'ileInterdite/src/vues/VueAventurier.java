@@ -140,13 +140,18 @@ public class VueAventurier extends JPanel{
         
 
     }
-    public void setVueJPrecedant(){
-        this.getBtnBouger().setEnabled(false);
+    public void setVueFinTour(){
+            this.getBtnBouger().setEnabled(false);
             this.getBtnAssecher().setEnabled(false);
-            this.getBtnTerminerTour().setEnabled(false);
+ 
             if("Pilote".equals(nomAventurier)){
                 this.getBtnAutreAction().setEnabled(false);
             }
+    }
+    public void setVueJPrecedant(){
+            this.setVueFinTour();
+            this.getBtnTerminerTour().setEnabled(false);
+            this.getBtnTerminerTour().setEnabled(false);
             this.getPanelAventurier().setBackground(couleurGrisee);
             this.getMainPanel().setBorder(BorderFactory.createLineBorder(couleurGrisee, 2)) ;
             this.getPanelCentre().setBorder(new MatteBorder(0, 0, 2, 0, couleurGrisee));
