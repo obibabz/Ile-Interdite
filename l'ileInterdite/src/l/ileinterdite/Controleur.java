@@ -159,7 +159,7 @@ public class Controleur implements Observer{
                 for(Integer key : listeJoueurs.keySet()){
                     System.out.println(key);
                 }
-                this.vuePlateau.setTuilesDeplacement(listeIdTuiles, idJoueur, listeJoueurs.get(idJoueur).getPion().getCouleurSelectionAssechee(), listeJoueurs.get(idJoueur).getPion().getCouleurSelectionInondee());
+                this.vuePlateau.setTuilesCliquables(listeIdTuiles, idJoueur, listeJoueurs.get(idJoueur).getPion().getCouleurSelectionAssechee(), listeJoueurs.get(idJoueur).getPion().getCouleurSelectionInondee());
                 
           
             }
@@ -168,17 +168,13 @@ public class Controleur implements Observer{
                 ArrayList<Integer> listeIdTuiles = listeJoueurs.get(idJoueur).getTuilesAccessibles(grille);
                 this.vuePlateau.setTuilesDefaut(listeIdTuiles);
                 gererDeplacement(idTuile, idJoueur);
+                finTour(o, nbActionsRestantes);
             }
             else if (((Message) arg).getCommande() == Commandes.ASSECHER) {
-               
-                    
                     //Gestion ingenieur (on relance gerer assechement, puis on incrémente nb action restantes)
+                    ArrayList<Integer>listeIdTuiles = listeJoueurs.get(idJoueur).getTuilesAssechables(grille);
+                    this.vuePlateau.setTuilesCliquables(listeIdTuiles, idJoueur, listeJoueurs.get(idJoueur).getPion().getCouleurSelectionAssechee(), listeJoueurs.get(idJoueur).getPion().getCouleurSelectionInondee());
                     
-                    if(JCourant.getPion().toString()=="Rouge"){                 
-                        
-                        nbActionsRestantes+=1;
-                    }
-                    System.out.println(nbActionsRestantes);
                     finTour(o, nbActionsRestantes);
                 
             }
@@ -203,13 +199,21 @@ public class Controleur implements Observer{
             }
         }
     }
-    public void gererDeplacement(Integer idTuile, Integer idJoueur){
-        this.grille.getListeTuiles().get(idTuile).arriveeJoueur(JCourant);
+    public void gererAssechement(Integer idTuile, Integer idJoueur){
         
-        this.vuePlateau.getVueGrille().getListeTuiles().get(idTuile).getJoueursSurTuile().add(this.listeJoueurs.get(idJoueur).getPion().getCouleur());
-        this.vuePlateau.getVueGrille().getListeTuiles().get(idTuile).setCasesJoueurs();
-        this.vuePlateau.getVueGrille().getListeTuiles().get(JCourant.getPosition().getId()).getJoueursSurTuile().remove(JCourant.getPion().getCouleur());
-        this.vuePlateau.getVueGrille().getListeTuiles().get(JCourant.getPosition().getId()).setCasesJoueurs();
+    }
+    public void gererDeplacement(Integer idTuileArrivee, Integer idJoueur){
+        LinkedHashMap<Integer, VueTuile> listeVuesTuiles = this.vuePlateau.getVueGrille().getListeTuiles();
+        Integer idTuileDepart =JCourant.getPosition().getId();
+        Color couleur = JCourant.getPion().getCouleur();
+        
+        listeVuesTuiles.get(idTuileDepart).getJoueursSurTuile().remove(couleur);
+        listeVuesTuiles.get(idTuileDepart).setCasesJoueurs();
+        
+        listeVuesTuiles.get(idTuileArrivee).getJoueursSurTuile().add(couleur);
+        listeVuesTuiles.get(idTuileArrivee).setCasesJoueurs();
+        this.grille.getListeTuiles().get(idTuileArrivee).arriveeJoueur(JCourant);
+        
         this.listeJoueurs.get(idJoueur).getPosition().departJoueur(JCourant);
         
     }

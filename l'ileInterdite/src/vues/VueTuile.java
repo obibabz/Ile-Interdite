@@ -77,6 +77,11 @@ public class VueTuile extends JPanel {
             casesJoueurs.get(i).setBackground(joueursSurTuile.get(i));
             i++;
         }
+        i = joueursSurTuile.size();
+        while(i <=3){
+            casesJoueurs.get(i).setBackground(Color.gray);
+            i++;
+        }
     }
     
     
