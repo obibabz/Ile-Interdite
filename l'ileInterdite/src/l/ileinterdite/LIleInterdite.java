@@ -17,6 +17,7 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
+import util.MessageBox;
 import util.Utils.Pion;
 import vues.VueGrille;
 import vues.VuePlateau;
@@ -168,7 +169,7 @@ public class LIleInterdite {
         controleur.setVuePlateau(vP);
         vP.addObserver(controleur);
         vP.afficher();
-        
+       
         
     }
     

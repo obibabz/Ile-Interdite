@@ -156,9 +156,17 @@ public class Controleur implements Observer{
             
             if (((Message) arg).getCommande() == Commandes.BOUGER) { 
                 ArrayList<Integer> listeIdTuiles = listeJoueurs.get(idJoueur).getTuilesAccessibles(grille);
-                this.vuePlateau.setTuilesCliquables(listeIdTuiles, idJoueur, listeJoueurs.get(idJoueur).getPion().getCouleurSelectionAssechee(), listeJoueurs.get(idJoueur).getPion().getCouleurSelectionInondee());
+                this.vuePlateau.setTuilesDeplacement(listeIdTuiles, idJoueur, listeJoueurs.get(idJoueur).getPion().getCouleurSelectionAssechee(), listeJoueurs.get(idJoueur).getPion().getCouleurSelectionInondee());
                 
           
+            }
+            else if (((Message) arg).getCommande() == Commandes.ASSECHER) {
+                    //Gestion ingenieur (on relance gerer assechement, puis on incrémente nb action restantes)
+                    ArrayList<Integer>listeIdTuiles = listeJoueurs.get(idJoueur).getTuilesAssechables(grille);
+                    this.vuePlateau.setTuilesAssechement(listeIdTuiles, idJoueur, listeJoueurs.get(idJoueur).getPion().getCouleurSelectionAssechee(), listeJoueurs.get(idJoueur).getPion().getCouleurSelectionInondee());
+                    
+                    //finTour(o, nbActionsRestantes);
+                
             }
             else if (((Message) arg).getCommande() == Commandes.CHOISIR_TUILE_D){
                 int idTuile =((Message) arg).getIdTuile();
@@ -173,22 +181,21 @@ public class Controleur implements Observer{
                 ArrayList<Integer> listeIdTuiles = listeJoueurs.get(idJoueur).getTuilesAssechables(grille);
                 this.vuePlateau.setTuilesDefaut(listeIdTuiles);
                 gererAssechement(idTuile, idJoueur);
-            }
-            else if (((Message) arg).getCommande() == Commandes.ASSECHER) {
-                    //Gestion ingenieur (on relance gerer assechement, puis on incrémente nb action restantes)
-                    ArrayList<Integer>listeIdTuiles = listeJoueurs.get(idJoueur).getTuilesAssechables(grille);
-                    this.vuePlateau.setTuilesCliquables(listeIdTuiles, idJoueur, listeJoueurs.get(idJoueur).getPion().getCouleurSelectionAssechee(), listeJoueurs.get(idJoueur).getPion().getCouleurSelectionInondee());
+                listeIdTuiles = listeJoueurs.get(idJoueur).getTuilesAssechables(grille);
+                if("Ingenieur".equals(listeJoueurs.get(idJoueur).getClass().getSimpleName()) && !listeIdTuiles.isEmpty() && listeJoueurs.get(idJoueur).getNbAssech() <2){
+                    System.out.println("00");
                     
-                    //finTour(o, nbActionsRestantes);
-                
+                    this.vuePlateau.notifyObservers(new Message(Commandes.ASSECHER, idJoueur, null, null, null));
+                }
             }
+            
             else if (((Message ) arg).getCommande() == Commandes.TERMINER) {
                 
                 nbActionsRestantes = 3;
                 ((VuePlateau) o).getListeVuesJoueurs().get((idJoueur)).setVueJPrecedant();
                 joueurSuivant();
                 
-                System.out.println(JCourant.getId());
+                
                 vuePlateau.getListeVuesJoueurs().get(JCourant.getId()).setVueJCourant();
                 
                 
@@ -208,6 +215,7 @@ public class Controleur implements Observer{
         vuePlateau.getVueGrille().getListeTuiles().get(idTuile).setCouleurDefaut();
         
         this.grille.getListeTuiles().get(idTuile).setEtatTuile(EtatTuile.ASSECHEE);
+        this.JCourant.setNbAssech(this.JCourant.getNbAssech()+1);
     }
     
     

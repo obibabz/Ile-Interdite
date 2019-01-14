@@ -25,12 +25,22 @@ public abstract class Aventurier extends ObjetIdentifie{
     private Tuile position;
     private Pion pion;
     private HashMap<Integer, CarteTirage> cartesEnMain;
+    private Integer nbAssech;
 
     public Aventurier(String nomJoueur, Tuile position, Pion pion) {
         this.nomJoueur = nomJoueur;
         this.position = position;
         this.pion = pion;
         this.cartesEnMain = new HashMap();
+        this.nbAssech = 0;
+    }
+
+    public void setNbAssech(Integer nbAssech) {
+        this.nbAssech = nbAssech;
+    }
+
+    public Integer getNbAssech() {
+        return nbAssech;
     }
 
     public HashMap<Integer,CarteTirage> getCartesEnMain() {
@@ -66,6 +76,7 @@ public abstract class Aventurier extends ObjetIdentifie{
         ArrayList<Integer> tuilesAdj = g.getTuileAdj(position.getId());
         ArrayList<Integer> tuilesAssech = g.getTuilesInondees(tuilesAdj);
         if(position.getEtatTuile() == EtatTuile.INONDEE) {tuilesAssech.add(position.getId());}
+        
         return tuilesAssech;
     }
     

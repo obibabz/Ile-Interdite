@@ -47,7 +47,7 @@ public class VuePlateau extends Observable {
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         //window.setLocation(0,0);
         //window.setLocation(dim.width/2-window.getSize().width/2, dim.height/2-window.getSize().height/2);
-        window.setSize(dim.width, dim.height);
+        window.setSize(dim.width, dim.height*2/3);
         panelPrincipal = new JPanel(new BorderLayout());
         window.add(panelPrincipal);
         
@@ -57,27 +57,12 @@ public class VuePlateau extends Observable {
         this.vueGrille = vueGrille;
         panelPrincipal.add(vueGrille, BorderLayout.CENTER);
         
-        //ACTION LISTENER CASES DE JEU
-        
-         for(Integer key : vueGrille.getListeTuiles().keySet()){
-            vueGrille.getListeTuiles().get(key).getBtnTuile().addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    setChanged();
-                    notifyObservers();
-                    clearChanged();
-                }
-            });
             
-        }this.listeVuesJoueurs=listeVuesJoueurs;
+        this.listeVuesJoueurs=listeVuesJoueurs;
         
         
         // ACTION LISTENER BOUTONS AVENTURIERS
-        
-        
         for(Integer key : listeVuesJoueurs.keySet()){
-            
-            
             listeVuesJoueurs.get(key).getBtnAssecher().addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -171,9 +156,10 @@ public class VuePlateau extends Observable {
                     clearChanged();
                 }
             });
+            this.vueGrille.getListeTuiles().get(idTuile).setCouleurCliquable(couleur, couleur2);
         }
     }
-    public void setTuilesCliquables(ArrayList<Integer> listeIdTuiles, Integer idJoueur, Color couleur, Color couleur2){
+    public void setTuilesDeplacement(ArrayList<Integer> listeIdTuiles, Integer idJoueur, Color couleur, Color couleur2){
         for(Integer idTuile : listeIdTuiles){
             this.vueGrille.getListeTuiles().get(idTuile).getBtnTuile().addActionListener(new ActionListener(){
                 @Override
