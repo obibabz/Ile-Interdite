@@ -18,6 +18,7 @@ public class Utils {
         BOUGER("Déplacer son pion"),
         ASSECHER("Assécher une tuile"),
         DONNER("Donner une carte à un autre joueur"),
+        ANNULER("Annuler un choix de commande"),
         RECUPERER_TRESOR("Récupérer le trésor de la tuile"),
         TERMINER("Terminer son tour"),
         RECEVOIR("Recevoir la carte donnée par un autre joueur"), 

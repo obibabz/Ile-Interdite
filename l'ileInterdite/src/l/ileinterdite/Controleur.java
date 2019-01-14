@@ -127,16 +127,27 @@ public class Controleur implements Observer{
             
             if (((Message) arg).getCommande() == Commandes.BOUGER) { 
                 ArrayList<Integer> listeIdTuiles = listeJoueurs.get(idJoueur).getTuilesAccessibles(grille);
-                this.vuePlateau.setTuilesDeplacement(listeIdTuiles, idJoueur, couleur1, couleur2);
-                vuePlateau.getMessageBox().displayMessage("Vous pouvez vous déplacer vers : <br/>" +listeIdTuilesToString(listeIdTuiles), couleur1, Boolean.TRUE, Boolean.TRUE);
-          
+                if(!listeIdTuiles.isEmpty()){
+                    this.vuePlateau.setTuilesDeplacement(listeIdTuiles, idJoueur, couleur1, couleur2);
+                    vuePlateau.getMessageBox().displayMessage("Vous pouvez vous déplacer vers : <br/>" +listeIdTuilesToString(listeIdTuiles), couleur1, Boolean.TRUE, Boolean.TRUE);
+                    vuePlateau.getListeVuesJoueurs().get(idJoueur).setVueChoix();
+                }
+                else{
+                    vuePlateau.getMessageBox().displayMessage("Vous ne pouvez vous déplacer nul-part." +listeIdTuilesToString(listeIdTuiles), couleur1, Boolean.TRUE, Boolean.TRUE);
+                }
             }
             else if (((Message) arg).getCommande() == Commandes.ASSECHER) {
-                    //Gestion ingenieur (on relance gerer assechement, puis on incrémente nb action restantes)
                     ArrayList<Integer>listeIdTuiles = listeJoueurs.get(idJoueur).getTuilesAssechables(grille);
-                    this.vuePlateau.setTuilesAssechement(listeIdTuiles, idJoueur, couleur1, couleur2  );
-                    vuePlateau.getMessageBox().displayMessage("Vous pouvez assécher : <br/>" +listeIdTuilesToString(listeIdTuiles), couleur1, Boolean.TRUE, Boolean.TRUE);
-                
+                    
+                    if(!listeIdTuiles.isEmpty()){
+                        this.vuePlateau.setTuilesAssechement(listeIdTuiles, idJoueur, couleur1, couleur2  );
+                        vuePlateau.getMessageBox().displayMessage("Vous pouvez assécher : <br/>" +listeIdTuilesToString(listeIdTuiles), couleur1, Boolean.TRUE, Boolean.TRUE);
+                        vuePlateau.getListeVuesJoueurs().get(idJoueur).setVueChoix();
+                    }
+                    else{
+                        vuePlateau.getMessageBox().displayMessage("Il n'y a pas de tuile asséchable adjacente" +listeIdTuilesToString(listeIdTuiles), couleur1, Boolean.TRUE, Boolean.TRUE);
+                    }
+                    
             }
             else if (((Message) arg).getCommande() == Commandes.CHOISIR_TUILE_D){
                 int idTuile =((Message) arg).getIdTuile();
@@ -146,6 +157,7 @@ public class Controleur implements Observer{
                 vuePlateau.getMessageBox().displayMessage("Vous vous êtes déplacés sur : <br/>" +JCourant.getPosition().getNom(), couleur1, Boolean.TRUE, Boolean.TRUE);
                 nbActionsRestantes-=1;
                 System.out.println(nbActionsRestantes);
+                vuePlateau.getListeVuesJoueurs().get(idJoueur).setVueJCourant();
                 finTour(o, idJoueur);
                 
             }
@@ -162,10 +174,12 @@ public class Controleur implements Observer{
                     System.out.println("00");
                     if(Utils.poserQuestion("Voulez vous assécher une seconde tuile")){
                         this.vuePlateau.setTuilesAssechement(listeIdTuiles, idJoueur, couleur1, couleur2);
+                        nbActionsRestantes+=1;
                     }
                     
                 }
                 nbActionsRestantes-=1;
+                vuePlateau.getListeVuesJoueurs().get(idJoueur).setVueJCourant();
                 System.out.println(nbActionsRestantes);
                 finTour(o, idJoueur);
             }
@@ -182,6 +196,16 @@ public class Controleur implements Observer{
                 
                 //((VueAventurier) o).getPosition().setText(JCourant.getPosition().getNom());
                 //((VueAventurier) o).getBtnAutreAction().setEnabled(false);
+                
+            }
+            
+            else if (((Message ) arg).getCommande() == Commandes.ANNULER) {
+                ArrayList<Integer> listeIdTuiles = new ArrayList<>();
+                for(Integer key : this.grille.getListeTuiles().keySet()){
+                    listeIdTuiles.add(key);
+                }
+                vuePlateau.setTuilesDefaut(listeIdTuiles);
+                vuePlateau.getListeVuesJoueurs().get(idJoueur).setVueJCourant();
                 
             }
         }

@@ -35,7 +35,6 @@ public class VueAventurier extends JPanel{
     private final String nomAventurier;
     private final Color couleur;
     private final Color couleurGrisee;
-    private final JPanel panelBoutonsPere;
     private final JPanel panelBoutons ;
     private final JPanel panelPosition ;
     private final JPanel panelCentre;
@@ -50,6 +49,7 @@ public class VueAventurier extends JPanel{
     private final JButton btnUtiliserCarte;
     private final JButton btnRecupTresor;
     private final JButton btnTerminerTour;
+    private final JButton btnAnnuler;
     private final JTextField position;
     //private final HashMap<Integer,VueCarte> cartesEnMain;
 
@@ -98,11 +98,10 @@ public class VueAventurier extends JPanel{
         }*/
 	// =================================================================================                                                                                            
         // SUD : les boutons  
-        this.panelBoutonsPere = new JPanel(new BorderLayout());
-        this.panelBoutons = new JPanel(new GridLayout(3,2));
+        
+        this.panelBoutons = new JPanel(new GridLayout(4,2));
         this.panelBoutons.setOpaque(false);
-	mainPanel.add(this.panelBoutonsPere, BorderLayout.SOUTH);
-        this.panelBoutonsPere.add(this.panelBoutons, BorderLayout.CENTER);
+	mainPanel.add(this.panelBoutons, BorderLayout.SOUTH);
 
         this.btnBouger = new JButton("Bouger") ;
         this.btnAssecher = new JButton( "Assecher");
@@ -112,7 +111,7 @@ public class VueAventurier extends JPanel{
         this.btnDonnerCarte = new JButton("Donner Carte") ;
         this.btnUtiliserCarte = new JButton("Utiliser Carte") ;
         this.btnRecupTresor = new JButton("Récupérer Trésor") ;
-        
+        this.btnAnnuler = new JButton("Annuler");
         
         this.panelBoutons.add(btnBouger);
         
@@ -126,8 +125,8 @@ public class VueAventurier extends JPanel{
         
         this.panelBoutons.add(btnRecupTresor); btnRecupTresor.setEnabled(false);
         
-        
-        this.panelBoutonsPere.add(btnTerminerTour, BorderLayout.SOUTH);
+        this.panelBoutons.add(btnAnnuler); btnAnnuler.setEnabled(false);
+        this.panelBoutons.add(btnTerminerTour);
         
         
         
@@ -140,41 +139,43 @@ public class VueAventurier extends JPanel{
         
 
     }
+    //AFFICHAGE SI NBACTIONSRESTANTES =0
     public void setVueFinTour(){
-            this.getBtnBouger().setEnabled(false);
-            this.getBtnAssecher().setEnabled(false);
- 
+            this.btnBouger.setEnabled(false);
+            this.btnAssecher.setEnabled(false);
             if("Pilote".equals(nomAventurier)){
                 this.getBtnAutreAction().setEnabled(false);
             }
     }
-    public void setVueJPrecedant(){
+    //AFFICHAGE POUR LES CHOIX DE TUILES/CARTES
+    public void setVueChoix(){
             this.setVueFinTour();
-            this.getBtnTerminerTour().setEnabled(false);
-            this.getBtnTerminerTour().setEnabled(false);
-            this.getPanelAventurier().setBackground(couleurGrisee);
-            this.getMainPanel().setBorder(BorderFactory.createLineBorder(couleurGrisee, 2)) ;
-            this.getPanelCentre().setBorder(new MatteBorder(0, 0, 2, 0, couleurGrisee));
+            this.btnTerminerTour.setEnabled(false);
     }
     
+    //DESACTIVATION DE LA VUE
+    public void setVueJPrecedant(){
+            this.setVueFinTour();
+            this.panelAventurier.setBackground(couleurGrisee);
+            this.mainPanel.setBorder(BorderFactory.createLineBorder(couleurGrisee, 2)) ;
+            this.panelCentre.setBorder(new MatteBorder(0, 0, 2, 0, couleurGrisee));
+    }
+    //ACTIVATION DE LA VUE
     public void setVueJCourant(){
-        this.getBtnBouger().setEnabled(true);
-            this.getBtnAssecher().setEnabled(true);
-            this.getBtnTerminerTour().setEnabled(true);
+            this.btnBouger.setEnabled(true);
+            this.btnAnnuler.setEnabled(false);
+            this.btnAssecher.setEnabled(true);
+            this.btnTerminerTour.setEnabled(true);
             if("Pilote".equals(nomAventurier)){
-                this.getBtnAutreAction().setEnabled(true);
+                this.btnAutreAction.setEnabled(true);
             }
-            this.getPanelAventurier().setBackground(couleur);
-            this.getMainPanel().setBorder(BorderFactory.createLineBorder(couleur, 2)) ;
-            this.getPanelCentre().setBorder(new MatteBorder(0, 0, 2, 0, couleur));
+            this.panelAventurier.setBackground(couleur);
+            this.mainPanel.setBorder(BorderFactory.createLineBorder(couleur, 2)) ;
+            this.panelCentre.setBorder(new MatteBorder(0, 0, 2, 0, couleur));
     }
 
     public JButton getBtnBouger() {
         return btnBouger;
-    }
-
-    public JPanel getPanelBoutonsPere() {
-        return panelBoutonsPere;
     }
 
     public JPanel getPanelBoutons() {
@@ -184,11 +185,7 @@ public class VueAventurier extends JPanel{
     public JPanel getPanelCentre() {
         return panelPosition;
     }
-/*
-    public JFrame getWindow() {
-        return window;
-    }
-*/
+
     public JPanel getPanelAventurier() {
         return panelAventurier;
     }
@@ -228,6 +225,10 @@ public class VueAventurier extends JPanel{
 
     public Integer getIdVueAventurier() {
         return idVueAventurier;
+    }
+
+    public JButton getBtnAnnuler() {
+        return btnAnnuler;
     }
  
 

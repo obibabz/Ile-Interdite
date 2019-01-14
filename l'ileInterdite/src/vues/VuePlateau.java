@@ -124,7 +124,14 @@ public class VuePlateau extends Observable {
                     clearChanged();
                 }
             });
-            
+            listeVuesJoueurs.get(key).getBtnAnnuler().addActionListener(new ActionListener(){
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    setChanged();
+                    notifyObservers(new Message(Commandes.ANNULER, key, null, null, null));
+                    clearChanged();
+                }
+            });
            
         }
         ArrayList<Integer> listeId = new ArrayList<>();
@@ -153,6 +160,7 @@ public class VuePlateau extends Observable {
             });
             this.vueGrille.getListeTuiles().get(idTuile).setCouleurCliquable(couleur, couleur2);
         }
+        this.listeVuesJoueurs.get(idJoueur).getBtnAnnuler().setEnabled(true);
     }
   
     public void setTuilesDeplacement(ArrayList<Integer> listeIdTuiles, Integer idJoueur, Color couleur, Color couleur2){
@@ -167,14 +175,17 @@ public class VuePlateau extends Observable {
             });
             this.vueGrille.getListeTuiles().get(idTuile).setCouleurCliquable(couleur, couleur2);
         }
+        this.listeVuesJoueurs.get(idJoueur).getBtnAnnuler().setEnabled(true);
     }
     //REMISE PAR DEFAUT DE L'AFFICHAGE DES TUILES APRES UN DEPLACEMENT OU UN ASSECHEMENT
     public void setTuilesDefaut(ArrayList<Integer> listeIdTuiles){
         for(Integer idTuile : listeIdTuiles){
             JButton btnTuile = this.vueGrille.getListeTuiles().get(idTuile).getBtnTuile();
- 
-            btnTuile.removeActionListener(btnTuile.getActionListeners()[0]);
-            this.vueGrille.getListeTuiles().get(idTuile).setCouleurDefaut();
+            if (!(btnTuile.getActionListeners().length == 0) ){
+                btnTuile.removeActionListener(btnTuile.getActionListeners()[0]);
+                this.vueGrille.getListeTuiles().get(idTuile).setCouleurDefaut();
+            }
+            
         }
     }
     public JFrame getWindow() {
