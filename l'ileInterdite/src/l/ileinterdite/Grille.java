@@ -18,8 +18,7 @@ import util.Utils.EtatTuile;
 public class Grille {
     private Tuile[][] grille = new Tuile[6][6];
     private LinkedHashMap<Integer, Tuile> listeTuiles;
-    private final ArrayList<Integer>  casesNonAccess=new ArrayList<>(Arrays.asList(0, 1, 4, 5));
-    private final ArrayList<Integer> casesAccess = new ArrayList<>(Arrays.asList(2, 3));
+    
 
     public Grille(LinkedHashMap<Integer, Tuile> listeTuiles) {
         this.listeTuiles = listeTuiles;
@@ -37,11 +36,10 @@ public class Grille {
                 
                 //System.out.println("i : "+i);
                 //System.out.println("j : "+j);
-                if(casesAccess.contains(i) || casesAccess.contains(j) || (i==1 && j==1) || (i==1 && j==4) || (i==4 && j==1) || (i==4 && j==4)){
+                if(verifCaseAccess(i,j)){
                     grille[i][j] = listeTuiles.get(listeIdTuiles.get(k));
                     k++;
-                   System.out.println("case assignée : " + grille[i][j].getId() + " = " + listeIdTuiles.get(k-1));
-                   System.out.println();
+                  
                 }
                 j++;
             }
@@ -71,15 +69,12 @@ public class Grille {
         //On cherche la tuile passée en parametre via son id
         for(int i = 0; i<6; i++){
             for(int j = 0; j<6; j++){
-                System.out.println("i="+i+", j="+j);
-                        System.out.println("id recherché : "+ idTuile);
-                if(!(casesNonAccess.contains(i) || casesNonAccess.contains(j)) || (i==1 && j==1) || (i==1 && j==4) || (i==4 && j==1) || (i==4 && j==4)){
+             
+                if(verifCaseAccess(i,j)){
                     if(grille[i][j].getId() == idTuile){
                         iTuile = i;
                         jTuile = j;
-                        System.out.println("i="+i+", j="+j);
-                        System.out.println("id actuel : "+grille[i][j].getId());
-                        System.out.println("id recherché : "+ idTuile);
+
                     }
                 }
             }
@@ -89,24 +84,24 @@ public class Grille {
         
         if (iTuile != 0 && grille[iTuile-1][jTuile]!= null){
             liste.add(getTuile(iTuile-1,jTuile).getId());
-            System.out.println("Tuile au dessus add");
+
         }
         if (iTuile != 5 && grille[iTuile+1][jTuile] != null){
             liste.add(getTuile(iTuile+1,jTuile).getId());
-            System.out.println("Tuile en dessous add");
+
         }
         if (jTuile != 0 && grille[iTuile][jTuile-1] != null){
             liste.add(getTuile(iTuile,jTuile-1).getId());
-            System.out.println("Tuile a gauche add");
+
         }
         if (jTuile != 5 && grille[iTuile][jTuile+1] != null){
             liste.add(getTuile(iTuile,jTuile+1).getId());
-            System.out.println("Tuile a droite add");
+
         }
         
         
         for(Integer i : liste){
-            System.out.println("case "+i);
+
         }
         
         return liste;
@@ -133,7 +128,7 @@ public class Grille {
         int jTuile =0;
         for(int i = 0; i<6; i++){
             for(int j = 0; j<6; j++){
-                if(casesAccess.contains(i) || casesAccess.contains(j)){
+                if(verifCaseAccess(i,j)){
                     //System.out.println("i : "+i);
                     //System.out.println("j : "+j);
                     if(grille[i][j].getId() == idTuile){
@@ -234,7 +229,14 @@ public class Grille {
         }
         return tuilesPasSeches;
     }
-/*    
+    public boolean verifCaseAccess(Integer i, Integer j){
+        boolean res = true;
+        if((i==0 && j==0)||(i==0&&j==1)||(i==0&&j==4)||(i==0&&j==5)||(i==1 && j==0)||(i==1&&j==5)||(i==4&&j==0)||(i==4&&j==5)||(i==5 && j==0)||(i==5&&j==1)||(i==5&&j==4)||(i==5&&j==5)){
+            res = false;
+        }
+        return res;
+    }
+/*   
     public HashMap<Tresor, Integer> getTresorInondee(){
         HashMap<Tresor, Integer> listeTresorInondee = new HashMap();
         for(int i=0; i<6; i++){

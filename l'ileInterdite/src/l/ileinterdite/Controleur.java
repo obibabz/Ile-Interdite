@@ -156,21 +156,19 @@ public class Controleur implements Observer{
             
             if (((Message) arg).getCommande() == Commandes.BOUGER) { 
                 ArrayList<Integer> listeIdTuiles = listeJoueurs.get(idJoueur).getTuilesAccessibles(grille);
-                
                 this.vuePlateau.setTuilesCliquables(listeIdTuiles, idJoueur, listeJoueurs.get(idJoueur).getPion().getCouleurSelectionAssechee(), listeJoueurs.get(idJoueur).getPion().getCouleurSelectionInondee());
                 
           
             }
-            else if (((Message) arg).getCommande() == Commandes.CHOISIR_TUILE_A){
+            else if (((Message) arg).getCommande() == Commandes.CHOISIR_TUILE_D){
                 int idTuile =((Message) arg).getIdTuile();
                 ArrayList<Integer> listeIdTuiles = listeJoueurs.get(idJoueur).getTuilesAccessibles(grille);
-                this.vuePlateau.setTuilesAssechement(listeIdTuiles, idJoueur, listeJoueurs.get(idJoueur).getPion().getCouleurSelectionAssechee(), listeJoueurs.get(idJoueur).getPion().getCouleurSelectionInondee());
-                
+                this.vuePlateau.setTuilesDefaut(listeIdTuiles);
                 gererDeplacement(idTuile, idJoueur);
                 //finTour(o, nbActionsRestantes);
                 
             }
-            else if (((Message) arg).getCommande() == Commandes.CHOISIR_TUILE_D){
+            else if (((Message) arg).getCommande() == Commandes.CHOISIR_TUILE_A){
                 int idTuile =((Message) arg).getIdTuile();
                 ArrayList<Integer> listeIdTuiles = listeJoueurs.get(idJoueur).getTuilesAssechables(grille);
                 this.vuePlateau.setTuilesDefaut(listeIdTuiles);
@@ -211,20 +209,24 @@ public class Controleur implements Observer{
         
         this.grille.getListeTuiles().get(idTuile).setEtatTuile(EtatTuile.ASSECHEE);
     }
+    
+    
     public void gererDeplacement(Integer idTuileArrivee, Integer idJoueur){
-        System.out.println("----------------------");
         LinkedHashMap<Integer, VueTuile> listeVuesTuiles = this.vuePlateau.getVueGrille().getListeTuiles();
         Integer idTuileDepart =JCourant.getPosition().getId();
         Color couleur = JCourant.getPion().getCouleur();
+        
+        this.grille.getListeTuiles().get(idTuileArrivee).arriveeJoueur(JCourant);
+        this.grille.getListeTuiles().get(idTuileDepart).departJoueur(JCourant);
+        this.JCourant.setPosition(this.grille.getListeTuiles().get(idTuileArrivee));
 
         listeVuesTuiles.get(idTuileDepart).getJoueursSurTuile().remove(couleur);
         listeVuesTuiles.get(idTuileDepart).setCasesJoueurs();
         
         listeVuesTuiles.get(idTuileArrivee).getJoueursSurTuile().add(couleur);
         listeVuesTuiles.get(idTuileArrivee).setCasesJoueurs();
-        this.grille.getListeTuiles().get(idTuileArrivee).arriveeJoueur(JCourant);
         
-        this.listeJoueurs.get(idJoueur).getPosition().departJoueur(JCourant);
+        
         
     }
     public void finTour(Observable o, int nbActionsRestantes){
