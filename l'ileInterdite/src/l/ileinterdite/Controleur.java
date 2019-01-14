@@ -247,7 +247,7 @@ public class Controleur implements Observer{
         c.equals(piocheTirage.get(1));
         piocheTirage.remove(1);
         defausseTirage.add(c);
-        if (c.getClass().getSimpleName() == "CarteInondation"){
+        if (c.getClass().getSimpleName() == "CarteMonteeDesEaux"){
             piocheCarteMonteeDesEaux();
         }else{
             if(JCourant.getCartesEnMain().size() < 5){
