@@ -21,6 +21,7 @@ import java.util.Scanner;
 import cartes.CarteTirage;
 import cartes.CarteInondation;
 import java.awt.Color;
+import java.util.LinkedHashMap;
 import java.util.Objects;
 import javax.swing.BorderFactory;
 import javax.swing.border.MatteBorder;
@@ -35,7 +36,7 @@ import util.Utils.EtatTuile;
         
 
 public class Controleur implements Observer{
-    private ArrayList <Aventurier> listeJoueurs;
+    private LinkedHashMap <Integer, Aventurier> listeJoueurs;
     private int nbActionsRestantes;
     private Aventurier JCourant;
     private Grille grille;
@@ -45,8 +46,8 @@ public class Controleur implements Observer{
     private int niveauInond;
     private ArrayList<CarteTirage> piocheTirage;
     private ArrayList<CarteTirage> defausseTirage;
-    private ArrayList<VueAventurier> vuesAventuriers;
-    private VueNiveau vueNiveau;
+    
+    
     private VuePlateau vuePlateau;
     
     
@@ -61,22 +62,6 @@ public class Controleur implements Observer{
             Collections.shuffle(arrayList);
         }*/
 
-    public void afficherTuiles(ArrayList<Tuile> listeTuiles){
-        for(Tuile t : listeTuiles) {
-            System.out.println(listeTuiles.indexOf(t)+ " : "+t.getNom());
-        }
-        
-    }
-    
-    public Tuile choixTuile(ArrayList<Tuile> listeTuiles){
-         
-         Scanner sc = new Scanner(System.in);
-    System.out.println("Veuillez rentrer le numéro de la tuile choisie");            
-    Integer numTuile = sc.nextInt();
-    return listeTuiles.get(numTuile);
-    
-    }
-    
     
     /**case7.getEtat() == EtatCase.O
      * Permet de poser une question à laquelle l'utilisateur répond par oui ou non
@@ -100,45 +85,8 @@ public class Controleur implements Observer{
  
     
     //methode de déplacement et decrementation de nbActionRestante
-    
-    public void gererDeplacement(){
-        ArrayList <Tuile>  tuilesAccess = JCourant.getTuilesAccessibles(grille);
-        afficherTuiles(tuilesAccess);
-        if(tuilesAccess.isEmpty()){
-            System.out.println("Il n'y a pas de tuile asséchable disponible");
-            nbActionsRestantes+=1;
-        }
-        Tuile tuile = choixTuile(tuilesAccess);
-        JCourant.getPosition().departJoueur(JCourant);
-        JCourant.setPosition(tuile);
-        System.out.println("Vous vous êtes déplacé sur la tuile : " +tuile.getNom());
-        nbActionsRestantes+=-1;
-    }
-    
-    public void gererAssechement(){
-        ArrayList <Tuile> tuilesAssech = JCourant.getTuilesAssechables(grille);
-        if(tuilesAssech.isEmpty()){
-            System.out.println("Il n'y a pas de tuile asséchable disponible");
-        }else{
-            afficherTuiles(tuilesAssech);
-            Tuile tuile = choixTuile(tuilesAssech);
-            tuile.setEtatTuile(EtatTuile.ASSECHEE);
-            System.out.println("Vous avez asséché la tuile : " +tuile.getNom());
-            nbActionsRestantes+=-1;
-        }
-        
-    }
-    
-    public void gererPouvoir(){
-        ArrayList <Tuile> tuilesAccess = JCourant.getTuileAccessiblesPouvoir(grille);
-        afficherTuiles(tuilesAccess);
-        Tuile tuile = choixTuile(tuilesAccess);
-        JCourant.getPosition().departJoueur(JCourant);
-        JCourant.setPosition(tuile);
-        System.out.println("Vous vous êtes déplacé sur la tuile : " +tuile.getNom());
-        nbActionsRestantes+=-1;
-    }
 
+ 
     /**
      * @return the nbActionsRestantes
      */
@@ -166,13 +114,7 @@ public class Controleur implements Observer{
     
     }
 
-    public void setVuesAventuriers(ArrayList<VueAventurier> vuesAventuriers) {
-        this.vuesAventuriers = vuesAventuriers;
-    }
-
-    public void setVueNiveau(VueNiveau vueNiveau) {
-        this.vueNiveau = vueNiveau;
-    }
+   
 
     public void setVuePlateau(VuePlateau vuePlateau) {
         this.vuePlateau = vuePlateau;
@@ -183,15 +125,19 @@ public class Controleur implements Observer{
         this.JCourant = JCourant;
     }
 
-    public void setListeJoueurs(ArrayList<Aventurier> listeJoueurs) {
+    public void setListeJoueurs(LinkedHashMap<Integer, Aventurier> listeJoueurs) {
         this.listeJoueurs = listeJoueurs;
     }
     
-    public void joueurSuivant(ArrayList <Aventurier> listeJoueurs){
-        if(listeJoueurs.indexOf(JCourant) < listeJoueurs.size()-1 ){
-            setJCourant(listeJoueurs.get(listeJoueurs.indexOf(JCourant)+1 ));
+    public void joueurSuivant(){
+        ArrayList<Integer> listeId = new ArrayList<>();
+        for(Integer key : this.listeJoueurs.keySet()){
+            listeId.add(key);
         }
-        else{setJCourant(listeJoueurs.get(0));}
+        if(listeId.indexOf(JCourant.getId()) < listeId.size()-1 ){
+            setJCourant(listeJoueurs.get(listeId.indexOf(JCourant.getId())+1 ));
+        }
+        else{setJCourant(listeJoueurs.get(listeId.get(0)));}
     }
      
     public void setGrille(Grille grille) {
@@ -202,24 +148,28 @@ public class Controleur implements Observer{
     public void update(Observable o, Object arg) {
         if (arg instanceof Message) {
             System.out.println("00");
-            int id =((Message) arg).getIdAventurier();
+            int idJoueur =((Message) arg).getIdAventurier();
+            
+            
             if (((Message) arg).getCommande() == Commandes.BOUGER) { 
+                ArrayList<Integer> listeIdTuiles = listeJoueurs.get(idJoueur).getTuilesAccessibles(grille);
+                this.vuePlateau.setTuilesDeplacement(listeIdTuiles, idJoueur, listeJoueurs.get(idJoueur).getPion().getCouleurSelectionAssechee(), listeJoueurs.get(idJoueur).getPion().getCouleurSelectionInondee());
                 
-                gererDeplacement();
-                ((VuePlateau) o).getVueJoueur(id).getPosition().setText(JCourant.getPosition().getNom());
-                System.out.println(nbActionsRestantes);
-                finTour(o, nbActionsRestantes);
-
+          
             }
-        
+            else if (((Message) arg).getCommande() == Commandes.CHOISIR_TUILE){
+                int idTuile =((Message) arg).getIdTuile();
+                ArrayList<Integer> listeIdTuiles = listeJoueurs.get(idJoueur).getTuilesAccessibles(grille);
+                this.vuePlateau.setTuilesDefaut(listeIdTuiles);
+                gererDeplacement(idTuile, idJoueur);
+            }
             else if (((Message) arg).getCommande() == Commandes.ASSECHER) {
                
-                    gererAssechement();
                     
                     //Gestion ingenieur (on relance gerer assechement, puis on incrémente nb action restantes)
                     
                     if(JCourant.getPion().toString()=="Rouge"){                 
-                        gererAssechement();
+                        
                         nbActionsRestantes+=1;
                     }
                     System.out.println(nbActionsRestantes);
@@ -229,24 +179,33 @@ public class Controleur implements Observer{
             else if (((Message ) arg).getCommande() == Commandes.TERMINER) {
                 System.out.println("0");
                 nbActionsRestantes = 3;
-                ((VuePlateau) o).getVueJoueur(id).setVueJPrecedant();
-                joueurSuivant(listeJoueurs);
+                ((VuePlateau) o).getListeVuesJoueurs().get((idJoueur)).setVueJPrecedant();
+                joueurSuivant();
                 System.out.println("1");
-                getVueJoueur(JCourant.getId()).setVueJCourant();
+                vuePlateau.getListeVuesJoueurs().get(JCourant.getId()).setVueJCourant();
                 System.out.println("2");
                 
                 
                 
             }
             else if (((Message ) arg).getCommande() == Commandes.POUVOIR) {
-                gererPouvoir();
+                
                 //((VueAventurier) o).getPosition().setText(JCourant.getPosition().getNom());
                 //((VueAventurier) o).getBtnAutreAction().setEnabled(false);
                 
             }
         }
     }
-
+    public void gererDeplacement(Integer idTuile, Integer idJoueur){
+        this.grille.getListeTuiles().get(idTuile).arriveeJoueur(JCourant);
+        
+        this.vuePlateau.getVueGrille().getListeTuiles().get(idTuile).getJoueursSurTuile().add(this.listeJoueurs.get(idJoueur).getPion().getCouleur());
+        this.vuePlateau.getVueGrille().getListeTuiles().get(idTuile).setCasesJoueurs();
+        this.vuePlateau.getVueGrille().getListeTuiles().get(JCourant.getPosition().getId()).getJoueursSurTuile().remove(JCourant.getPion().getCouleur());
+        this.vuePlateau.getVueGrille().getListeTuiles().get(JCourant.getPosition().getId()).setCasesJoueurs();
+        this.listeJoueurs.get(idJoueur).getPosition().departJoueur(JCourant);
+        
+    }
     public void finTour(Observable o, int nbActionsRestantes){
         tirageCarte();
         tirageInondation();
@@ -359,8 +318,8 @@ public class Controleur implements Observer{
         boolean retour = false;
         if(ifToutLesJoueursSurHeliport()){
             if(ifToutLesTrésors()){
-                for(Aventurier a : listeJoueurs){
-                    if(ifCarteHelico(a)){
+                for(Integer key : listeJoueurs.keySet()){
+                    if(ifCarteHelico(listeJoueurs.get(key))){
                         retour = true;
                     }
                 }
@@ -398,14 +357,7 @@ public class Controleur implements Observer{
     
     
     
-    public VueAventurier getVueJoueur(Integer id){
-        for(VueAventurier va : this.vuesAventuriers){
-            if(Objects.equals(va.getIdVueAventurier(), id)){
-                return va;
-            }
-        }
-        return this.vuesAventuriers.get(0);
-    }
+    
     
     /*IF DEFAITE A FAIRE
     

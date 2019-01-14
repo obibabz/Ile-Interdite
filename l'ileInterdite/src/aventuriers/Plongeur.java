@@ -22,23 +22,23 @@ public class Plongeur extends Aventurier{
     }
     
     @Override
-   public ArrayList<Tuile> getTuilesAccessibles(Grille g){
+   public ArrayList<Integer> getTuilesAccessibles(Grille g){
        int i = 0;
        
-       ArrayList <Tuile> tuilesAdj = g.getTuileAdj(super.getPosition());
-       ArrayList <Tuile> tuilesAccess = g.getTuilesNonCoulees(tuilesAdj);
-       ArrayList <Tuile> tuilesAdjPS = g.getTuilesPasSeches(tuilesAdj);
+       ArrayList <Integer> tuilesAdj = g.getTuileAdj(super.getPosition().getId());
+       ArrayList <Integer> tuilesAccess = g.getTuilesNonCoulees(tuilesAdj);
+       ArrayList <Integer> tuilesAdjPS = g.getTuilesPasSeches(tuilesAdj);
        
        while(i < tuilesAdjPS.size()){
-           ArrayList <Tuile> tAdj = g.getTuileAdj(tuilesAdjPS.get(i));
-           ArrayList <Tuile> tAdjPC = g.getTuilesNonCoulees(tAdj);
-           for(Tuile t2 : tAdjPC){
-               if(tuilesAccess.contains(t2) == false && t2 != super.getPosition()){
+           ArrayList <Integer> tAdj = g.getTuileAdj(tuilesAdjPS.get(i));
+           ArrayList <Integer> tAdjPC = g.getTuilesNonCoulees(tAdj);
+           for(Integer t2 : tAdjPC){
+               if(tuilesAccess.contains(t2) == false && t2 != super.getPosition().getId()){
                    tuilesAccess.add(t2);
                }
            }
-           ArrayList <Tuile> tAdjPS = g.getTuilesPasSeches(tAdj);
-           for(Tuile t3 : tAdjPS){
+           ArrayList <Integer> tAdjPS = g.getTuilesPasSeches(tAdj);
+           for(Integer t3 : tAdjPS){
                if(tuilesAdjPS.contains(t3) == false){
                    tuilesAdjPS.add(t3);
                }

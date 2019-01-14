@@ -56,21 +56,21 @@ public abstract class Aventurier extends ObjetIdentifie{
         this.position = position;
     }
     
-    public ArrayList<Tuile> getTuilesAccessibles(Grille g){
-        ArrayList<Tuile> tuilesAdj = g.getTuileAdj(position);
-        ArrayList<Tuile> tuilesAccess = g.getTuilesNonCoulees(tuilesAdj);
+    public ArrayList<Integer> getTuilesAccessibles(Grille g){
+        ArrayList<Integer> tuilesAdj = g.getTuileAdj(position.getId());
+        ArrayList<Integer> tuilesAccess = g.getTuilesNonCoulees(tuilesAdj);
         return tuilesAccess;
     }
     
-    public ArrayList<Tuile> getTuilesAssechables(Grille g) {
-        ArrayList<Tuile> tuilesAdj = g.getTuileAdj(position);
-        ArrayList<Tuile> tuilesAssech = g.getTuilesInondees(tuilesAdj);
-        if(position.getEtatTuile() == EtatTuile.INONDEE) {tuilesAssech.add(position);}
+    public ArrayList<Integer> getTuilesAssechables(Grille g) {
+        ArrayList<Integer> tuilesAdj = g.getTuileAdj(position.getId());
+        ArrayList<Integer> tuilesAssech = g.getTuilesInondees(tuilesAdj);
+        if(position.getEtatTuile() == EtatTuile.INONDEE) {tuilesAssech.add(position.getId());}
         return tuilesAssech;
     }
     
-    public ArrayList<Tuile> getTuileAccessiblesPouvoir(Grille g){
-    ArrayList <Tuile> tuiles = new ArrayList<>();
+    public ArrayList<Integer> getTuileAccessiblesPouvoir(Grille g){
+    ArrayList <Integer> tuiles = new ArrayList<>();
     return tuiles;
     }
     

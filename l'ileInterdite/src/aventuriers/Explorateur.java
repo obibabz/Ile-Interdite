@@ -21,16 +21,16 @@ public class Explorateur extends Aventurier{
         super(nomJoueur, position, pion);
     }
     
-    public ArrayList <Tuile> getTuilesAssechables(Grille g){
+    public ArrayList <Integer> getTuilesAssechables(Grille g){
         
-        ArrayList <Tuile> tuilesAdj = g.getTuileAdj(super.getPosition());
-        tuilesAdj.addAll(g.getTuileDiag(super.getPosition()));
+        ArrayList <Integer> tuilesAdj = g.getTuileAdj(super.getPosition().getId());
+        tuilesAdj.addAll(g.getTuileDiag(super.getPosition().getId()));
         return g.getTuilesInondees(tuilesAdj);
     }
     
-    public ArrayList <Tuile> getTuilesAccessibles(Grille g){
-        ArrayList <Tuile> tuilesAdj = g.getTuileAdj(super.getPosition());
-        tuilesAdj.addAll(g.getTuileDiag(super.getPosition()));
+    public ArrayList <Integer> getTuilesAccessibles(Grille g){
+        ArrayList <Integer> tuilesAdj = g.getTuileAdj(super.getPosition().getId());
+        tuilesAdj.addAll(g.getTuileDiag(super.getPosition().getId()));
         return g.getTuilesNonCoulees(tuilesAdj);
         
     }

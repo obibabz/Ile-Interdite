@@ -8,6 +8,7 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.Objects;
 import java.util.Observable;
 import javax.swing.JButton;
@@ -27,7 +28,7 @@ public class VuePlateau extends Observable {
     private final JFrame window;
     private final VueGrille vueGrille;
     private JLabel titre;
-    private final ArrayList<VueAventurier> listeVuesJoueurs;
+    private final LinkedHashMap<Integer, VueAventurier> listeVuesJoueurs;
     private final JPanel panelGauche;
     private final JPanel panelDroite;
     
@@ -37,7 +38,7 @@ public class VuePlateau extends Observable {
     //private JPanel panelDroite;
     
 
-    public VuePlateau(VueGrille vueGrille, ArrayList<VueAventurier> listeVuesJoueurs) {
+    public VuePlateau(VueGrille vueGrille, LinkedHashMap<Integer, VueAventurier> listeVuesJoueurs) {
         window = new JFrame();
         window.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
         window.setTitle("L'ile Interdite");
@@ -72,92 +73,116 @@ public class VuePlateau extends Observable {
         
         
         // ACTION LISTENER BOUTONS AVENTURIERS
-        int j = 0;
         
-        while(j<= listeVuesJoueurs.size()-1){
-            int idJoueur = listeVuesJoueurs.get(j).getIdVueAventurier();
+        
+        for(Integer key : listeVuesJoueurs.keySet()){
             
-            listeVuesJoueurs.get(j).getBtnAssecher().addActionListener(new ActionListener() {
+            
+            listeVuesJoueurs.get(key).getBtnAssecher().addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     setChanged();
-                    notifyObservers(new Message(Commandes.ASSECHER, idJoueur, null, null, null));
+                    notifyObservers(new Message(Commandes.ASSECHER, key, null, null, null));
                     clearChanged();
                 }
             });
-            listeVuesJoueurs.get(j).getBtnBouger().addActionListener(new ActionListener() {
+            listeVuesJoueurs.get(key).getBtnBouger().addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     setChanged();
-                    notifyObservers(new Message(Commandes.BOUGER, idJoueur, null, null, null));
+                    notifyObservers(new Message(Commandes.BOUGER, key, null, null, null));
                     clearChanged();
                 }
             });
-            listeVuesJoueurs.get(j).getBtnAutreAction().addActionListener(new ActionListener() {
+            listeVuesJoueurs.get(key).getBtnAutreAction().addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     setChanged();
-                    notifyObservers(new Message(Commandes.POUVOIR, idJoueur, null, null, null));
+                    notifyObservers(new Message(Commandes.POUVOIR, key, null, null, null));
                     clearChanged();
                 }
             });
-            listeVuesJoueurs.get(j).getBtnDonnerCarte().addActionListener(new ActionListener(){
+            listeVuesJoueurs.get(key).getBtnDonnerCarte().addActionListener(new ActionListener(){
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     setChanged();
-                    notifyObservers(new Message(Commandes.DONNER, idJoueur, null, null, null));
+                    notifyObservers(new Message(Commandes.DONNER, key, null, null, null));
                     clearChanged();
                 }
             });
-            listeVuesJoueurs.get(j).getBtnUtiliserCarte().addActionListener(new ActionListener(){
+            listeVuesJoueurs.get(key).getBtnUtiliserCarte().addActionListener(new ActionListener(){
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     setChanged();
-                    notifyObservers(new Message(Commandes.CHOISIR_CARTE, idJoueur, null, null, null));
+                    notifyObservers(new Message(Commandes.CHOISIR_CARTE, key, null, null, null));
                     clearChanged();
                 }
             });
-            listeVuesJoueurs.get(j).getBtnTerminerTour().addActionListener(new ActionListener() {
+            listeVuesJoueurs.get(key).getBtnTerminerTour().addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     setChanged();
-                    notifyObservers(new Message(Commandes.TERMINER, idJoueur, null, null, null));
+                    notifyObservers(new Message(Commandes.TERMINER, key, null, null, null));
                     clearChanged();
                 }
             });
-            listeVuesJoueurs.get(j).getBtnRecupTresor().addActionListener(new ActionListener(){
+            listeVuesJoueurs.get(key).getBtnRecupTresor().addActionListener(new ActionListener(){
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     setChanged();
-                    notifyObservers(new Message(Commandes.RECUPERER_TRESOR, idJoueur, null, null, null));
+                    notifyObservers(new Message(Commandes.RECUPERER_TRESOR, key, null, null, null));
                     clearChanged();
                 }
             });
             
-            j++;
+           
         }
-        
+        ArrayList<Integer> listeId = new ArrayList<>();
+        for(Integer key : listeVuesJoueurs.keySet()){
+            listeId.add(key);
+        }
         //PANNEAUX AVENTURIERS DE GAUCHE
         panelGauche = new JPanel(new GridLayout(2,1));
         panelPrincipal.add(panelGauche, BorderLayout.WEST);
         if(listeVuesJoueurs.size()>=1){
-            panelGauche.add(listeVuesJoueurs.get(0));
+            panelGauche.add(listeVuesJoueurs.get(listeId.get(0)));
         }
         if(listeVuesJoueurs.size()>=2){
-            panelGauche.add(listeVuesJoueurs.get(1));
+            panelGauche.add(listeVuesJoueurs.get(listeId.get(1)));
         }
         
         //PANNEAUX AVENTURIERS DE DROITE
         panelDroite = new JPanel(new GridLayout(2,1));
         panelPrincipal.add(panelDroite, BorderLayout.EAST);
         if(listeVuesJoueurs.size()>=1){
-            panelDroite.add(listeVuesJoueurs.get(2));
+            panelDroite.add(listeVuesJoueurs.get(listeId.get(2)));
         }
         if(listeVuesJoueurs.size()>=2){
-            panelDroite.add(listeVuesJoueurs.get(3));
+            panelDroite.add(listeVuesJoueurs.get(listeId.get(3)));
         }
     }
-
+    
+    public void setTuilesDeplacement(ArrayList<Integer> listeIdTuiles, Integer idJoueur, Color couleur, Color couleur2){
+        for(Integer idTuile : listeIdTuiles){
+            this.vueGrille.getListeTuiles().get(idTuile).getBtnTuile().addActionListener(new ActionListener(){
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    setChanged();
+                    notifyObservers(new Message(Commandes.CHOISIR_TUILE, idJoueur, null, null, idTuile));
+                    clearChanged();
+                }
+            });
+            this.vueGrille.getListeTuiles().get(idTuile).setCouleurCliquable(couleur, couleur2);
+        }
+    }
+    public void setTuilesDefaut(ArrayList<Integer> listeIdTuiles){
+        for(Integer idTuile : listeIdTuiles){
+            JButton btnTuile = this.vueGrille.getListeTuiles().get(idTuile).getBtnTuile();
+ 
+            btnTuile.removeActionListener(btnTuile.getActionListeners()[0]);
+            this.vueGrille.getListeTuiles().get(idTuile).setCouleurDefaut();
+        }
+    }
     public JFrame getWindow() {
         return window;
     }
@@ -170,7 +195,7 @@ public class VuePlateau extends Observable {
         return titre;
     }
 
-    public ArrayList<VueAventurier> getListeVuesJoueurs() {
+    public LinkedHashMap<Integer, VueAventurier> getListeVuesJoueurs() {
         return listeVuesJoueurs;
     }
 
@@ -185,14 +210,7 @@ public class VuePlateau extends Observable {
     public JPanel getPanelPrincipal() {
         return panelPrincipal;
     }
-    public VueAventurier getVueJoueur(Integer id){
-        for(VueAventurier va : this.listeVuesJoueurs){
-            if(Objects.equals(va.getIdVueAventurier(), id)){
-                return va;
-            }
-        }
-        return this.listeVuesJoueurs.get(0);
-    }
+    
     
     public void afficher() {
         this.window.setVisible(true);

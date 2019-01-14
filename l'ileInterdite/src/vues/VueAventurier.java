@@ -53,7 +53,7 @@ public class VueAventurier extends JPanel{
     private final JTextField position;
     //private final HashMap<Integer,VueCarte> cartesEnMain;
 
-    public VueAventurier(int id, int numJCourant, int numJoueur, String nomJoueur, String nomAventurier, Color couleur, Color couleurGrisee, String pos/*, HashMap<Integer, VueCarte> cartesEnMain*/){
+    public VueAventurier(int id, String nomJoueur, String nomAventurier, Color couleur, Color couleurGrisee, String pos/*, HashMap<Integer, VueCarte> cartesEnMain*/){
 
         //this.window = new JFrame();
         //window.setSize(350, 200);
@@ -130,14 +130,14 @@ public class VueAventurier extends JPanel{
         this.panelBoutonsPere.add(btnTerminerTour, BorderLayout.SOUTH);
         
         
-        if(numJCourant != numJoueur){
+        
             this.btnBouger.setEnabled(false);
             this.btnAssecher.setEnabled(false);
             panelAventurier.setBackground(couleurGrisee);
             mainPanel.setBorder(BorderFactory.createLineBorder(couleurGrisee, 2)) ;
             this.panelPosition.setBorder(new MatteBorder(0, 0, 2, 0, couleurGrisee));
             this.btnTerminerTour.setEnabled(false);
-        }
+        
 
     }
     public void setVueJPrecedant(){

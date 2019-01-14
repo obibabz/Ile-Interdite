@@ -76,71 +76,34 @@ public class LIleInterdite {
         Tuile TGu = new Tuile("La Tour du Guet", EtatTuile.ASSECHEE);
         Tuile JMu = new Tuile("Le Jardin des Murmures", EtatTuile.INONDEE); JMu.setTresor(Tresor.ZEPHYR);
         
-        ArrayList<Tuile> listeTuiles = new ArrayList<>();
-        listeTuiles.add(PAb);
-        listeTuiles.add(PBr);
-        listeTuiles.add(COm);
-        listeTuiles.add(PFe);
-        listeTuiles.add(POr);
-        listeTuiles.add(FOu);
-        listeTuiles.add(PCo);
-        listeTuiles.add(PAr);
-        listeTuiles.add(DIl);
-        listeTuiles.add(H);
-        listeTuiles.add(PCu);
-        listeTuiles.add(JHu);
-        listeTuiles.add(FPo);
-        listeTuiles.add(LPe);
-        listeTuiles.add(MBr);
-        listeTuiles.add(O);
-        listeTuiles.add(RFa);
-        listeTuiles.add(CBr);
-        listeTuiles.add(TSo);
-        listeTuiles.add(TLu);
-        listeTuiles.add(PMa);
-        listeTuiles.add(VCr);
-        listeTuiles.add(TGu);
-        listeTuiles.add(JMu);
-        Tuile[][] grille = new Tuile[6][6];
-
-        grille[0][0] = V1;
-        grille[0][1] = V2;
-        grille[0][2] = PAb;
-        grille[0][3] = PBr;
-        grille[0][4] = V3;
-        grille[0][5] = V4;
-        grille[1][0] = V5;
-        grille[1][1] = COm;
-        grille[1][2] = PFe;
-        grille[1][3] = POr;
-        grille[1][4] = FOu;
-        grille[1][5] = V6;
-        grille[2][0] = PCo;
-        grille[2][1] = PAr;
-        grille[2][2] = DIl;
-        grille[2][3] = H;
-        grille[2][4] = PCu;
-        grille[2][5] = JHu;
-        grille[3][0] = FPo;
-        grille[3][1] = LPe;
-        grille[3][2] = MBr;
-        grille[3][3] = O;
-        grille[3][4] = RFa;
-        grille[3][5] = CBr;
-        grille[4][0] = V7;
-        grille[4][1] = TSo;
-        grille[4][2] = TLu;
-        grille[4][3] = PMa;
-        grille[4][4] = VCr;
-        grille[4][5] = V8;
-        grille[5][0] = V9;
-        grille[5][1] = V10;
-        grille[5][2] = TGu;
-        grille[5][3] = JMu;
-        grille[5][4] = V11;
-        grille[5][5] = V12;
+        LinkedHashMap<Integer, Tuile> listeTuiles = new LinkedHashMap<>();
+        listeTuiles.put(PAb.getId(), PAb);
+        listeTuiles.put(PBr.getId(), PBr);
+        listeTuiles.put(COm.getId(), COm);
+        listeTuiles.put(PFe.getId(), PFe);
+        listeTuiles.put(POr.getId(), POr);
+        listeTuiles.put(FOu.getId(), FOu);
+        listeTuiles.put(PCo.getId(), PCo);
+        listeTuiles.put(PAr.getId(), PAr);
+        listeTuiles.put(DIl.getId(), DIl);
+        listeTuiles.put(H.getId(), H);
+        listeTuiles.put(PCu.getId(), PCu);
+        listeTuiles.put(JHu.getId(), JHu);
+        listeTuiles.put(FPo.getId(), FPo);
+        listeTuiles.put(LPe.getId(), LPe);
+        listeTuiles.put(MBr.getId(), MBr);
+        listeTuiles.put(O.getId(), O);
+        listeTuiles.put(RFa.getId(), RFa);
+        listeTuiles.put(CBr.getId(), CBr);
+        listeTuiles.put(TSo.getId(), TSo);
+        listeTuiles.put(TLu.getId(), TLu);
+        listeTuiles.put(PMa.getId(), PMa);
+        listeTuiles.put(VCr.getId(), VCr);
+        listeTuiles.put(TGu.getId(), TGu);
+        listeTuiles.put(JMu.getId(), JMu);
         
-        Grille grid = new Grille(grille);
+        
+        Grille grid = new Grille(listeTuiles);
         
         Pion rouge = Pion.ROUGE;
         Pion bleu = Pion.BLEU;
@@ -150,11 +113,11 @@ public class LIleInterdite {
         Pion violet = Pion.VIOLET;
         
         
-        ArrayList<Aventurier> joueursSurGrille = new ArrayList<Aventurier>();
-        Aventurier joueur1 = new Ingenieur("joueur1", PBr, rouge); joueursSurGrille.add(joueur1);PBr.arriveeJoueur(joueur1);
-        Aventurier joueur2 = new Explorateur("joueur2", PCu, vert); joueursSurGrille.add(joueur2);PCu.arriveeJoueur(joueur2);
-        Aventurier joueur3 = new Plongeur("joueur3", PFe, violet); joueursSurGrille.add(joueur3);PFe.arriveeJoueur(joueur3);
-        Aventurier joueur4 = new Pilote("joueur4", H, bleu); joueursSurGrille.add(joueur4);H.arriveeJoueur(joueur4);
+        LinkedHashMap<Integer, Aventurier> joueursSurGrille = new LinkedHashMap();
+        Aventurier joueur1 = new Ingenieur("joueur1", PBr, rouge); joueursSurGrille.put(joueur1.getId(), joueur1);PBr.arriveeJoueur(joueur1);
+        Aventurier joueur2 = new Explorateur("joueur2", PCu, vert); joueursSurGrille.put(joueur2.getId(), joueur2);PCu.arriveeJoueur(joueur2);
+        Aventurier joueur3 = new Plongeur("joueur3", PFe, violet); joueursSurGrille.put(joueur3.getId(), joueur3);PFe.arriveeJoueur(joueur3);
+        Aventurier joueur4 = new Pilote("joueur4", H, bleu); joueursSurGrille.put(joueur4.getId(), joueur4);H.arriveeJoueur(joueur4);
         //Aventurier joueur5 = new Navigateur("joueur5", POr, jaune); joueursSurGrille.add(joueur5);
         //Aventurier joueur6 = new Messager("joueur6", PAr, orange); joueursSurGrille.add(joueur6);
         
@@ -165,16 +128,16 @@ public class LIleInterdite {
             }
         }
         */
-        VueAventurier vue1 = new VueAventurier(joueur1.getId(), 0, joueursSurGrille.indexOf(joueur1), joueur1.getNomJoueur(), joueur1.getClass().getSimpleName(), joueur1.getPion().getCouleur(), joueur1.getPion().getCouleurGrisee(), joueur1.getPosition().getNom());
-        VueAventurier vue2 = new VueAventurier(joueur2.getId(), 0, joueursSurGrille.indexOf(joueur2), joueur2.getNomJoueur(), joueur2.getClass().getSimpleName(), joueur2.getPion().getCouleur(), joueur2.getPion().getCouleurGrisee(), joueur2.getPosition().getNom());
-        VueAventurier vue3 = new VueAventurier(joueur3.getId(), 0, joueursSurGrille.indexOf(joueur3), joueur3.getNomJoueur(), joueur3.getClass().getSimpleName(), joueur3.getPion().getCouleur(), joueur3.getPion().getCouleurGrisee(), joueur3.getPosition().getNom());
-        VueAventurier vue4 = new VueAventurier(joueur4.getId(), 0, joueursSurGrille.indexOf(joueur4), joueur4.getNomJoueur(), joueur4.getClass().getSimpleName(), joueur4.getPion().getCouleur(), joueur4.getPion().getCouleurGrisee(), joueur4.getPosition().getNom());
+        VueAventurier vue1 = new VueAventurier(joueur1.getId(),  joueur1.getNomJoueur(), joueur1.getClass().getSimpleName(), joueur1.getPion().getCouleur(), joueur1.getPion().getCouleurGrisee(), joueur1.getPosition().getNom()); vue1.setVueJCourant();
+        VueAventurier vue2 = new VueAventurier(joueur2.getId(),  joueur2.getNomJoueur(), joueur2.getClass().getSimpleName(), joueur2.getPion().getCouleur(), joueur2.getPion().getCouleurGrisee(), joueur2.getPosition().getNom());
+        VueAventurier vue3 = new VueAventurier(joueur3.getId(),  joueur3.getNomJoueur(), joueur3.getClass().getSimpleName(), joueur3.getPion().getCouleur(), joueur3.getPion().getCouleurGrisee(), joueur3.getPosition().getNom());
+        VueAventurier vue4 = new VueAventurier(joueur4.getId(),  joueur4.getNomJoueur(), joueur4.getClass().getSimpleName(), joueur4.getPion().getCouleur(), joueur4.getPion().getCouleurGrisee(), joueur4.getPosition().getNom());
      
-        ArrayList<VueAventurier> vuesAventurier = new ArrayList<>();
-        vuesAventurier.add(vue1);
-        vuesAventurier.add(vue2);
-        vuesAventurier.add(vue3);
-        vuesAventurier.add(vue4);
+        LinkedHashMap<Integer, VueAventurier> vuesAventurier = new LinkedHashMap<>();
+        vuesAventurier.put(joueur1.getId(), vue1);
+        vuesAventurier.put(joueur2.getId(), vue2);
+        vuesAventurier.put(joueur3.getId(), vue3);
+        vuesAventurier.put(joueur4.getId(), vue4);
         
         Controleur controleur = new Controleur();
 
@@ -182,14 +145,14 @@ public class LIleInterdite {
         controleur.setListeJoueurs(joueursSurGrille);
         controleur.setJCourant(joueur1);
         controleur.setNbActionsRestantes(3);
-        controleur.setVuesAventuriers(vuesAventurier);
+        
      
         // INNITIALISATION PLATEAU
         
         LinkedHashMap<Integer, VueTuile> vuesTuiles= new LinkedHashMap<>();
-        for(Tuile t : listeTuiles){
+        for(Integer key : listeTuiles.keySet()){
             
-            VueTuile vT = controleur.initVueTuile(t);
+            VueTuile vT = controleur.initVueTuile(listeTuiles.get(key));
                        
 
             vuesTuiles.put(vT.getIdVueTuile(), vT);

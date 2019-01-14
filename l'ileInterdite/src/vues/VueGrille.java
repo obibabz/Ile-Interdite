@@ -50,8 +50,8 @@ public class VueGrille extends JPanel{
         ArrayList<Integer> listeid = new ArrayList<>();
         for(Integer key : listeTuiles.keySet()){
             listeid.add(key);
-            //System.out.println(key);
-            System.out.println(listeTuiles.get(key).getBtnTuile().getText());
+            
+            
             }
         while(i <= 35 ){
                 if(liste.contains(i)){

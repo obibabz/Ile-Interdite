@@ -6,7 +6,8 @@
 package l.ileinterdite;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Arrays;
+import java.util.LinkedHashMap;
 import util.Utils.Tresor;
 import util.Utils.EtatTuile;
 
@@ -16,9 +17,30 @@ import util.Utils.EtatTuile;
  */
 public class Grille {
     private Tuile[][] grille = new Tuile[6][6];
+    private LinkedHashMap<Integer, Tuile> listeTuiles;
+    private final ArrayList<Integer>  casesNonAccess=new ArrayList<>(Arrays.asList(0, 1, 4, 5));
+    private final ArrayList<Integer> casesAccess = new ArrayList<>(Arrays.asList(2, 3));
 
-    public Grille(Tuile[][] grille) {
-        this.grille = grille;
+    public Grille(LinkedHashMap<Integer, Tuile> listeTuiles) {
+        this.listeTuiles = listeTuiles;
+        ArrayList<Integer> listeIdTuiles = new ArrayList<>();
+        for(Integer key : listeTuiles.keySet()){
+            listeIdTuiles.add(key);
+        }
+        int i =0;
+        int j =0;
+        int k =0;
+
+        while(i<=5){
+            while (j<=5){
+                if(!(casesNonAccess.contains(i) && casesNonAccess.contains(j))){
+                    grille[i][j] = listeTuiles.get(listeIdTuiles.get(k));
+                    k++;
+                }
+                j++;
+            }
+            i++;
+        }
     }
 
     public Tuile[][] getGrille() {
@@ -33,75 +55,76 @@ public class Grille {
         return grille[i][j];
     }
     
-    public ArrayList<Tuile> getTuileAdj(Tuile tuile){
+    public ArrayList<Integer> getTuileAdj(Integer tuile){
         
-        ArrayList<Tuile> liste = new ArrayList();
+        ArrayList<Integer> liste = new ArrayList();
         
         int i = 0;
         int j = 0;
         
-        while (i < 6 && j < 6 &&(grille[i][j].getNom() != tuile.getNom())){
+        while (i < 6 &&  casesAccess.contains(i) && grille[i][j].getId() !=tuile){
             j = 0;
-            while ( j < 5 && grille[i][j].getNom() !=tuile.getNom()){
-                j++;
+            while ( j < 5 && casesAccess.contains(j) && grille[i][j].getId() !=tuile){
+                System.out.println(listeTuiles.get(grille[i][j].getId()));
+                j++; 
             }
-            if(grille[i][j].getNom() != tuile.getNom()){
+            if(grille[i][j].getId() != tuile){
             i++;
             }
         }
 
-        if (j != 5 && !"Void".equals(getTuile(i, j+1).getNom())){
-            liste.add(getTuile(i,j+1));
+        if (j != 5 && grille[i][j+1] != null){
+            liste.add(getTuile(i,j+1).getId());
         }
-        if (j != 0 && !"Void".equals(getTuile(i, j-1).getNom())){
-            liste.add(getTuile(i,j-1));
+        if (j != 0 && grille[i][j-1] != null){
+            liste.add(getTuile(i,j-1).getId());
         }
-        if (i != 0 &&!"Void".equals(getTuile(i-1, j).getNom())){
-            liste.add(getTuile(i-1,j));
+        if (i != 0 && grille[i-1][j]!= null){
+            liste.add(getTuile(i-1,j).getId());
         }
-        if (i != 5 && !"Void".equals(getTuile(i+1, j).getNom())){
-            liste.add(getTuile(i+1,j));
+        if (i != 5 && grille[i+1][j] != null){
+            liste.add(getTuile(i+1,j).getId());
         }
         
         return liste;
     }
 
-    public ArrayList<Tuile> getTuileDiag(Tuile tuile){
+    public ArrayList<Integer> getTuileDiag(Integer tuile){
         
-        ArrayList<Tuile> liste = new ArrayList();
+        ArrayList<Integer> liste = new ArrayList();
         
         int i = 0;
         int j = 0;
         
-        while (i < 6 && j < 6 && grille[i][j].getNom() != tuile.getNom()){
+        while (i < 6 && j < 6 && grille[i][j].getId() != tuile){
             j = 0;
-            while ( j <5 && grille[i][j].getNom()!=tuile.getNom()){
+            while ( j <5 && grille[i][j].getId() !=tuile){
                 j++;
             }
-            if(grille[i][j].getNom() != tuile.getNom()){
+            if(grille[i][j].getId() != tuile){
             i++;
             }
         }
         
         if ( i != 5 && j !=5 && !"Void".equals(getTuile(i+1, j+1).getNom())){
-            liste.add(getTuile(i+1,j+1));
+            liste.add(getTuile(i+1,j+1).getId());
         }
         if (i != 5 && j != 0 && !"Void".equals(getTuile(i+1, j-1).getNom())){
-            liste.add(getTuile(i+1,j-1));
+            liste.add(getTuile(i+1,j-1).getId());
         }
         if (i != 0 && j != 5 && !"Void".equals(getTuile(i-1, j+1).getNom())){
-            liste.add(getTuile(i-1,j+1));
+            liste.add(getTuile(i-1,j+1).getId());
         }
         if (i != 0 && j != 0 && !"Void".equals(getTuile(i-1, j-1).getNom())){
-            liste.add(getTuile(i-1,j-1));
+            liste.add(getTuile(i-1,j-1).getId());
         }
                 
         return liste;
     }
     
-    public ArrayList<Tuile> getTuilePouvoirPilote(Tuile tuile){
+    public ArrayList<Integer> getTuilePouvoirPilote(Integer tuile){
         
-        ArrayList<Tuile> tuilesPilote = new ArrayList();
+        ArrayList<Integer> tuilesPilote = new ArrayList();
         int i = 0;
         int j = 0;
         
@@ -109,8 +132,8 @@ public class Grille {
             j = 0;
             while ( j < 6 ){
 
-                if (grille[i][j].getNom() != "Void" && grille[i][j].getEtatTuile() != EtatTuile.COULEE && tuile.getNom() != grille[i][j].getNom()){
-                    tuilesPilote.add(grille[i][j]);
+                if (grille[i][j].getNom() != "Void" && grille[i][j].getEtatTuile() != EtatTuile.COULEE && tuile != grille[i][j].getId()){
+                    tuilesPilote.add(grille[i][j].getId());
 
                 }
                 j++;
@@ -119,32 +142,36 @@ public class Grille {
         }
         return tuilesPilote;
     }
+
+    public LinkedHashMap<Integer, Tuile> getListeTuiles() {
+        return listeTuiles;
+    }
     
-    public ArrayList<Tuile> getTuilesInondees(ArrayList<Tuile> tuiles){
-        ArrayList<Tuile> tuilesInondees = new ArrayList();
-        for(Tuile tuile : tuiles){
-            if (tuile.getEtatTuile() == EtatTuile.INONDEE){
-                tuilesInondees.add(tuile);
+    public ArrayList<Integer> getTuilesInondees(ArrayList<Integer> tuiles){
+        ArrayList<Integer> tuilesInondees = new ArrayList();
+        for(Integer key : tuiles){
+            if (listeTuiles.get(key).getEtatTuile() == EtatTuile.INONDEE){
+                tuilesInondees.add(key);
             }
         }
         return tuilesInondees;
     }
     
-    public ArrayList<Tuile> getTuilesPasSeches(ArrayList<Tuile> tuiles){
-        ArrayList<Tuile> tuilesPasSeches = new ArrayList();
-        for(Tuile tuile : tuiles){
-            if (tuile.getEtatTuile() != EtatTuile.ASSECHEE){
-                tuilesPasSeches.add(tuile);
+    public ArrayList<Integer> getTuilesPasSeches(ArrayList<Integer> tuiles){
+        ArrayList<Integer> tuilesPasSeches = new ArrayList();
+        for(Integer key : tuiles){
+            if (listeTuiles.get(key).getEtatTuile() != EtatTuile.ASSECHEE){
+                tuilesPasSeches.add(key);
             }
         }
         return tuilesPasSeches;
     }
     
-    public ArrayList<Tuile> getTuilesNonCoulees(ArrayList<Tuile> tuiles){
-        ArrayList<Tuile> tuilesPasSeches = new ArrayList();
-        for(Tuile tuile : tuiles){
-            if (tuile.getEtatTuile() != EtatTuile.COULEE){
-                tuilesPasSeches.add(tuile);
+    public ArrayList<Integer> getTuilesNonCoulees(ArrayList<Integer> tuiles){
+        ArrayList<Integer> tuilesPasSeches = new ArrayList();
+        for(Integer key : tuiles){
+            if (listeTuiles.get(key).getEtatTuile() != EtatTuile.COULEE){
+                tuilesPasSeches.add(key);
             }
         }
         return tuilesPasSeches;

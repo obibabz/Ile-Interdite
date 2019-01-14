@@ -20,8 +20,8 @@ public class Pilote extends Aventurier{
     public Pilote(String nomJoueur , Tuile position, Pion pion) {
         super(nomJoueur, position, pion);
     }
-    public ArrayList<Tuile> getTuileAccessiblesPouvoir(Grille g){
-        return g.getTuilePouvoirPilote(getPosition());
+    public ArrayList<Integer> getTuileAccessiblesPouvoir(Grille g){
+        return g.getTuilePouvoirPilote(getPosition().getId());
     }
     
     
