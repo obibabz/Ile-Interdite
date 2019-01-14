@@ -35,13 +35,13 @@ public class Grille {
             j =0;
             while (j<=5){
                 
-                //System.out.println("i : "+i);
-                //System.out.println("j : "+j);
-                if(!(casesNonAccess.contains(i) && casesNonAccess.contains(j))){
+                System.out.println("i : "+i);
+                System.out.println("j : "+j);
+                if(!(casesNonAccess.contains(i) || casesNonAccess.contains(j)) && (i==1 && j==1) && (i==1 && j==4) && (i==4 && j==1) && (i==4 && j==4)){
                     grille[i][j] = listeTuiles.get(listeIdTuiles.get(k));
                     k++;
-                   // System.out.println("case assignée : " + grille[i][j].getId() + " = " + listeIdTuiles.get(k-1));
-                   // System.out.println();
+                   System.out.println("case assignée : " + grille[i][j].getId() + " = " + listeIdTuiles.get(k-1));
+                   System.out.println();
                 }
                 j++;
             }
