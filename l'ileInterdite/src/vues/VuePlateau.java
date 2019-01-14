@@ -161,14 +161,25 @@ public class VuePlateau extends Observable {
             panelDroite.add(listeVuesJoueurs.get(listeId.get(3)));
         }
     }
-    
-    public void setTuilesDeplacement(ArrayList<Integer> listeIdTuiles, Integer idJoueur, Color couleur, Color couleur2){
+    public void setTuilesAssechement(ArrayList<Integer> listeIdTuiles, Integer idJoueur, Color couleur, Color couleur2){
+        for (Integer idTuile : listeIdTuiles){
+            this.vueGrille.getListeTuiles().get(idTuile).getBtnTuile().addActionListener(new ActionListener(){
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    setChanged();
+                    notifyObservers(new Message(Commandes.CHOISIR_TUILE_A, idJoueur, null, null, idTuile));
+                    clearChanged();
+                }
+            });
+        }
+    }
+    public void setTuilesCliquables(ArrayList<Integer> listeIdTuiles, Integer idJoueur, Color couleur, Color couleur2){
         for(Integer idTuile : listeIdTuiles){
             this.vueGrille.getListeTuiles().get(idTuile).getBtnTuile().addActionListener(new ActionListener(){
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     setChanged();
-                    notifyObservers(new Message(Commandes.CHOISIR_TUILE, idJoueur, null, null, idTuile));
+                    notifyObservers(new Message(Commandes.CHOISIR_TUILE_D, idJoueur, null, null, idTuile));
                     clearChanged();
                 }
             });
