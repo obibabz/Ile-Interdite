@@ -106,7 +106,7 @@ public class VueAventurier extends JPanel{
 
         this.btnBouger = new JButton("Bouger") ;
         this.btnAssecher = new JButton( "Assecher");
-	this.btnAutreAction = new JButton("AutreAction") ;
+	this.btnAutreAction = new JButton("Autre Action") ;
         this.btnTerminerTour = new JButton("Terminer Tour") ;
         
         this.btnDonnerCarte = new JButton("Donner Carte") ;

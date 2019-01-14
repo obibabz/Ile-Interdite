@@ -94,7 +94,7 @@ public class VueGrille extends JPanel{
                 labelsTresors.add(labelVide);
                 k++;
         }
-        //AFFICHAHE PIOCHE/DEFAUSSE CARTES TRESOR ET INONDATION
+        //AFFICHAGE PIOCHE/DEFAUSSE CARTES TRESOR ET INONDATION
         panelSud = new JPanel(new FlowLayout());
         this.add(panelSud, BorderLayout.SOUTH);
         
