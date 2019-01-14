@@ -156,37 +156,43 @@ public class Controleur implements Observer{
             
             if (((Message) arg).getCommande() == Commandes.BOUGER) { 
                 ArrayList<Integer> listeIdTuiles = listeJoueurs.get(idJoueur).getTuilesAccessibles(grille);
-                for(Integer key : listeJoueurs.keySet()){
-                    System.out.println(key);
-                }
+                
                 this.vuePlateau.setTuilesCliquables(listeIdTuiles, idJoueur, listeJoueurs.get(idJoueur).getPion().getCouleurSelectionAssechee(), listeJoueurs.get(idJoueur).getPion().getCouleurSelectionInondee());
                 
           
             }
-            else if (((Message) arg).getCommande() == Commandes.CHOISIR_TUILE){
+            else if (((Message) arg).getCommande() == Commandes.CHOISIR_TUILE_A){
                 int idTuile =((Message) arg).getIdTuile();
                 ArrayList<Integer> listeIdTuiles = listeJoueurs.get(idJoueur).getTuilesAccessibles(grille);
-                this.vuePlateau.setTuilesDefaut(listeIdTuiles);
+                this.vuePlateau.setTuilesAssechement(listeIdTuiles, idJoueur, listeJoueurs.get(idJoueur).getPion().getCouleurSelectionAssechee(), listeJoueurs.get(idJoueur).getPion().getCouleurSelectionInondee());
+                
                 gererDeplacement(idTuile, idJoueur);
-                finTour(o, nbActionsRestantes);
+                //finTour(o, nbActionsRestantes);
+                
+            }
+            else if (((Message) arg).getCommande() == Commandes.CHOISIR_TUILE_D){
+                int idTuile =((Message) arg).getIdTuile();
+                ArrayList<Integer> listeIdTuiles = listeJoueurs.get(idJoueur).getTuilesAssechables(grille);
+                this.vuePlateau.setTuilesDefaut(listeIdTuiles);
+                gererAssechement(idTuile, idJoueur);
             }
             else if (((Message) arg).getCommande() == Commandes.ASSECHER) {
                     //Gestion ingenieur (on relance gerer assechement, puis on incrémente nb action restantes)
                     ArrayList<Integer>listeIdTuiles = listeJoueurs.get(idJoueur).getTuilesAssechables(grille);
                     this.vuePlateau.setTuilesCliquables(listeIdTuiles, idJoueur, listeJoueurs.get(idJoueur).getPion().getCouleurSelectionAssechee(), listeJoueurs.get(idJoueur).getPion().getCouleurSelectionInondee());
                     
-                    finTour(o, nbActionsRestantes);
+                    //finTour(o, nbActionsRestantes);
                 
             }
             else if (((Message ) arg).getCommande() == Commandes.TERMINER) {
-                System.out.println("0");
+                
                 nbActionsRestantes = 3;
                 ((VuePlateau) o).getListeVuesJoueurs().get((idJoueur)).setVueJPrecedant();
                 joueurSuivant();
-                System.out.println("1");
+                
                 System.out.println(JCourant.getId());
                 vuePlateau.getListeVuesJoueurs().get(JCourant.getId()).setVueJCourant();
-                System.out.println("2");
+                
                 
                 
                 
@@ -200,13 +206,17 @@ public class Controleur implements Observer{
         }
     }
     public void gererAssechement(Integer idTuile, Integer idJoueur){
+        vuePlateau.getVueGrille().getListeTuiles().get(idTuile).setEtat(EtatTuile.ASSECHEE.toString());
+        vuePlateau.getVueGrille().getListeTuiles().get(idTuile).setCouleurDefaut();
         
+        this.grille.getListeTuiles().get(idTuile).setEtatTuile(EtatTuile.ASSECHEE);
     }
     public void gererDeplacement(Integer idTuileArrivee, Integer idJoueur){
+        System.out.println("----------------------");
         LinkedHashMap<Integer, VueTuile> listeVuesTuiles = this.vuePlateau.getVueGrille().getListeTuiles();
         Integer idTuileDepart =JCourant.getPosition().getId();
         Color couleur = JCourant.getPion().getCouleur();
-        
+
         listeVuesTuiles.get(idTuileDepart).getJoueursSurTuile().remove(couleur);
         listeVuesTuiles.get(idTuileDepart).setCasesJoueurs();
         

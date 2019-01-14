@@ -22,7 +22,8 @@ public class Utils {
         TERMINER("Terminer son tour"),
         RECEVOIR("Recevoir la carte donnée par un autre joueur"), 
         CHOISIR_CARTE("Utiliser une carte trésor"),
-        CHOISIR_TUILE("Sélectionner une tuile"), 
+        CHOISIR_TUILE_D("Sélectionner une tuile pour s'y déplacer"), 
+        CHOISIR_TUILE_A("Sélectionner une tuile pour l'assécher"),
         DEPLACER("Déplacer un autre joueur"),
         VOIR_DEFAUSSE("Un joueur souhaite voir la défausse de cartes Tirage"),
         POUVOIR("Le Pilote souhaire utiliser son pouvoir");

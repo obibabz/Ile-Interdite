@@ -72,16 +72,21 @@ public class VueTuile extends JPanel {
         
     public void setCasesJoueurs(){
         int i = 0;
+        
         while(i <= joueursSurTuile.size()-1){
             
             casesJoueurs.get(i).setBackground(joueursSurTuile.get(i));
+            
             i++;
         }
         i = joueursSurTuile.size();
+        
         while(i <=3){
             casesJoueurs.get(i).setBackground(Color.gray);
+            
             i++;
         }
+        
     }
     
     
@@ -108,6 +113,14 @@ public class VueTuile extends JPanel {
 
     public JButton getBtnTuile() {
         return btnTuile;
+    }
+
+    public void setEtat(String etat) {
+        this.etat = etat;
+    }
+
+    public void setJoueursSurTuile(ArrayList<Color> joueursSurTuile) {
+        this.joueursSurTuile = joueursSurTuile;
     }
 
     public ArrayList<JPanel> getCasesJoueurs() {
