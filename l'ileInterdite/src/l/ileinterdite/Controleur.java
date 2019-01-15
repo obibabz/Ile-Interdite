@@ -42,12 +42,12 @@ public class Controleur implements Observer{
     private int nbActionsRestantes;
     private Aventurier JCourant;
     private Grille grille;
-    private ArrayList <CarteInondation> piocheInondation;
-    private ArrayList <CarteInondation> defausseInondation;
-    private ArrayList<Tresor> tresorPossede;
+    private ArrayList<CarteInondation> piocheInondation;
+    private ArrayList<CarteInondation> defausseInondation = new ArrayList();
+    private ArrayList<Tresor> tresorPossede = new ArrayList();
     private int niveauInond;
     private LinkedHashMap< Integer, CarteTirage> piocheTirage;
-    private LinkedHashMap<Integer, CarteTirage> defausseTirage;
+    private LinkedHashMap<Integer, CarteTirage> defausseTirage = new LinkedHashMap();
     
     
     private VuePlateau vuePlateau;
@@ -152,7 +152,7 @@ public class Controleur implements Observer{
                 vuePlateau.getMessageBox().displayMessage("Vous vous êtes déplacés sur : <br/>" +JCourant.getPosition().getNom(), couleur1, Boolean.TRUE, Boolean.TRUE);
                 nbActionsRestantes-=1;
                 vuePlateau.getListeVuesJoueurs().get(idJoueur).setVueJCourant();
-                finTour(o, idJoueur);
+                verifFinTour(o, idJoueur);
                 
             }
             else if (((Message) arg).getCommande() == Commandes.CHOISIR_TUILE_A){
@@ -175,11 +175,11 @@ public class Controleur implements Observer{
                 nbActionsRestantes-=1;
                 vuePlateau.getListeVuesJoueurs().get(idJoueur).setVueJCourant();
                 System.out.println(nbActionsRestantes);
-                finTour(o, idJoueur);
+                verifFinTour(o, idJoueur);
             }
             
             else if (((Message ) arg).getCommande() == Commandes.TERMINER) {
-                
+                actionFinTour(o, idJoueur);
                 nbActionsRestantes = 3;
                 ((VuePlateau) o).getListeVuesJoueurs().get((idJoueur)).setVueJPrecedant();
                 joueurSuivant();
@@ -231,24 +231,25 @@ public class Controleur implements Observer{
         }
     }
     
-    public void finTour(Observable o, int idJCourant){
-        //tirageCarte();
-        //tirageInondation();
+    public void verifFinTour(Observable o, int idJCourant){
         if (nbActionsRestantes == 0){
             this.vuePlateau.getListeVuesJoueurs().get(idJCourant).setVueFinTour();
         }
-        
+    }    
+            
+    public void actionFinTour(Observable o, int idJCourant){
         tirageCarte();
         tirageCarte();      //Tirage des cartes Tresor et Inondation
         tirageInondation();
-        
+
         if (ifVictoire()){
             System.out.println("INSEREZ VUE VICTOIRE");
         }
-        
+
         if(ifDefaite()){
             System.out.println("INSEREZ VUE DEFAITE");
         }
+        
     }
     
     public void joueurSuivant(){
@@ -330,19 +331,15 @@ public class Controleur implements Observer{
     //pioche d'une carte inondation
 
     public void piocheCarteInondee(){
-        ArrayList<Integer> listeId = new ArrayList<>();
-        for(Integer key : piocheTirage.keySet()){
-            listeId.add(key);
-        }
-        CarteInondation c = piocheInondation.get(listeId.get(0));
+        CarteInondation c = piocheInondation.get(0);
         // inondation de la tuile correspondante
         if(grille.getListeTuiles().get(c.getId()).getEtatTuile() == EtatTuile.ASSECHEE){        //
             grille.getListeTuiles().get(c.getId()).setEtatTuile(EtatTuile.INONDEE);
-            defausseInondation.get(listeId.get(0));
-            piocheInondation.remove(listeId.get(0));
+            defausseInondation.add(c);
+            piocheInondation.remove(0);
         }else if(grille.getListeTuiles().get(c.getId()).getEtatTuile() == EtatTuile.INONDEE){
             grille.getListeTuiles().get(c.getId()).setEtatTuile(EtatTuile.COULEE);
-            piocheInondation.remove(listeId.get(0));
+            piocheInondation.remove(0);
         }
     }
 
@@ -448,6 +445,10 @@ public class Controleur implements Observer{
         this.piocheTirage = piocheTirage;
     }
     
+    public void setPiocheInondation(ArrayList<CarteInondation> piocheInondation) {
+        this.piocheInondation = piocheInondation;
+    }
+    
     public String listeIdTuilesToString(ArrayList<Integer> listeTuiles){
         String res ="";
         for(Integer key : listeTuiles){
@@ -484,8 +485,9 @@ public class Controleur implements Observer{
         int nbTempleInondee=0;
         if(!tresorPossede.contains(Tresor.PIERRE)){
             for(Integer key : this.grille.getListeTuiles().keySet()){
-                if (this.grille.getListeTuiles().get(key).getTresor()==Tresor.PIERRE){
+                if (grille.getListeTuiles().get(key).getTresor()==Tresor.PIERRE && grille.getListeTuiles().get(key).getEtatTuile() == EtatTuile.COULEE){
                         nbTempleInondee++;
+                        System.out.println("Nombre de temple inondee : "+nbTempleInondee+ "  carte comptee : "+grille.getListeTuiles().get(key).getNom());
                 }
             }
         }
@@ -496,7 +498,7 @@ public class Controleur implements Observer{
         int nbTempleInondee=0;    
         if(!tresorPossede.contains(Tresor.ZEPHYR)){
             for(Integer key : this.grille.getListeTuiles().keySet()){
-                if (this.grille.getListeTuiles().get(key).getTresor()==Tresor.ZEPHYR){
+                if (this.grille.getListeTuiles().get(key).getTresor()==Tresor.ZEPHYR && grille.getListeTuiles().get(key).getEtatTuile() == EtatTuile.COULEE){
                         nbTempleInondee++;
                 }
             }
@@ -508,7 +510,7 @@ public class Controleur implements Observer{
         int nbTempleInondee=0;    
         if(!tresorPossede.contains(Tresor.CRISTAL)){
             for(Integer key : this.grille.getListeTuiles().keySet()){
-                if (this.grille.getListeTuiles().get(key).getTresor()==Tresor.CRISTAL){
+                if (this.grille.getListeTuiles().get(key).getTresor()==Tresor.CRISTAL && grille.getListeTuiles().get(key).getEtatTuile() == EtatTuile.COULEE){
                         nbTempleInondee++;
                 }
             }
@@ -520,7 +522,7 @@ public class Controleur implements Observer{
         int nbTempleInondee=0;    
         if(!tresorPossede.contains(Tresor.CALICE)){
             for(Integer key : this.grille.getListeTuiles().keySet()){
-                if (this.grille.getListeTuiles().get(key).getTresor()==Tresor.CALICE){
+                if (this.grille.getListeTuiles().get(key).getTresor()==Tresor.CALICE && grille.getListeTuiles().get(key).getEtatTuile() == EtatTuile.COULEE){
                         nbTempleInondee++;
                 }
             }
