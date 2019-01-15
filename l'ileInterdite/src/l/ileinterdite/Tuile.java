@@ -57,8 +57,8 @@ public class Tuile extends ObjetIdentifie{
         this.etatTuile = etatTuile;
     }
 
-    public void arriveeJoueur(Integer idJoueur, Aventurier joueur) {
-        this.joueursSurTuile.put(idJoueur, joueur);
+    public void arriveeJoueur( Aventurier joueur) {
+        this.joueursSurTuile.put(joueur.getId(), joueur);
     }
     
     public void departJoueur(Integer idJoueur) {
