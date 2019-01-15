@@ -93,7 +93,6 @@ public class Controleur implements Observer{
         this.grille = grille;
     }
 
-
     public void setVuePlateau(VuePlateau vuePlateau) {
         this.vuePlateau = vuePlateau;
     }
@@ -106,17 +105,10 @@ public class Controleur implements Observer{
         this.listeJoueurs = listeJoueurs;
     }
     
-    public void joueurSuivant(){
-        ArrayList<Integer> listeId = new ArrayList<>();
-        for(Integer key : this.listeJoueurs.keySet()){
-            listeId.add(key);
-        }
-        if(listeId.indexOf(JCourant.getId()) < listeId.size()-1 ){   
-            setJCourant(listeJoueurs.get(listeId.get(listeId.indexOf(JCourant.getId())+1 )));
-        }
-        else{setJCourant(listeJoueurs.get(listeId.get(0)));}
-    }
 
+
+    //Fonction de déroulement de la partie: 
+    
     @Override
     public void update(Observable o, Object arg) {
         if (arg instanceof Message) {
@@ -239,9 +231,40 @@ public class Controleur implements Observer{
         }
     }
     
+    public void finTour(Observable o, int idJCourant){
+        //tirageCarte();
+        //tirageInondation();
+        if (nbActionsRestantes == 0){
+            this.vuePlateau.getListeVuesJoueurs().get(idJCourant).setVueFinTour();
+        }
+        
+        tirageCarte();
+        tirageCarte();      //Tirage des cartes Tresor et Inondation
+        tirageInondation();
+        
+        if (ifVictoire()){
+            System.out.println("INSEREZ VUE VICTOIRE");
+        }
+        
+        if(ifDefaite()){
+            System.out.println("INSEREZ VUE DEFAITE");
+        }
+    }
+    
+    public void joueurSuivant(){
+        ArrayList<Integer> listeId = new ArrayList<>();
+        for(Integer key : this.listeJoueurs.keySet()){
+            listeId.add(key);
+        }
+        if(listeId.indexOf(JCourant.getId()) < listeId.size()-1 ){   
+            setJCourant(listeJoueurs.get(listeId.get(listeId.indexOf(JCourant.getId())+1 )));
+        }
+        else{setJCourant(listeJoueurs.get(listeId.get(0)));}
+    }
     
 
-    
+
+    //Fonction de dépalcement et d'assechement
     
     public void gererDeplacement(Integer idTuileArrivee, Integer idJoueur){
         LinkedHashMap<Integer, VueTuile> listeVuesTuiles = this.vuePlateau.getVueGrille().getListeTuiles();
@@ -269,18 +292,8 @@ public class Controleur implements Observer{
         this.JCourant.setNbAssech(this.JCourant.getNbAssech()+1);
     }
     
-    
-    public void finTour(Observable o, int idJCourant){
-        //tirageCarte();
-        //tirageInondation();
-        if (nbActionsRestantes == 0){
-            this.vuePlateau.getListeVuesJoueurs().get(idJCourant).setVueFinTour();
-        }
-        if (ifVictoire()){
-            System.out.println("FAUT FAIRE LA VUE VICTOIRE VITE ET SUPPRIMER CE MESSAGE");
-        }
-    }
-    
+
+
     //gestion tirage carte
     
     public void tirageCarte(){
@@ -305,13 +318,35 @@ public class Controleur implements Observer{
     
     public void piocheCarteMonteeDesEaux(){
         niveauInond++;
+        vuePlateau.getVueNiveau().setNiveau(niveauInond);
         defausseInondation.addAll(piocheInondation);
         piocheInondation.clear();
         piocheInondation.addAll(defausseInondation);
         defausseInondation.clear();
     }
     
-    //nb de carte tirer+tirage effectif
+    
+    
+    //pioche d'une carte inondation
+
+    public void piocheCarteInondee(){
+        ArrayList<Integer> listeId = new ArrayList<>();
+        for(Integer key : piocheTirage.keySet()){
+            listeId.add(key);
+        }
+        CarteInondation c = piocheInondation.get(listeId.get(0));
+        // inondation de la tuile correspondante
+        if(grille.getListeTuiles().get(c.getId()).getEtatTuile() == EtatTuile.ASSECHEE){        //
+            grille.getListeTuiles().get(c.getId()).setEtatTuile(EtatTuile.INONDEE);
+            defausseInondation.get(listeId.get(0));
+            piocheInondation.remove(listeId.get(0));
+        }else if(grille.getListeTuiles().get(c.getId()).getEtatTuile() == EtatTuile.INONDEE){
+            grille.getListeTuiles().get(c.getId()).setEtatTuile(EtatTuile.COULEE);
+            piocheInondation.remove(listeId.get(0));
+        }
+    }
+
+    //nb de carte inondation tiree + tirage effectif
     
     public void tirageInondation(){
         if(niveauInond <3){         //2 carte piochées
@@ -337,14 +372,6 @@ public class Controleur implements Observer{
     }
 
     //gestion tirage carte inondee
-    
-    public void piocheCarteInondee(){
-        CarteInondation c = new CarteInondation();
-        c.equals(piocheInondation.get(1));
-        // inondation de la tuile correspondante
-        defausseInondation.add(c);
-        piocheInondation.remove(c);
-    }
     
     // fonction pour les conditions de Victoire et de Defaite
     public boolean ifCarteHelico(Aventurier a){
