@@ -196,15 +196,19 @@ public class Controleur implements Observer{
             else if(((Message ) arg).getCommande() == Commandes.DONNER_CARTE){
                 
                 ArrayList<Integer> idJoueurs = JCourant.getJoueursCiblables(grille);
-         
-                vuePlateau.setBoutonsRecevoirCarte(idJoueurs, idJoueur);
+                if(!JCourant.getCartesTresor().isEmpty()){
+                    vuePlateau.setBoutonsRecevoirCarte(idJoueurs, idJoueur);
+                }
             }
             else if(((Message ) arg).getCommande() == Commandes.RECEVOIR_CARTE){
                 ArrayList<Integer> idJoueurs = JCourant.getJoueursCiblables(grille);
                 vuePlateau.setBoutonsDonnerCarte(idJoueurs, idJoueur);
                 
                 ArrayList<Integer> idCartes = JCourant.getCartesTresor();
-                vuePlateau.setCartesUtilisables(idCartes, JCourant.getId(), idJoueur);
+                for(Integer key :idCartes){
+                    System.out.println(key);
+                }
+                vuePlateau.setCartesDonnables(idCartes, JCourant.getId(), idJoueur);
             }
             //CHOIX DE LA CARTE
             else if(((Message ) arg).getCommande() == Commandes.CHOISIR_CARTE){
@@ -212,7 +216,7 @@ public class Controleur implements Observer{
                 CarteTirage ct= JCourant.getCartesEnMain().get(idCarte);//On récupère la carte en question
                 vuePlateau.setCartesDefaut(JCourant.getCartesTresor(), JCourant.getId());//On remet l'affichade par défaut des cartes
                 
-                JCourant.defausseCarte(ct);//On la retire de la main du JCourant
+                JCourant.retirerCarte(ct);//On la retire de la main du JCourant
                 VueCarte vc = vuePlateau.getListeVuesJoueurs().get(JCourant.getId()).getCartesEnMain().get(idCarte);
                 vuePlateau.getListeVuesJoueurs().get(JCourant.getId()).retirerCarte(idCarte);//On retire la VueCarte associée de la VueAventurier du JCourant
 
@@ -299,22 +303,30 @@ public class Controleur implements Observer{
     
     public void tirageCarte(){
         ArrayList<Integer> listeId = new ArrayList<>();
-        for(Integer key : piocheTirage.keySet()){
-            listeId.add(key);
-        }
+        listeId.addAll( piocheTirage.keySet());
         CarteTirage c = piocheTirage.get(listeId.get(0));
         
         if (c.getClass().getSimpleName() == "CarteMonteeDesEaux"){
             piocheCarteMonteeDesEaux();
             piocheTirage.put(c.getId(), c);
         }else{
+            if(JCourant.cartesEnMainsinf5()){
                 JCourant.addCartesEnMain(c);
-                
+            }
+            else{
+                gestionDefausse(c);
+            }
+    
                 vuePlateau.getListeVuesJoueurs().get(JCourant.getId()).ajouterCarte(listeId.get(0), vuePlateau.getListeVuesCartes().get(listeId.get(0)));
         }   
         piocheTirage.remove(listeId.get(0));
     }
-    
+    public void gestionDefausse(CarteTirage ct){
+        ArrayList<Integer> cartesJ = new ArrayList<>(); cartesJ.addAll(JCourant.getCartesEnMain().keySet());
+        cartesJ.add(ct.getId());
+        JCourant.addCartesEnMain(ct);
+        vuePlateau.setCartesDefaussables(cartesJ, JCourant.getId());
+    }
     //Gestion montée des eaux
     
     public void piocheCarteMonteeDesEaux(){
@@ -332,14 +344,26 @@ public class Controleur implements Observer{
 
     public void piocheCarteInondee(){
         CarteInondation c = piocheInondation.get(0);
+        Tuile t = grille.getListeTuiles().get(c.getId());
+        VueTuile vt = vuePlateau.getVueGrille().getListeTuiles().get(c.getId());
         // inondation de la tuile correspondante
-        if(grille.getListeTuiles().get(c.getId()).getEtatTuile() == EtatTuile.ASSECHEE){        //
-            grille.getListeTuiles().get(c.getId()).setEtatTuile(EtatTuile.INONDEE);
+        if(t.getEtatTuile() == EtatTuile.ASSECHEE){        //
+            t.setEtatTuile(EtatTuile.INONDEE);
             defausseInondation.add(c);
             piocheInondation.remove(0);
+            vuePlateau.getMessageBox().displayMessage("La tuile : "+grille.getListeTuiles().get(c.getId()).getNom()+" a été inondée", Color.BLACK, Boolean.TRUE, Boolean.TRUE);
+            vt.setEtat(EtatTuile.INONDEE.toString());
+            vt.setCouleurDefaut();
         }else if(grille.getListeTuiles().get(c.getId()).getEtatTuile() == EtatTuile.INONDEE){
-            grille.getListeTuiles().get(c.getId()).setEtatTuile(EtatTuile.COULEE);
+            t.setEtatTuile(EtatTuile.COULEE);
             piocheInondation.remove(0);
+            vt.setEtat(EtatTuile.COULEE.toString());
+            vt.setCouleurDefaut();
+            vuePlateau.getMessageBox().displayMessage("La tuile : "+grille.getListeTuiles().get(c.getId()).getNom()+" a été coulée", Color.BLACK, Boolean.TRUE, Boolean.TRUE);
+        }
+        else if(grille.getListeTuiles().get(c.getId()).getEtatTuile() == EtatTuile.COULEE){
+            piocheInondation.remove(0);
+            piocheCarteInondee();
         }
     }
 

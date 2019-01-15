@@ -124,7 +124,9 @@ public class LIleInterdite {
         ArrayList<CarteInondation> listeCartesInond = new ArrayList();
         for(Integer key : listeTuiles.keySet()){
             CarteInondation cI = new CarteInondation(listeTuiles.get(key));
+            CarteInondation cI2 = new CarteInondation(listeTuiles.get(key));
             piocheInond.add(cI);
+            piocheInond.add(cI2);
         }
         
         
@@ -239,10 +241,6 @@ public class LIleInterdite {
         controleur.setPiocheTirage(listeCartes);
         controleur.setPiocheInondation(piocheInond);
         
-        
-        
-        
-     
         // INNITIALISATION PLATEAU
         
         LinkedHashMap<Integer, VueTuile> vuesTuiles= new LinkedHashMap<>();
