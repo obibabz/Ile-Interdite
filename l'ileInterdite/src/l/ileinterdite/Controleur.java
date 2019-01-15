@@ -392,31 +392,74 @@ public class Controleur implements Observer{
     
     
     
-    /*IF DEFAITE A FAIRE
+    
     
     public boolean ifHeliportNoyee(){
         boolean retour = false;
-        for (int i=0; i<6; i++){
-            for(int j=0; j<6; j++){
-                if("Heliport".equals(grille.getTuile(i, j).getNom())){
-                    if(grille.getTuile(i, j).getEtatTuile() == EtatTuile.NOYEE){
-                        retour=true;
-                    }
-                }
+        
+        Tuile t = JCourant.getPosition();
+        for(Integer key : this.grille.getListeTuiles().keySet()){
+            if (this.grille.getListeTuiles().get(key).getNom()=="Heliport"){
+                t = this.grille.getListeTuiles().get(key);
             }
         }
-        return retour;
+        
+        return t.getEtatTuile() == EtatTuile.COULEE;
     }
     
     public boolean ifNiveauMax(){
-        return niveauInnond == 10; 
+        return niveauInond == 10; 
+    }
+    
+    public boolean ifTresorPierrePerdu(){
+        int nbTempleInondee=0;
+        if(!tresorPossede.contains(Tresor.PIERRE)){
+            for(Integer key : this.grille.getListeTuiles().keySet()){
+                if (this.grille.getListeTuiles().get(key).getTresor()==Tresor.PIERRE){
+                        nbTempleInondee++;
+                }
+            }
+        }
+        return nbTempleInondee == 2;
+    }
+    
+    public boolean ifTresorZephyrPerdu(){
+        int nbTempleInondee=0;    
+        if(!tresorPossede.contains(Tresor.ZEPHYR)){
+            for(Integer key : this.grille.getListeTuiles().keySet()){
+                if (this.grille.getListeTuiles().get(key).getTresor()==Tresor.ZEPHYR){
+                        nbTempleInondee++;
+                }
+            }
+        }
+        return nbTempleInondee == 2;
+    }
+    
+    public boolean ifTresorCristalPerdu(){
+        int nbTempleInondee=0;    
+        if(!tresorPossede.contains(Tresor.CRISTAL)){
+            for(Integer key : this.grille.getListeTuiles().keySet()){
+                if (this.grille.getListeTuiles().get(key).getTresor()==Tresor.CRISTAL){
+                        nbTempleInondee++;
+                }
+            }
+        }
+        return nbTempleInondee == 2;
+    }
+    
+    public boolean ifTresorCalicePerdu(){
+        int nbTempleInondee=0;    
+        if(!tresorPossede.contains(Tresor.CALICE)){
+            for(Integer key : this.grille.getListeTuiles().keySet()){
+                if (this.grille.getListeTuiles().get(key).getTresor()==Tresor.CALICE){
+                        nbTempleInondee++;
+                }
+            }
+        }
+        return nbTempleInondee == 2;
     }
     
     public boolean ifDefaite(){
-        if(ifNiveauMax()){
-           System.out.println("VUE DEFAITE A FAIRE");
-        }else if(ifHeliportNoyee()){
-            
-        }
-    }*/
+        return(ifNiveauMax() || ifHeliportNoyee() || this.ifTresorPierrePerdu() ||this.ifTresorZephyrPerdu() || this.ifTresorCristalPerdu() || this.ifTresorCalicePerdu());
+    }
 }
