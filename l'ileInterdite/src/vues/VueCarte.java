@@ -17,24 +17,17 @@ import javax.swing.JPanel;
  * @author Administrateur
  */
 public class VueCarte extends JPanel{
-    private Integer idCarte = null;
+    private final String nomCarte;
     private final JButton btnCarte;
 
-    public VueCarte() {
+    public VueCarte(String nom) {
         this.setLayout(new BorderLayout());
         btnCarte = new JButton();
+        this.nomCarte = nom;
         this.setBorder(BorderFactory.createLineBorder(Color.darkGray, 1));
         this.setPreferredSize(new Dimension(50,75));
         this.add(btnCarte, BorderLayout.CENTER);
+        btnCarte.setEnabled(false);
     }
     
-    public void ajoutCarte(Integer id, String nomCarte){
-        this.idCarte=id;
-        this.btnCarte.setText(nomCarte);
-    }
-    
-    public void enleverCarte(){
-        this.idCarte = null;
-        this.btnCarte.setText(null);
-    }
 }

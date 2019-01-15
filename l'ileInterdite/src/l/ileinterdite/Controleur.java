@@ -45,8 +45,8 @@ public class Controleur implements Observer{
     private ArrayList <CarteInondation> defausseInondation;
     private ArrayList<Tresor> tresorPossede;
     private int niveauInond;
-    private ArrayList<CarteTirage> piocheTirage;
-    private ArrayList<CarteTirage> defausseTirage;
+    private LinkedHashMap< Integer, CarteTirage> piocheTirage;
+    private LinkedHashMap<Integer, CarteTirage> defausseTirage;
     
     
     private VuePlateau vuePlateau;
@@ -227,6 +227,7 @@ public class Controleur implements Observer{
         this.grille.getListeTuiles().get(idTuileArrivee).arriveeJoueur(JCourant);
         this.grille.getListeTuiles().get(idTuileDepart).departJoueur(JCourant);
         this.JCourant.setPosition(this.grille.getListeTuiles().get(idTuileArrivee));
+        this.vuePlateau.getListeVuesJoueurs().get(idJoueur).getPosition().setText(JCourant.getPosition().getNom());
 
         listeVuesTuiles.get(idTuileDepart).getJoueursSurTuile().remove(couleur);
         listeVuesTuiles.get(idTuileDepart).setCasesJoueurs();

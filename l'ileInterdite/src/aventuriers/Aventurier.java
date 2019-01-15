@@ -12,6 +12,7 @@ import l.ileinterdite.Tuile;
 import cartes.CarteTirage;
 import cartes.CarteTresor;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import util.Utils.Pion;
 import util.Utils.EtatTuile;
 /**
@@ -24,14 +25,14 @@ public abstract class Aventurier extends ObjetIdentifie{
     private String nomJoueur;
     private Tuile position;
     private Pion pion;
-    private HashMap<Integer, CarteTirage> cartesEnMain;
+    private LinkedHashMap<Integer, CarteTirage> cartesEnMain;
     private Integer nbAssech;
 
     public Aventurier(String nomJoueur, Tuile position, Pion pion) {
         this.nomJoueur = nomJoueur;
         this.position = position;
         this.pion = pion;
-        this.cartesEnMain = new HashMap();
+        this.cartesEnMain = new LinkedHashMap();
         this.nbAssech = 0;
     }
 
@@ -43,10 +44,6 @@ public abstract class Aventurier extends ObjetIdentifie{
         return nbAssech;
     }
 
-    public HashMap<Integer,CarteTirage> getCartesEnMain() {
-        return cartesEnMain;
-    }
-    
     public void addCartesEnMain(CarteTirage c){
         cartesEnMain.put(c.getId(),c);
     }
@@ -100,6 +97,14 @@ public abstract class Aventurier extends ObjetIdentifie{
             }
         }
         return cartesDonnables;
+    }
+
+    public LinkedHashMap<Integer, CarteTirage> getCartesEnMain() {
+        return cartesEnMain;
+    }
+
+    public void setCartesEnMain(LinkedHashMap<Integer, CarteTirage> cartesEnMain) {
+        this.cartesEnMain = cartesEnMain;
     }
 
     public Pion getPion() {
