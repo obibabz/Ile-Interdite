@@ -45,11 +45,18 @@ public abstract class Aventurier extends ObjetIdentifie{
     }
 
     public void addCartesEnMain(CarteTirage c){
-        cartesEnMain.put(c.getId(),c);
+        if(cartesEnMain.size()<5){
+            cartesEnMain.put(c.getId(),c);
+        }
+        else{ 
+            this.defausseCarte(c);
+        }
     }
-    public void retirerCarte(Integer id){
+
+    public void defausseCarte(CarteTirage c){
         cartesEnMain.remove(id);
     }
+    
     public String getNomJoueur() {
         return nomJoueur;
     }

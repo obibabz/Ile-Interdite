@@ -10,5 +10,13 @@ import l.ileinterdite.ObjetIdentifie;
  * @author lienardr
  */
 public class CarteTirage extends ObjetIdentifie{
-    
+    private String nom;
+
+    public String getNom() {
+        return nom;
+    }
+
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
 }

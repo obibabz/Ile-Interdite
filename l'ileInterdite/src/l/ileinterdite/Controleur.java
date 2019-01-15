@@ -253,19 +253,20 @@ public class Controleur implements Observer{
     //gestion tirage carte
     
     public void tirageCarte(){
-        CarteTirage c = new CarteTirage();
-        c.equals(piocheTirage.get(1));
-        piocheTirage.remove(1);
-        defausseTirage.add(c);
+        ArrayList<Integer> listeId = new ArrayList<>();
+        for(Integer key : piocheTirage.keySet()){
+            listeId.add(key);
+        }
+        CarteTirage c = piocheTirage.get(listeId.get(0));
+        
         if (c.getClass().getSimpleName() == "CarteMonteeDesEaux"){
             piocheCarteMonteeDesEaux();
+            piocheTirage.put(c.getId(), c);
         }else{
-            if(JCourant.getCartesEnMain().size() < 5){
-               JCourant.addCartesEnMain(c);
-            } else {
-                System.out.println("FAUT SUPPRIMER, mais carte enlevee");
-            }
+                JCourant.addCartesEnMain(c);
+            
         }   
+        piocheTirage.remove(listeId.get(0));
     }
     
     //Gestion montée des eaux
@@ -379,6 +380,14 @@ public class Controleur implements Observer{
         
         return vT;
     }
+
+    public LinkedHashMap<Integer, CarteTirage> getPiocheTirage() {
+        return piocheTirage;
+    }
+
+    public void setPiocheTirage(LinkedHashMap<Integer, CarteTirage> piocheTirage) {
+        this.piocheTirage = piocheTirage;
+    }
     
     public String listeIdTuilesToString(ArrayList<Integer> listeTuiles){
         String res ="";
@@ -389,6 +398,7 @@ public class Controleur implements Observer{
         }
         return res;
     }
+
     
     
     
