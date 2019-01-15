@@ -14,4 +14,10 @@ import l.ileinterdite.ObjetIdentifie;
  */
 public class CarteInondation extends ObjetIdentifie{
     private Tuile tuile;
-}
+
+    public CarteInondation(Tuile tuile) {
+        this.tuile = tuile;
+        super.id = this.tuile.getId();
+    }
+
+}    

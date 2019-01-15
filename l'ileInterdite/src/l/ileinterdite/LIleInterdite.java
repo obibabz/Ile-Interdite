@@ -13,6 +13,7 @@ import aventuriers.Pilote;
 import aventuriers.Explorateur;
 import aventuriers.Aventurier;
 import cartes.CarteHelicoptere;
+import cartes.CarteInondation;
 import cartes.CarteMonteeDesEaux;
 import cartes.CarteSacsDeSable;
 import cartes.CarteTirage;
@@ -109,6 +110,17 @@ public class LIleInterdite {
         listeTuiles.put(TGu.getId(), TGu);
         listeTuiles.put(JMu.getId(), JMu);
         
+        //INITIALISATION DES CARTES INONDATIONS
+        
+        ArrayList<CarteInondation> piocheInond = new ArrayList();
+        
+        ArrayList<CarteInondation> listeCartesInond = new ArrayList();
+        for(Integer key : listeTuiles.keySet()){
+            CarteInondation cI = new CarteInondation(listeTuiles.get(key));
+            piocheInond.add(cI);
+        }
+        
+        
         
         Grille grid = new Grille(listeTuiles);
         
@@ -191,7 +203,7 @@ public class LIleInterdite {
         controleur.setJCourant(joueur1);
         controleur.setNbActionsRestantes(3);
         controleur.setPiocheTirage(listeCartes);
-        
+        controleur.setPiocheInondation(piocheInond);
         
         
         
