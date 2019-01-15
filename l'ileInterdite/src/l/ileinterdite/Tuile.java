@@ -7,6 +7,7 @@ package l.ileinterdite;
 
 import aventuriers.Aventurier;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import util.Utils.Tresor;
 import util.Utils.EtatTuile;
 
@@ -17,7 +18,7 @@ import util.Utils.EtatTuile;
 public class Tuile extends ObjetIdentifie{
     private String nom;
     private EtatTuile etatTuile;
-    private ArrayList<Aventurier> joueursSurTuile = new ArrayList();
+    private LinkedHashMap<Integer, Aventurier> joueursSurTuile = new LinkedHashMap();
     private Tresor tresor;
 
     public Tuile(String nom, EtatTuile etatTuile) {
@@ -31,7 +32,7 @@ public class Tuile extends ObjetIdentifie{
         return etatTuile;
     }
 
-    public ArrayList<Aventurier> getJoueursSurTuile() {
+    public LinkedHashMap<Integer, Aventurier> getJoueursSurTuile() {
         return joueursSurTuile;
     }
 
@@ -43,7 +44,7 @@ public class Tuile extends ObjetIdentifie{
         return tresor;
     }
 
-    public void setJoueursSurTuile(ArrayList<Aventurier> joueursSurTuile) {
+    public void setJoueursSurTuile(LinkedHashMap<Integer, Aventurier> joueursSurTuile) {
         this.joueursSurTuile = joueursSurTuile;
     }
 
@@ -56,12 +57,12 @@ public class Tuile extends ObjetIdentifie{
         this.etatTuile = etatTuile;
     }
 
-    public void arriveeJoueur(Aventurier joueur) {
-        this.joueursSurTuile.add(joueur);
+    public void arriveeJoueur(Integer idJoueur, Aventurier joueur) {
+        this.joueursSurTuile.put(idJoueur, joueur);
     }
     
-    public void departJoueur(Aventurier joueur) {
-        this.joueursSurTuile.remove(joueur);
+    public void departJoueur(Integer idJoueur) {
+        this.joueursSurTuile.remove(idJoueur);
     }
 
     public Tuile(String nom) {

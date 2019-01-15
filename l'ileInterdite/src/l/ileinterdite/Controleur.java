@@ -33,6 +33,7 @@ import vues.VueNiveau;
 import vues.VuePlateau;
 import vues.VueTuile;
 import util.Utils.EtatTuile;
+import vues.VueCarte;
 
         
 
@@ -113,6 +114,8 @@ public class Controleur implements Observer{
         if (arg instanceof Message) {
             
             int idJoueur =((Message) arg).getIdAventurier();
+           
+            
             Color couleur1 = listeJoueurs.get(idJoueur).getPion().getCouleurSelectionAssechee();
             Color couleur2 =listeJoueurs.get(idJoueur).getPion().getCouleurSelectionInondee();
             
@@ -189,6 +192,33 @@ public class Controleur implements Observer{
                 //((VueAventurier) o).getBtnAutreAction().setEnabled(false);
                 
             }
+            //COMMANDE DONNER CARTE
+            else if(((Message ) arg).getCommande() == Commandes.DONNER_CARTE){
+                
+                ArrayList<Integer> idJoueurs = JCourant.getJoueursCiblables(grille);
+         
+                vuePlateau.setBoutonsRecevoirCarte(idJoueurs, idJoueur);
+            }
+            else if(((Message ) arg).getCommande() == Commandes.RECEVOIR_CARTE){
+                ArrayList<Integer> idJoueurs = JCourant.getJoueursCiblables(grille);
+                vuePlateau.setBoutonsDonnerCarte(idJoueurs, idJoueur);
+                
+                ArrayList<Integer> idCartes = JCourant.getCartesTresor();
+                vuePlateau.setCartesUtilisables(idCartes, JCourant.getId(), idJoueur);
+            }
+            //CHOIX DE LA CARTE
+            else if(((Message ) arg).getCommande() == Commandes.CHOISIR_CARTE){
+                int idCarte = ((Message) arg).getIdCarte();
+                CarteTirage ct= JCourant.getCartesEnMain().get(idCarte);//On récupère la carte en question
+                vuePlateau.setCartesDefaut(JCourant.getCartesTresor(), JCourant.getId());//On remet l'affichade par défaut des cartes
+                
+                JCourant.defausseCarte(ct);//On la retire de la main du JCourant
+                VueCarte vc = vuePlateau.getListeVuesJoueurs().get(JCourant.getId()).getCartesEnMain().get(idCarte);
+                vuePlateau.getListeVuesJoueurs().get(JCourant.getId()).retirerCarte(idCarte);//On retire la VueCarte associée de la VueAventurier du JCourant
+
+                listeJoueurs.get(idJoueur).addCartesEnMain(ct); //On ajoute la carte au joueur cible
+                vuePlateau.getListeVuesJoueurs().get(idJoueur).ajouterCarte(idCarte, vc);//On ajoute la vue carte au joueur cible
+            }
             
             else if (((Message ) arg).getCommande() == Commandes.ANNULER) {
                 ArrayList<Integer> listeIdTuiles = new ArrayList<>();
@@ -196,8 +226,7 @@ public class Controleur implements Observer{
                     listeIdTuiles.add(key);
                 }
                 vuePlateau.setTuilesDefaut(listeIdTuiles);
-                vuePlateau.getListeVuesJoueurs().get(idJoueur).setVueJCourant();
-                
+                vuePlateau.getListeVuesJoueurs().get(idJoueur).setVueJCourant();   
             }
         }
     }
@@ -243,8 +272,8 @@ public class Controleur implements Observer{
         Integer idTuileDepart =JCourant.getPosition().getId();
         Color couleur = JCourant.getPion().getCouleur();
         
-        this.grille.getListeTuiles().get(idTuileArrivee).arriveeJoueur(JCourant);
-        this.grille.getListeTuiles().get(idTuileDepart).departJoueur(JCourant);
+        this.grille.getListeTuiles().get(idTuileArrivee).arriveeJoueur(JCourant.getId(), JCourant);
+        this.grille.getListeTuiles().get(idTuileDepart).departJoueur(JCourant.getId());
         this.JCourant.setPosition(this.grille.getListeTuiles().get(idTuileArrivee));
         this.vuePlateau.getListeVuesJoueurs().get(idJoueur).getPosition().setText(JCourant.getPosition().getNom());
 
@@ -386,8 +415,8 @@ public class Controleur implements Observer{
         
         VueTuile vT;
         ArrayList<Color> couleurs = new ArrayList<>();
-        for(Aventurier a : t.getJoueursSurTuile()){
-            couleurs.add(a.getPion().getCouleur());
+        for(Integer key  : t.getJoueursSurTuile().keySet()){
+            couleurs.add(t.getJoueursSurTuile().get(key).getPion().getCouleur());
         }
         String tresor;
         tresor = null;
@@ -504,4 +533,5 @@ public class Controleur implements Observer{
     public boolean ifDefaite(){
         return(ifNiveauMax() || ifHeliportNoyee() || this.ifTresorPierrePerdu() ||this.ifTresorZephyrPerdu() || this.ifTresorCristalPerdu() || this.ifTresorCalicePerdu());
     }
+
 }

@@ -134,6 +134,15 @@ public class VuePlateau extends Observable {
                     clearChanged();
                 }
             });
+            listeVuesJoueurs.get(key).getBtnDonnerCarte().addActionListener(new ActionListener(){
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    setChanged();
+                    notifyObservers(new Message(Commandes.DONNER_CARTE, key, null, null, null));
+                    clearChanged();
+                }
+            });
+
            
         }
         ArrayList<Integer> listeId = new ArrayList<>();
@@ -192,17 +201,65 @@ public class VuePlateau extends Observable {
     }
     
     //AFFICHAGE DE VUE POUR CHOISIR UNE CARTE
-    public void setCartesUtilisables(ArrayList<Integer> listeIdCartes, Integer idJoueur){
+    public void setCartesUtilisables(ArrayList<Integer> listeIdCartes, Integer idJoueurCourant, Integer idJoueurCible){
         for (Integer idCarte : listeIdCartes){
-            this.listeVuesJoueurs.get(idJoueur).getCartesEnMain().get(idCarte).setBorder(BorderFactory.createLineBorder(Color.yellow, 2));
-            this.listeVuesJoueurs.get(idJoueur).getCartesEnMain().get(idCarte).getBtnCarte().addActionListener(new ActionListener(){
+            VueCarte vc = this.listeVuesJoueurs.get(idJoueurCourant).getCartesEnMain().get(idCarte);
+            vc.setSkinCliquable();
+            vc.getBtnCarte().addActionListener(new ActionListener(){
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     setChanged();
-                    notifyObservers(new Message(Commandes.CHOISIR_CARTE, idJoueur, idCarte, null, null));
+                    notifyObservers(new Message(Commandes.CHOISIR_CARTE, idJoueurCible, idCarte, null, null));
                     clearChanged();
                 }
             });
+        }
+    }
+    public void setCartesDefaut(ArrayList<Integer> listeIdCartes, Integer idJoueur){
+        for (Integer idCarte : listeIdCartes){
+            VueCarte vc = this.listeVuesJoueurs.get(idJoueur).getCartesEnMain().get(idCarte);
+            vc.setSkinDefaut();
+            vc.getBtnCarte().removeActionListener(vc.getBtnCarte().getActionListeners()[0]);
+             
+        }
+    }
+    public void setBoutonsRecevoirCarte(ArrayList<Integer> listeIdJoueurs, Integer idJoueur){
+        for(Integer key : listeIdJoueurs){
+            
+                JButton btn = this.listeVuesJoueurs.get(key).getBtnDonnerCarte();
+                btn.setText("Recevoir Carte");
+                btn.setEnabled(true);
+                btn.removeActionListener(btn.getActionListeners()[0]);
+                
+                btn.addActionListener(new ActionListener(){
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        setChanged();
+                        
+                        notifyObservers(new Message(Commandes.RECEVOIR_CARTE, key, null, null, null));
+                        clearChanged();
+                    }
+                });
+            
+        }
+    }
+    public void setBoutonsDonnerCarte(ArrayList<Integer> listeIdJoueurs, Integer idJoueur){
+        for(Integer key : listeIdJoueurs){
+            
+                JButton btn = this.listeVuesJoueurs.get(key).getBtnDonnerCarte();
+                btn.setText("Donner Carte");
+                btn.setEnabled(false);
+                btn.removeActionListener(btn.getActionListeners()[0]);
+                
+                btn.addActionListener(new ActionListener(){
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        setChanged();
+                        
+                        notifyObservers(new Message(Commandes.DONNER_CARTE, key, null, null, null));
+                        clearChanged();
+                    }
+                });
         }
     }
     

@@ -27,7 +27,7 @@ public class VueCarte extends JPanel{
         btnCarte = new JButton(nomCarte);btnCarte.setFont(new Font("Serif", Font.PLAIN, 10));
         //btnCarte.setMargin(m);
         this.setBorder(BorderFactory.createLineBorder(Color.darkGray, 1));
-        this.setPreferredSize(new Dimension(200,50));
+        this.setPreferredSize(new Dimension(75,50));
         this.add(btnCarte, BorderLayout.CENTER);
         btnCarte.setEnabled(false);
     }
@@ -35,5 +35,12 @@ public class VueCarte extends JPanel{
     public JButton getBtnCarte() {
         return btnCarte;
     }
-    
+    public void setSkinCliquable(){
+        this.setBorder(BorderFactory.createLineBorder(Color.yellow, 2));
+        this.getBtnCarte().setEnabled(true);
+    }
+    public void setSkinDefaut(){
+        this.setBorder(BorderFactory.createLineBorder(Color.darkGray, 1));
+        this.getBtnCarte().setEnabled(false);
+    }
 }

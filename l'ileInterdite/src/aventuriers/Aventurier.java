@@ -89,18 +89,19 @@ public abstract class Aventurier extends ObjetIdentifie{
     return tuiles;
     }
     
-    public ArrayList<Aventurier> getJoueursCiblables(Grille g){
-        ArrayList <Aventurier> cibles = new ArrayList<>();
-        this.getPosition().getJoueursSurTuile();
-        cibles.remove(this);
+    public ArrayList<Integer> getJoueursCiblables(Grille g){
+        ArrayList <Integer> cibles =  new ArrayList<>();
+        cibles.addAll(this.getPosition().getJoueursSurTuile().keySet());
+  
+        cibles.remove(this.getId());
         return cibles;
     }
     
-    public HashMap<Integer,CarteTirage> getCartesTresor(){
-        HashMap<Integer, CarteTirage> cartesDonnables = new HashMap<>();
+    public ArrayList<Integer> getCartesTresor(){
+        ArrayList<Integer> cartesDonnables = new ArrayList<>();
         for(Integer key : cartesEnMain.keySet()){
             if ("CarteTresor".equals(cartesEnMain.get(key).getClass().getSimpleName())){
-                cartesDonnables.put(key, cartesEnMain.get(key));
+                cartesDonnables.add(key);
             }
         }
         return cartesDonnables;
@@ -117,7 +118,6 @@ public abstract class Aventurier extends ObjetIdentifie{
     public Pion getPion() {
         return pion;
     }
-    
 
     
 }
