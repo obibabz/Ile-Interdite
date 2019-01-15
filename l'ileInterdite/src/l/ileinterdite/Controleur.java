@@ -252,19 +252,20 @@ public class Controleur implements Observer{
     //gestion tirage carte
     
     public void tirageCarte(){
+        ArrayList<Integer> listeId = new ArrayList<>();
+        for(Integer key : piocheTirage.keySet()){
+            listeId.add(key);
+        }
+        CarteTirage c = piocheTirage.get(listeId.get(0));
         
-        c.equals(piocheTirage.get(1));
-        piocheTirage.remove(1);
-        defausseTirage.add(c);
         if (c.getClass().getSimpleName() == "CarteMonteeDesEaux"){
             piocheCarteMonteeDesEaux();
+            piocheTirage.put(c.getId(), c);
         }else{
-            if(JCourant.getCartesEnMain().size() < 5){
                 JCourant.addCartesEnMain(c);
-            } else {
-                System.out.println("FAUT SUPPRIMER, mais carte enlevee");
-            }
+            
         }   
+        piocheTirage.remove(listeId.get(0));
     }
     
     //Gestion montée des eaux
@@ -378,6 +379,14 @@ public class Controleur implements Observer{
         
         return vT;
     }
+
+    public LinkedHashMap<Integer, CarteTirage> getPiocheTirage() {
+        return piocheTirage;
+    }
+
+    public void setPiocheTirage(LinkedHashMap<Integer, CarteTirage> piocheTirage) {
+        this.piocheTirage = piocheTirage;
+    }
     
     public String listeIdTuilesToString(ArrayList<Integer> listeTuiles){
         String res ="";
@@ -388,13 +397,7 @@ public class Controleur implements Observer{
         }
         return res;
     }
-    public ArrayList<Integer> listeId(LinkedHashMap<Integer, Object> liste){
-        ArrayList<Integer> listeId = new ArrayList<>();
-        for (Integer key : liste.keySet()){
-            listeId.add(key);
-        }
-        return listeId;
-    }
+
     
     
     

@@ -54,7 +54,7 @@ public class VueAventurier extends JPanel{
     private final JTextField position;
     private final LinkedHashMap<Integer,VueCarte> cartesEnMain;
 
-    public VueAventurier(int id, String nomJoueur, String nomAventurier, Color couleur, Color couleurGrisee, String pos, LinkedHashMap<Integer, VueCarte> cartesEnMain){
+    public VueAventurier(int id, String nomJoueur, String nomAventurier, Color couleur, Color couleurGrisee, String pos){
 
         //this.window = new JFrame();
         //window.setSize(350, 200);
@@ -68,7 +68,7 @@ public class VueAventurier extends JPanel{
         this.nomAventurier = nomAventurier;
         this.couleur = couleur;
         this.couleurGrisee= couleurGrisee;
-        this.cartesEnMain=cartesEnMain;
+        this.cartesEnMain= new LinkedHashMap();
         //this.cartesEnMain=cartesEnMain;
 
         // =================================================================================                                                                                            
@@ -227,6 +227,10 @@ public class VueAventurier extends JPanel{
 
     public Integer getIdVueAventurier() {
         return idVueAventurier;
+    }
+
+    public LinkedHashMap<Integer, VueCarte> getCartesEnMain() {
+        return cartesEnMain;
     }
 
     public JButton getBtnAnnuler() {

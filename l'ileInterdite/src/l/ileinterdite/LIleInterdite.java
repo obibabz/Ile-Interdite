@@ -119,6 +119,8 @@ public class LIleInterdite {
         Pion vert = Pion.VERT;
         Pion violet = Pion.VIOLET;
         
+        
+        //INITIALISATION DES CARTES/MAINS JOUEURS
         LinkedHashMap<Integer, CarteTirage> listeCartes = new LinkedHashMap<>();
         int i =0;
         while(i<=31){
@@ -150,6 +152,7 @@ public class LIleInterdite {
             CarteMonteeDesEaux ct = new CarteMonteeDesEaux();
             listeCartes.put(ct.getId(), ct);
             }
+            i++;
         }
         
         LinkedHashMap<Integer, VueCarte> piocheTirage = new LinkedHashMap();
@@ -187,7 +190,7 @@ public class LIleInterdite {
         controleur.setListeJoueurs(joueursSurGrille);
         controleur.setJCourant(joueur1);
         controleur.setNbActionsRestantes(3);
-        controleur.set
+        controleur.setPiocheTirage(listeCartes);
      
         // INNITIALISATION PLATEAU
         

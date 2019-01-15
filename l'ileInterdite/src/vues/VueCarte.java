@@ -29,5 +29,9 @@ public class VueCarte extends JPanel{
         this.add(btnCarte, BorderLayout.CENTER);
         btnCarte.setEnabled(false);
     }
+
+    public JButton getBtnCarte() {
+        return btnCarte;
+    }
     
 }

@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Objects;
 import java.util.Observable;
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -188,6 +189,22 @@ public class VuePlateau extends Observable {
             
         }
     }
+    
+    //AFFICHAGE DE VUE POUR CHOISIR UNE CARTE
+    public void setCartesUtilisables(ArrayList<Integer> listeIdCartes, Integer idJoueur){
+        for (Integer idCarte : listeIdCartes){
+            this.listeVuesJoueurs.get(idJoueur).getCartesEnMain().get(idCarte).setBorder(BorderFactory.createLineBorder(Color.yellow, 2));
+            this.listeVuesJoueurs.get(idJoueur).getCartesEnMain().get(idCarte).getBtnCarte().addActionListener(new ActionListener(){
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    setChanged();
+                    notifyObservers(new Message(Commandes.CHOISIR_CARTE, idJoueur, idCarte, null, null));
+                    clearChanged();
+                }
+            });
+        }
+    }
+    
     public JFrame getWindow() {
         return window;
     }
