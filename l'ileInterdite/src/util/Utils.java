@@ -15,6 +15,8 @@ public class Utils {
     
     public static enum Commandes {
         VALIDER_JOUEURS("Valider l'inscription des joueurs"),
+        DONNER_CARTE("Donner une carte"),
+        RECEVOIR_CARTE("Recevoir une carte"),
         BOUGER("Déplacer son pion"),
         ASSECHER("Assécher une tuile"),
         DONNER("Donner une carte à un autre joueur"),

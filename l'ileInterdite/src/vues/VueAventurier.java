@@ -93,8 +93,9 @@ public class VueAventurier extends JPanel{
         position.setText(pos);
 	position.setHorizontalAlignment(CENTER);
         panelPosition.add(position);
-
-        panelCartes = new JPanel(new FlowLayout());
+        
+        //PANEL CARTES
+        panelCartes = new JPanel(new GridLayout(1,this.getCartesEnMain().size()));
         panelCentre.add(panelCartes);
         for(Integer key : this.cartesEnMain.keySet()){
             panelCartes.add(cartesEnMain.get(key));
@@ -122,7 +123,7 @@ public class VueAventurier extends JPanel{
         
         this.panelBoutons.add(btnAutreAction); btnAutreAction.setEnabled(false);
         
-        this.panelBoutons.add(btnDonnerCarte); btnDonnerCarte.setEnabled(false);
+        this.panelBoutons.add(btnDonnerCarte);this.btnDonnerCarte.setEnabled(false);
         
         this.panelBoutons.add(btnUtiliserCarte); btnUtiliserCarte.setEnabled(false);
         
@@ -144,6 +145,7 @@ public class VueAventurier extends JPanel{
     }
     //AFFICHAGE SI NBACTIONSRESTANTES =0
     public void setVueFinTour(){
+        
             this.btnBouger.setEnabled(false);
             this.btnAssecher.setEnabled(false);
             if("Pilote".equals(nomAventurier)){
@@ -159,6 +161,7 @@ public class VueAventurier extends JPanel{
     //DESACTIVATION DE LA VUE
     public void setVueJPrecedant(){
             this.setVueFinTour();
+            
             this.btnTerminerTour.setEnabled(false);
             this.panelAventurier.setBackground(couleurGrisee);
             this.mainPanel.setBorder(BorderFactory.createLineBorder(couleurGrisee, 2)) ;
@@ -166,6 +169,7 @@ public class VueAventurier extends JPanel{
     }
     //ACTIVATION DE LA VUE
     public void setVueJCourant(){
+            this.btnDonnerCarte.setEnabled(true);
             this.btnBouger.setEnabled(true);
             this.btnAnnuler.setEnabled(false);
             this.btnAssecher.setEnabled(true);

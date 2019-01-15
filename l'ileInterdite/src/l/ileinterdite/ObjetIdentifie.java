@@ -1,5 +1,8 @@
 package l.ileinterdite;
 
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+
 /**
  *
  * @author IUT2-Dept Info
@@ -22,5 +25,13 @@ public class ObjetIdentifie {
 
     public void setId(Integer id) {
         this.id = id ;
-    }    
+    }
+    
+public ArrayList<Integer> listetoid(LinkedHashMap<Integer, ObjetIdentifie> liste){
+    ArrayList<Integer> listeid = new ArrayList<>();
+    for(Integer key : liste.keySet()){
+        listeid.add(key);
+    }
+    return listeid;
+}    
 }
