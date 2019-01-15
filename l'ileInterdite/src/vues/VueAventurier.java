@@ -13,6 +13,7 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Observable;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -38,7 +39,7 @@ public class VueAventurier extends JPanel{
     private final JPanel panelBoutons ;
     private final JPanel panelPosition ;
     private final JPanel panelCentre;
-    //private final JPanel panelCartes;
+    private final JPanel panelCartes;
     //private final JFrame window;
     private final JPanel panelAventurier;
     private final JPanel mainPanel;
@@ -51,9 +52,9 @@ public class VueAventurier extends JPanel{
     private final JButton btnTerminerTour;
     private final JButton btnAnnuler;
     private final JTextField position;
-    //private final HashMap<Integer,VueCarte> cartesEnMain;
+    private final LinkedHashMap<Integer,VueCarte> cartesEnMain;
 
-    public VueAventurier(int id, String nomJoueur, String nomAventurier, Color couleur, Color couleurGrisee, String pos/*, HashMap<Integer, VueCarte> cartesEnMain*/){
+    public VueAventurier(int id, String nomJoueur, String nomAventurier, Color couleur, Color couleurGrisee, String pos, LinkedHashMap<Integer, VueCarte> cartesEnMain){
 
         //this.window = new JFrame();
         //window.setSize(350, 200);
@@ -67,6 +68,7 @@ public class VueAventurier extends JPanel{
         this.nomAventurier = nomAventurier;
         this.couleur = couleur;
         this.couleurGrisee= couleurGrisee;
+        this.cartesEnMain=cartesEnMain;
         //this.cartesEnMain=cartesEnMain;
 
         // =================================================================================                                                                                            
@@ -91,11 +93,11 @@ public class VueAventurier extends JPanel{
         position.setText(pos);
 	position.setHorizontalAlignment(CENTER);
         panelPosition.add(position);
-/*
+
         panelCartes = new JPanel(new FlowLayout());
         for(Integer key : this.cartesEnMain.keySet()){
             panelCartes.add(cartesEnMain.get(key));
-        }*/
+        }
 	// =================================================================================                                                                                            
         // SUD : les boutons  
         

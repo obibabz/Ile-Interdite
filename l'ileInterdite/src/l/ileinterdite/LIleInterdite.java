@@ -12,6 +12,9 @@ import aventuriers.Messager;
 import aventuriers.Pilote;
 import aventuriers.Explorateur;
 import aventuriers.Aventurier;
+import cartes.CarteSacsDeSable;
+import cartes.CarteTirage;
+import cartes.CarteTresor;
 import vues.VueAventurier;
 import java.awt.Color;
 import java.util.ArrayList;
@@ -113,9 +116,37 @@ public class LIleInterdite {
         Pion vert = Pion.VERT;
         Pion violet = Pion.VIOLET;
         
+        LinkedHashMap<Integer, CarteTirage> listeCartes = new LinkedHashMap<>();
+        int i =0;
+        while(i<=31){
+            if(i<5){
+                CarteTresor ct = new CarteTresor(Tresor.CALICE);
+                listeCartes.put(ct.getId(), ct);
+            }
+            if(5<i && i<10){
+                CarteTresor ct = new CarteTresor(Tresor.PIERRE);
+                listeCartes.put(ct.getId(), ct);
+            }
+            if(10<i && i<15){
+                CarteTresor ct = new CarteTresor(Tresor.CRISTAL);
+                listeCartes.put(ct.getId(), ct);
+            }
+            if(15<i && i<20){
+                CarteTresor ct = new CarteTresor(Tresor.ZEPHYR);
+                listeCartes.put(ct.getId(), ct);
+            }
+            if(20<i && i<25){
+                CarteSacsDeSable ct = new CarteSacsDeSable();
+                listeCartes.put(ct.getId(), ct);
+            }
+            
+        }
+        
+        
+        
         
         LinkedHashMap<Integer, Aventurier> joueursSurGrille = new LinkedHashMap();
-        Aventurier joueur1 = new Ingenieur("joueur1", PBr, rouge); joueursSurGrille.put(joueur1.getId(), joueur1);PBr.arriveeJoueur(joueur1);
+        Aventurier joueur1 = new Ingenieur("joueur1", PBr, rouge); joueursSurGrille.put(joueur1.getId(), joueur1);PMa.arriveeJoueur(joueur1); joueur1.setPosition(PMa);
         Aventurier joueur2 = new Explorateur("joueur2", PCu, vert); joueursSurGrille.put(joueur2.getId(), joueur2);PCu.arriveeJoueur(joueur2);
         Aventurier joueur3 = new Plongeur("joueur3", PFe, violet); joueursSurGrille.put(joueur3.getId(), joueur3);PFe.arriveeJoueur(joueur3);
         Aventurier joueur4 = new Pilote("joueur4", H, bleu); joueursSurGrille.put(joueur4.getId(), joueur4);H.arriveeJoueur(joueur4);

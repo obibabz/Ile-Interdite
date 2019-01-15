@@ -11,4 +11,16 @@ import util.Utils.Tresor;
  */
 public class CarteTresor extends CarteTirage{
     private Tresor tresor;
+
+    public CarteTresor(Tresor tresor) {
+        this.tresor = tresor;
+    }
+
+    public Tresor getTresor() {
+        return tresor;
+    }
+
+    public void setTresor(Tresor tresor) {
+        this.tresor = tresor;
+    }
 }
