@@ -214,6 +214,9 @@ public class LIleInterdite {
         vP.addObserver(controleur);
         vP.afficher();
         controleur.tirageCarte();
+        controleur.tirageCarte();
+        controleur.tirageCarte();
+        controleur.tirageCarte();
         
     }
     

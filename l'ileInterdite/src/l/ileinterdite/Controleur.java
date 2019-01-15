@@ -473,4 +473,7 @@ public class Controleur implements Observer{
     public boolean ifDefaite(){
         return(ifNiveauMax() || ifHeliportNoyee() || this.ifTresorPierrePerdu() ||this.ifTresorZephyrPerdu() || this.ifTresorCristalPerdu() || this.ifTresorCalicePerdu());
     }
+    public void test(){
+        
+    }
 }
