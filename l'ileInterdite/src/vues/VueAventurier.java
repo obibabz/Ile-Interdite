@@ -159,6 +159,7 @@ public class VueAventurier extends JPanel{
     //DESACTIVATION DE LA VUE
     public void setVueJPrecedant(){
             this.setVueFinTour();
+            this.btnTerminerTour.setEnabled(false);
             this.panelAventurier.setBackground(couleurGrisee);
             this.mainPanel.setBorder(BorderFactory.createLineBorder(couleurGrisee, 2)) ;
             this.panelCentre.setBorder(new MatteBorder(0, 0, 2, 0, couleurGrisee));
