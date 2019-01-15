@@ -156,7 +156,6 @@ public class Controleur implements Observer{
                 gererDeplacement(idTuile, idJoueur);
                 vuePlateau.getMessageBox().displayMessage("Vous vous êtes déplacés sur : <br/>" +JCourant.getPosition().getNom(), couleur1, Boolean.TRUE, Boolean.TRUE);
                 nbActionsRestantes-=1;
-                System.out.println(nbActionsRestantes);
                 vuePlateau.getListeVuesJoueurs().get(idJoueur).setVueJCourant();
                 finTour(o, idJoueur);
                 
@@ -210,6 +209,9 @@ public class Controleur implements Observer{
             }
         }
     }
+    
+    
+    
     public void gererAssechement(Integer idTuile, Integer idJoueur){
         vuePlateau.getVueGrille().getListeTuiles().get(idTuile).setEtat(EtatTuile.ASSECHEE.toString());
         vuePlateau.getVueGrille().getListeTuiles().get(idTuile).setCouleurDefaut();
@@ -233,10 +235,9 @@ public class Controleur implements Observer{
         
         listeVuesTuiles.get(idTuileArrivee).getJoueursSurTuile().add(couleur);
         listeVuesTuiles.get(idTuileArrivee).setCasesJoueurs();
-        
-        
-        
     }
+    
+    
     public void finTour(Observable o, int idJCourant){
         //tirageCarte();
         //tirageInondation();
@@ -259,7 +260,7 @@ public class Controleur implements Observer{
             piocheCarteMonteeDesEaux();
         }else{
             if(JCourant.getCartesEnMain().size() < 5){
-                JCourant.addCartesEnMain(c);
+               JCourant.addCartesEnMain(c);
             } else {
                 System.out.println("FAUT SUPPRIMER, mais carte enlevee");
             }
