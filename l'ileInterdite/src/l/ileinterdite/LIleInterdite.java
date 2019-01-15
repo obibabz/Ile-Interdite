@@ -46,13 +46,13 @@ public class LIleInterdite {
         // TODO code application logic here
         
         
-        
+        scenario1();
         
         
     }
     
 //  ================================== SCENARIO 1: test partie normale ============================================================
-    public void scenario1() {
+    public static void scenario1() {
     
         Tuile V1 = new Tuile("Void", EtatTuile.ASSECHEE); V1.setEtatTuile(null);
         Tuile V2 = new Tuile("Void", EtatTuile.ASSECHEE); V2.setEtatTuile(null);
@@ -237,6 +237,7 @@ public class LIleInterdite {
         controleur.setJCourant(joueur1);
         controleur.setNbActionsRestantes(3);
         controleur.setPiocheTirage(listeCartes);
+        controleur.setPiocheInondation(piocheInond);
         
         
         
@@ -265,7 +266,7 @@ public class LIleInterdite {
         
     }
     
-    
+/*   
     
     //  ================================== SCENARIO 2: test condition de victoire ============================================================
     public void scenario2() {
@@ -600,8 +601,6 @@ public class LIleInterdite {
         controleur.setListeJoueurs(joueursSurGrille);
         controleur.setJCourant(joueur1);
         controleur.setNbActionsRestantes(3);
-        controleur.setPiocheTirage(listeCartes);
-        controleur.setPiocheInondation(piocheInond);
         
         
         
@@ -962,4 +961,5 @@ public class LIleInterdite {
         vP.afficher();
         controleur.tirageCarte();
     }
+}*/
 }
