@@ -252,7 +252,7 @@ public class Controleur implements Observer{
     //gestion tirage carte
     
     public void tirageCarte(){
-        CarteTirage c = new CarteTirage();
+        
         c.equals(piocheTirage.get(1));
         piocheTirage.remove(1);
         defausseTirage.add(c);
@@ -387,6 +387,13 @@ public class Controleur implements Observer{
             res += " ";
         }
         return res;
+    }
+    public ArrayList<Integer> listeId(LinkedHashMap<Integer, Object> liste){
+        ArrayList<Integer> listeId = new ArrayList<>();
+        for (Integer key : liste.keySet()){
+            listeId.add(key);
+        }
+        return listeId;
     }
     
     

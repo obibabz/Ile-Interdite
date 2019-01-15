@@ -22,6 +22,7 @@ public class CarteSacsDeSable extends CarteTirage{
     }
 
     public CarteSacsDeSable() {
+        super.setNom("Carte Sac de Sable");
     }
     
 }

@@ -12,6 +12,8 @@ import aventuriers.Messager;
 import aventuriers.Pilote;
 import aventuriers.Explorateur;
 import aventuriers.Aventurier;
+import cartes.CarteHelicoptere;
+import cartes.CarteMonteeDesEaux;
 import cartes.CarteSacsDeSable;
 import cartes.CarteTirage;
 import cartes.CarteTresor;
@@ -27,6 +29,7 @@ import vues.VuePlateau;
 import vues.VueTuile;
 import util.Utils.EtatTuile;
 import util.Utils.Tresor;
+import vues.VueCarte;
 import vues.VueNiveau;
 
 /**
@@ -123,23 +126,37 @@ public class LIleInterdite {
                 CarteTresor ct = new CarteTresor(Tresor.CALICE);
                 listeCartes.put(ct.getId(), ct);
             }
-            if(5<i && i<10){
+            if(5<=i && i<10){
                 CarteTresor ct = new CarteTresor(Tresor.PIERRE);
                 listeCartes.put(ct.getId(), ct);
             }
-            if(10<i && i<15){
+            if(10<=i && i<15){
                 CarteTresor ct = new CarteTresor(Tresor.CRISTAL);
                 listeCartes.put(ct.getId(), ct);
             }
-            if(15<i && i<20){
+            if(15<=i && i<20){
                 CarteTresor ct = new CarteTresor(Tresor.ZEPHYR);
                 listeCartes.put(ct.getId(), ct);
             }
-            if(20<i && i<25){
+            if(20<=i && i<25){
                 CarteSacsDeSable ct = new CarteSacsDeSable();
                 listeCartes.put(ct.getId(), ct);
             }
-            
+            if(25<=i && i<30){
+                CarteHelicoptere ct = new CarteHelicoptere();
+                listeCartes.put(ct.getId(), ct);
+            }
+            if(30<=i && i<31){
+            CarteMonteeDesEaux ct = new CarteMonteeDesEaux();
+            listeCartes.put(ct.getId(), ct);
+            }
+        }
+        
+        LinkedHashMap<Integer, VueCarte> piocheTirage = new LinkedHashMap();
+        
+        for(Integer key : listeCartes.keySet()){
+            VueCarte vc = new VueCarte(listeCartes.get(key).getNom());
+            piocheTirage.put(key, vc);
         }
         
         
@@ -170,7 +187,7 @@ public class LIleInterdite {
         controleur.setListeJoueurs(joueursSurGrille);
         controleur.setJCourant(joueur1);
         controleur.setNbActionsRestantes(3);
-        
+        controleur.set
      
         // INNITIALISATION PLATEAU
         

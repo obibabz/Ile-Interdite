@@ -11,4 +11,8 @@ package cartes;
  */
 public class CarteMonteeDesEaux extends CarteTirage{
     private int test = 0;
+
+    public CarteMonteeDesEaux() {
+        super.setNom("Carte Montée des Eaux");
+    }
 }
