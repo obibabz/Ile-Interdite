@@ -37,6 +37,7 @@ public class VuePlateau extends Observable {
     private MessageBox messageBox;
     private final JPanel mainPanel;
     private final JPanel panelPrincipal;
+    private LinkedHashMap<Integer, VueCarte> listeVuesCartes;
 
     public VuePlateau(VueGrille vueGrille, LinkedHashMap<Integer, VueAventurier> listeVuesJoueurs, MessageBox mb, VueNiveau vn) {
         window = new JFrame();
@@ -207,6 +208,17 @@ public class VuePlateau extends Observable {
     
     public JFrame getWindow() {
         return window;
+    }
+
+    public LinkedHashMap<Integer, VueCarte> getListeVuesCartes() {
+        return listeVuesCartes;
+    }
+
+    public void setListeVuesCartes(LinkedHashMap<Integer, VueCarte> listeVuesCartes) {
+        this.listeVuesCartes = listeVuesCartes;
+    }
+    public void addCarte(Integer id, VueCarte vc){
+        this.listeVuesCartes.put(id, vc);
     }
 
     public VueGrille getVueGrille() {

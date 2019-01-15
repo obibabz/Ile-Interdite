@@ -191,6 +191,10 @@ public class LIleInterdite {
         controleur.setJCourant(joueur1);
         controleur.setNbActionsRestantes(3);
         controleur.setPiocheTirage(listeCartes);
+        
+        
+        
+        
      
         // INNITIALISATION PLATEAU
         
@@ -200,15 +204,16 @@ public class LIleInterdite {
             vuesTuiles.put(vT.getIdVueTuile(), vT);
         }
       
-        MessageBox mb = new MessageBox();
+        MessageBox mb = new MessageBox();mb.setCaliceVisible();
         VueGrille vG = new VueGrille(vuesTuiles);
         
         
         VuePlateau vP = new VuePlateau(vG, vuesAventurier, mb, new VueNiveau(2));
         controleur.setVuePlateau(vP);
+        vP.setListeVuesCartes(piocheTirage);
         vP.addObserver(controleur);
         vP.afficher();
-        
+        controleur.tirageCarte();
         
     }
     

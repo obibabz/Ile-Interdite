@@ -8,6 +8,7 @@ package vues;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -22,10 +23,11 @@ public class VueCarte extends JPanel{
 
     public VueCarte(String nom) {
         this.setLayout(new BorderLayout());
-        btnCarte = new JButton();
         this.nomCarte = nom;
+        btnCarte = new JButton(nomCarte);btnCarte.setFont(new Font("Serif", Font.PLAIN, 10));
+        //btnCarte.setMargin(m);
         this.setBorder(BorderFactory.createLineBorder(Color.darkGray, 1));
-        this.setPreferredSize(new Dimension(50,75));
+        this.setPreferredSize(new Dimension(200,50));
         this.add(btnCarte, BorderLayout.CENTER);
         btnCarte.setEnabled(false);
     }

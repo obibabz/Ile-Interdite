@@ -263,7 +263,8 @@ public class Controleur implements Observer{
             piocheTirage.put(c.getId(), c);
         }else{
                 JCourant.addCartesEnMain(c);
-            
+                
+                vuePlateau.getListeVuesJoueurs().get(JCourant.getId()).ajouterCarte(listeId.get(0), vuePlateau.getListeVuesCartes().get(listeId.get(0)));
         }   
         piocheTirage.remove(listeId.get(0));
     }

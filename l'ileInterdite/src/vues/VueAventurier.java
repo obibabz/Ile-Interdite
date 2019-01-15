@@ -95,6 +95,7 @@ public class VueAventurier extends JPanel{
         panelPosition.add(position);
 
         panelCartes = new JPanel(new FlowLayout());
+        panelCentre.add(panelCartes);
         for(Integer key : this.cartesEnMain.keySet()){
             panelCartes.add(cartesEnMain.get(key));
         }
@@ -176,6 +177,28 @@ public class VueAventurier extends JPanel{
             this.panelCentre.setBorder(new MatteBorder(0, 0, 2, 0, couleur));
     }
 
+    public void ajouterCarte(Integer id, VueCarte vc){
+        System.out.println("0");
+        this.cartesEnMain.put(id, vc);
+                System.out.println("1");
+
+        panelCartes.removeAll();
+                System.out.println("2");
+
+        for(Integer key : this.cartesEnMain.keySet()){
+                    System.out.println("3");
+
+            panelCartes.add(cartesEnMain.get(key));
+                    System.out.println("4");
+
+        }
+    }
+    public void retirerCarte(Integer id){
+        this.cartesEnMain.remove(id);panelCartes.removeAll();
+        for(Integer key : this.cartesEnMain.keySet()){
+            panelCartes.add(cartesEnMain.get(key));
+        }
+    }
     public JButton getBtnBouger() {
         return btnBouger;
     }
