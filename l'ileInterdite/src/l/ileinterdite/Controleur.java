@@ -211,14 +211,7 @@ public class Controleur implements Observer{
     }
     
     
-    
-    public void gererAssechement(Integer idTuile, Integer idJoueur){
-        vuePlateau.getVueGrille().getListeTuiles().get(idTuile).setEtat(EtatTuile.ASSECHEE.toString());
-        vuePlateau.getVueGrille().getListeTuiles().get(idTuile).setCouleurDefaut();
-        
-        this.grille.getListeTuiles().get(idTuile).setEtatTuile(EtatTuile.ASSECHEE);
-        this.JCourant.setNbAssech(this.JCourant.getNbAssech()+1);
-    }
+
     
     
     public void gererDeplacement(Integer idTuileArrivee, Integer idJoueur){
@@ -236,6 +229,15 @@ public class Controleur implements Observer{
         
         listeVuesTuiles.get(idTuileArrivee).getJoueursSurTuile().add(couleur);
         listeVuesTuiles.get(idTuileArrivee).setCasesJoueurs();
+    }
+    
+        
+    public void gererAssechement(Integer idTuile, Integer idJoueur){
+        vuePlateau.getVueGrille().getListeTuiles().get(idTuile).setEtat(EtatTuile.ASSECHEE.toString());
+        vuePlateau.getVueGrille().getListeTuiles().get(idTuile).setCouleurDefaut();
+        
+        this.grille.getListeTuiles().get(idTuile).setEtatTuile(EtatTuile.ASSECHEE);
+        this.JCourant.setNbAssech(this.JCourant.getNbAssech()+1);
     }
     
     
