@@ -105,17 +105,8 @@ public class Controleur implements Observer{
         this.listeJoueurs = listeJoueurs;
     }
     
-    public void joueurSuivant(){
-        ArrayList<Integer> listeId = new ArrayList<>();
-        for(Integer key : this.listeJoueurs.keySet()){
-            listeId.add(key);
-        }
-        if(listeId.indexOf(JCourant.getId()) < listeId.size()-1 ){   
-            setJCourant(listeJoueurs.get(listeId.get(listeId.indexOf(JCourant.getId())+1 )));
-        }
-        else{setJCourant(listeJoueurs.get(listeId.get(0)));}
-    }
-
+    //Fonction de déroulement de la partie: 
+    
     @Override
     public void update(Observable o, Object arg) {
         if (arg instanceof Message) {
@@ -210,9 +201,29 @@ public class Controleur implements Observer{
         }
     }
     
+    public void finTour(Observable o, int idJCourant){
+        //tirageCarte();
+        //tirageInondation();
+        if (nbActionsRestantes == 0){
+            this.vuePlateau.getListeVuesJoueurs().get(idJCourant).setVueFinTour();
+        }
+        if (ifVictoire()){
+            System.out.println("FAUT FAIRE LA VUE VICTOIRE VITE ET SUPPRIMER CE MESSAGE");
+        }
+    }
     
-
+    public void joueurSuivant(){
+        ArrayList<Integer> listeId = new ArrayList<>();
+        for(Integer key : this.listeJoueurs.keySet()){
+            listeId.add(key);
+        }
+        if(listeId.indexOf(JCourant.getId()) < listeId.size()-1 ){   
+            setJCourant(listeJoueurs.get(listeId.get(listeId.indexOf(JCourant.getId())+1 )));
+        }
+        else{setJCourant(listeJoueurs.get(listeId.get(0)));}
+    }
     
+    //Fonction de dépalcement et d'assechement
     
     public void gererDeplacement(Integer idTuileArrivee, Integer idJoueur){
         LinkedHashMap<Integer, VueTuile> listeVuesTuiles = this.vuePlateau.getVueGrille().getListeTuiles();
@@ -238,18 +249,6 @@ public class Controleur implements Observer{
         
         this.grille.getListeTuiles().get(idTuile).setEtatTuile(EtatTuile.ASSECHEE);
         this.JCourant.setNbAssech(this.JCourant.getNbAssech()+1);
-    }
-    
-    
-    public void finTour(Observable o, int idJCourant){
-        //tirageCarte();
-        //tirageInondation();
-        if (nbActionsRestantes == 0){
-            this.vuePlateau.getListeVuesJoueurs().get(idJCourant).setVueFinTour();
-        }
-        if (ifVictoire()){
-            System.out.println("FAUT FAIRE LA VUE VICTOIRE VITE ET SUPPRIMER CE MESSAGE");
-        }
     }
     
     //gestion tirage carte
