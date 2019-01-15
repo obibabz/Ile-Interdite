@@ -272,7 +272,7 @@ public class Controleur implements Observer{
         Integer idTuileDepart =JCourant.getPosition().getId();
         Color couleur = JCourant.getPion().getCouleur();
         
-        this.grille.getListeTuiles().get(idTuileArrivee).arriveeJoueur(JCourant.getId(), JCourant);
+        this.grille.getListeTuiles().get(idTuileArrivee).arriveeJoueur( JCourant);
         this.grille.getListeTuiles().get(idTuileDepart).departJoueur(JCourant.getId());
         this.JCourant.setPosition(this.grille.getListeTuiles().get(idTuileArrivee));
         this.vuePlateau.getListeVuesJoueurs().get(idJoueur).getPosition().setText(JCourant.getPosition().getNom());
