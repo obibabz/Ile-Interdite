@@ -115,6 +115,10 @@ public class Controleur implements Observer{
     public void setListeJoueurs(LinkedHashMap<Integer, Aventurier> listeJoueurs) {
         this.listeJoueurs = listeJoueurs;
     }
+
+    public void setNiveauInond(int niveauInond) {
+        this.niveauInond = niveauInond;
+    }
     
 
 
@@ -130,32 +134,30 @@ public class Controleur implements Observer{
             Color couleur1 = listeJoueurs.get(idJoueur).getPion().getCouleurSelectionAssechee();
             Color couleur2 =listeJoueurs.get(idJoueur).getPion().getCouleurSelectionInondee();
             
-            
+             // Commande de Déplacement
             if (((Message) arg).getCommande() == Commandes.BOUGER) { 
                 ArrayList<Integer> listeIdTuiles = listeJoueurs.get(idJoueur).getTuilesAccessibles(grille);
                 if(!listeIdTuiles.isEmpty()){
                     this.vuePlateau.setTuilesDeplacement(listeIdTuiles, idJoueur, couleur1, couleur2);
                     vuePlateau.getMessageBox().displayMessage("Vous pouvez vous déplacer vers : <br/>" +listeIdTuilesToString(listeIdTuiles), couleur1, Boolean.TRUE, Boolean.TRUE);
                     vuePlateau.getListeVuesJoueurs().get(idJoueur).setVueChoix();
-                }
-                else{
+                }else{
                     vuePlateau.getMessageBox().displayMessage("Vous ne pouvez vous déplacer nul-part." +listeIdTuilesToString(listeIdTuiles), couleur1, Boolean.TRUE, Boolean.TRUE);
                 }
-            }
-            else if (((Message) arg).getCommande() == Commandes.ASSECHER) {
+                
+                // Commande d'Assechement
+            }else if (((Message) arg).getCommande() == Commandes.ASSECHER) {
                     ArrayList<Integer>listeIdTuiles = listeJoueurs.get(idJoueur).getTuilesAssechables(grille);
                     
                     if(!listeIdTuiles.isEmpty()){
                         this.vuePlateau.setTuilesAssechement(listeIdTuiles, idJoueur, couleur1, couleur2  );
                         vuePlateau.getMessageBox().displayMessage("Vous pouvez assécher : <br/>" +listeIdTuilesToString(listeIdTuiles), couleur1, Boolean.TRUE, Boolean.TRUE);
                         vuePlateau.getListeVuesJoueurs().get(idJoueur).setVueChoix();
-                    }
-                    else{
+                    }else{
                         vuePlateau.getMessageBox().displayMessage("Il n'y a pas de tuile asséchable adjacente" +listeIdTuilesToString(listeIdTuiles), couleur1, Boolean.TRUE, Boolean.TRUE);
                     }
-                    
-            }
-            else if (((Message) arg).getCommande() == Commandes.CHOISIR_TUILE_D){
+                 // Choix de la tuile de déplacement   
+            }else if (((Message) arg).getCommande() == Commandes.CHOISIR_TUILE_D){
                 int idTuile =((Message) arg).getIdTuile();
                 ArrayList<Integer> listeIdTuiles = listeJoueurs.get(idJoueur).getTuilesAccessibles(grille);
                 this.vuePlateau.setTuilesDefaut();
@@ -165,8 +167,8 @@ public class Controleur implements Observer{
                 vuePlateau.getListeVuesJoueurs().get(idJoueur).setVueJCourant();
                 verifFinTour(o, idJoueur);
                 
-            }
-            else if (((Message) arg).getCommande() == Commandes.CHOISIR_TUILE_A){
+                //Choix de la tuile d'assechement
+            }else if (((Message) arg).getCommande() == Commandes.CHOISIR_TUILE_A){
                 int idTuile =((Message) arg).getIdTuile();
                 ArrayList<Integer> listeIdTuiles = listeJoueurs.get(idJoueur).getTuilesAssechables(grille);
                 this.vuePlateau.setTuilesDefaut();
@@ -186,7 +188,7 @@ public class Controleur implements Observer{
                 vuePlateau.getListeVuesJoueurs().get(idJoueur).setVueJCourant();
                 verifFinTour(o, idJoueur);
             }
-            
+                // Gestion de la fin du tour
             else if (((Message ) arg).getCommande() == Commandes.TERMINER) {
                 actionFinTour();
                 nbActionsRestantes = 3;
@@ -196,8 +198,8 @@ public class Controleur implements Observer{
                 vuePlateau.getListeVuesJoueurs().get(JCourant.getId()).setVueJCourant();
                 vuePlateau.getMessageBox().displayMessage("C'est à  : <br/>" +JCourant.getClass().getSimpleName()+" de jouer.", JCourant.getPion().getCouleur(), Boolean.TRUE, Boolean.TRUE);
                 actionDebutTour();
-            }
-            else if (((Message ) arg).getCommande() == Commandes.POUVOIR) {
+            
+            }else if (((Message ) arg).getCommande() == Commandes.POUVOIR) {
                 
                 //((VueAventurier) o).getPosition().setText(JCourant.getPosition().getNom());
                 //((VueAventurier) o).getBtnAutreAction().setEnabled(false);
@@ -211,8 +213,8 @@ public class Controleur implements Observer{
                     vuePlateau.setBoutonsRecevoirCarte(idJoueurs, idJoueur);
                     vuePlateau.getListeVuesJoueurs().get(idJoueur).setVueChoix();
                 }
-            }
-            else if(((Message ) arg).getCommande() == Commandes.RECEVOIR_CARTE){
+                //reçu d'une carte
+            }else if(((Message ) arg).getCommande() == Commandes.RECEVOIR_CARTE){
                 ArrayList<Integer> idJoueurs = JCourant.getJoueursCiblables(grille);
                 vuePlateau.setBoutonsDonnerCarte(idJoueurs, idJoueur);
                 
@@ -255,7 +257,7 @@ public class Controleur implements Observer{
                     utilisationHelicoptere(idCarte, idJoueur);
                 }
             }
-            
+             //Annulation
             else if (((Message ) arg).getCommande() == Commandes.ANNULER) {
                 ArrayList<Integer> listeIdTuiles = new ArrayList<>();
                 for(Integer key : this.grille.getListeTuiles().keySet()){
@@ -263,7 +265,7 @@ public class Controleur implements Observer{
                 }
                 vuePlateau.setTuilesDefaut();
                 vuePlateau.getListeVuesJoueurs().get(idJoueur).setVueJCourant();   
-            }
+            }//Utilisation de la carte
             else if(((Message) arg).getCommande() == Commandes.UTILISER_CARTE){
                 ArrayList<Integer> listeIdCartes = new ArrayList<>();
                 listeIdCartes = JCourant.getCartesUtilisables();
@@ -272,6 +274,7 @@ public class Controleur implements Observer{
         }
     }
     
+    //Action a éxécuter en cas de fin du tour pour cause d'actions restante epuisée
     public void verifFinTour(Observable o, int idJCourant){
         if (nbActionsRestantes == 0){
             this.vuePlateau.getListeVuesJoueurs().get(idJCourant).setVueFinTour();
@@ -279,7 +282,8 @@ public class Controleur implements Observer{
     }    
     public void actionDebutTour(){
         gestionDefausse(JCourant.getId());
-    }       
+    }
+        //Action a éxécuter a la fin d'un tour
     public void actionFinTour(){
         
              //Tirage des cartes Tresor et Inondation
@@ -402,6 +406,7 @@ public class Controleur implements Observer{
         piocheInondation.addAll(defausseInondation);
         defausseInondation.clear();
         vuePlateau.getMessageBox().displayMessage("Une carte montee des eaux a été pioché", JCourant.getPion().getCouleur(), Boolean.TRUE, Boolean.TRUE);
+        vuePlateau.getMessageBox().displayAlerte("Une carte montee des eaux a été pioché");
         vuePlateau.getVueNiveau().setNiveau(niveauInond);
     }
     
@@ -410,16 +415,16 @@ public class Controleur implements Observer{
     //pioche d'une carte inondation
 
     public void piocheCarteInondee(){
-        CarteInondation c = piocheInondation.get(0);
-        Tuile t = grille.getListeTuiles().get(c.getId());
-        VueTuile vt = vuePlateau.getVueGrille().getListeTuiles().get(c.getId());
-        // inondation de la tuile correspondante
+        // Inondation de la tuile correspondante
         if (piocheInondation.isEmpty()){
             for(CarteInondation ci: this.defausseInondation){
                 piocheInondation.add(ci);
             }
         }
-        if(t.getEtatTuile() == EtatTuile.ASSECHEE){        //
+        CarteInondation c = piocheInondation.get(0);
+        Tuile t = grille.getListeTuiles().get(c.getId());
+        VueTuile vt = vuePlateau.getVueGrille().getListeTuiles().get(c.getId());
+        if(t.getEtatTuile() == EtatTuile.ASSECHEE){
             t.setEtatTuile(EtatTuile.INONDEE);
             defausseInondation.add(c);
             piocheInondation.remove(0);
