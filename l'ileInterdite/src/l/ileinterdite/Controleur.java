@@ -482,9 +482,6 @@ public class Controleur implements Observer{
         return retour;
     }
 
-
-    
-    
     
             //Test des différentes conditions de défaites (sauf le cas de la "mort" d'un joueur, directement géré dans tirageCarteInodation)
     
