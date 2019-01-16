@@ -57,6 +57,7 @@ public class Controleur implements Observer{
     private int niveauInond;
     private LinkedHashMap< Integer, CarteTirage> piocheTirage;
     private LinkedHashMap<Integer, CarteTirage> defausseTirage = new LinkedHashMap();
+    private boolean partiePerdue = false;
     
     
     private VuePlateau vuePlateau;
@@ -286,9 +287,9 @@ public class Controleur implements Observer{
     }       
     public void actionFinTour(){
         
-        tirageCarte();
-        tirageCarte();
              //Tirage des cartes Tresor et Inondation
+        tirageCarte();
+        tirageCarte();
         tirageInondation();
 
         if (ifVictoire()){
@@ -410,23 +411,26 @@ public class Controleur implements Observer{
         Tuile t = grille.getListeTuiles().get(c.getId());
         VueTuile vt = vuePlateau.getVueGrille().getListeTuiles().get(c.getId());
         // inondation de la tuile correspondante
-        if(t.getEtatTuile() == EtatTuile.ASSECHEE){        //
-            t.setEtatTuile(EtatTuile.INONDEE);
+        if(grille.getListeTuiles().get(c.getId()).getEtatTuile() == EtatTuile.ASSECHEE){        //
+            grille.getListeTuiles().get(c.getId()).setEtatTuile(EtatTuile.INONDEE);
             defausseInondation.add(c);
             piocheInondation.remove(0);
             vuePlateau.getMessageBox().displayMessage("La tuile : "+grille.getListeTuiles().get(c.getId()).getNom()+" a été inondée", Color.BLACK, Boolean.TRUE, Boolean.TRUE);
             vt.setEtat(EtatTuile.INONDEE.toString());
             vt.setCouleurDefaut();
         }else if(grille.getListeTuiles().get(c.getId()).getEtatTuile() == EtatTuile.INONDEE){
-            t.setEtatTuile(EtatTuile.COULEE);
+            grille.getListeTuiles().get(c.getId()).setEtatTuile(EtatTuile.COULEE);
+            vuePlateau.getMessageBox().displayMessage("La tuile "+grille.getListeTuiles().get(c.getId()).getNom()+" a été coulée.", Color.BLACK, Boolean.TRUE, Boolean.TRUE);
             piocheInondation.remove(0);
-            vt.setEtat(EtatTuile.COULEE.toString());
-            vt.setCouleurDefaut();
-            vuePlateau.getMessageBox().displayMessage("La tuile : "+grille.getListeTuiles().get(c.getId()).getNom()+" a été coulée", Color.BLACK, Boolean.TRUE, Boolean.TRUE);
-        }
-        else if(grille.getListeTuiles().get(c.getId()).getEtatTuile() == EtatTuile.COULEE){
-            piocheInondation.remove(0);
-            piocheCarteInondee();
+            if(!grille.getListeTuiles().get(c.getId()).getJoueursSurTuile().isEmpty()){
+                for(Integer key : grille.getListeTuiles().get(c.getId()).getJoueursSurTuile().keySet()){
+                    if(!grille.getListeTuiles().get(c.getId()).getJoueursSurTuile().get(key).getTuilesAccessibles(grille).isEmpty()){
+                        vuePlateau.setTuilesDeplacement(grille.getListeTuiles().get(c.getId()).getJoueursSurTuile().get(key).getTuilesAccessibles(grille), key, Color.blue, Color.blue);
+                    }else{
+                        partiePerdue = true;
+                    }
+                }
+            }
         }
     }
 
@@ -549,7 +553,7 @@ public class Controleur implements Observer{
     
     
     
-    
+            //Test des différentes conditions de défaites (sauf le cas de la "mort" d'un joueur, directement géré dans tirageCarteInodation)
     
     public boolean ifHeliportNoyee(){
         boolean retour = false;
@@ -618,7 +622,7 @@ public class Controleur implements Observer{
     }
     
     public boolean ifDefaite(){
-        return(ifNiveauMax() || ifHeliportNoyee() || this.ifTresorPierrePerdu() ||this.ifTresorZephyrPerdu() || this.ifTresorCristalPerdu() || this.ifTresorCalicePerdu());
+        return(ifNiveauMax() || ifHeliportNoyee() || ifTresorPierrePerdu() || ifTresorZephyrPerdu() || ifTresorCristalPerdu() || ifTresorCalicePerdu() || partiePerdue);
     }
     
 //  ================================== SCENARIO 1: test partie normale ============================================================
