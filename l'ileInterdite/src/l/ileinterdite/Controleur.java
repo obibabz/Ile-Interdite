@@ -57,6 +57,7 @@ public class Controleur implements Observer{
     private int niveauInond;
     private LinkedHashMap< Integer, CarteTirage> piocheTirage;
     private LinkedHashMap<Integer, CarteTirage> defausseTirage = new LinkedHashMap();
+    private boolean partiePerdue = false;
     
     
     private VuePlateau vuePlateau;
@@ -279,9 +280,9 @@ public class Controleur implements Observer{
     }       
     public void actionFinTour(){
         
-        tirageCarte();
-        tirageCarte();
              //Tirage des cartes Tresor et Inondation
+        tirageCarte();
+        tirageCarte();
         tirageInondation();
 
         if (ifVictoire()){
@@ -402,7 +403,11 @@ public class Controleur implements Observer{
             piocheInondation.remove(0);
             if(!grille.getListeTuiles().get(c.getId()).getJoueursSurTuile().isEmpty()){
                 for(Integer key : grille.getListeTuiles().get(c.getId()).getJoueursSurTuile().keySet()){
-                    vuePlateau.setTuilesDeplacement(grille.getListeTuiles().get(c.getId()).getJoueursSurTuile().get(key).getTuilesAccessibles(grille), key, Color.blue, Color.blue);
+                    if(!grille.getListeTuiles().get(c.getId()).getJoueursSurTuile().get(key).getTuilesAccessibles(grille).isEmpty()){
+                        vuePlateau.setTuilesDeplacement(grille.getListeTuiles().get(c.getId()).getJoueursSurTuile().get(key).getTuilesAccessibles(grille), key, Color.blue, Color.blue);
+                    }else{
+                        partiePerdue = true;
+                    }
                 }
             }
         }
@@ -527,7 +532,7 @@ public class Controleur implements Observer{
     
     
     
-    
+            //Test des différentes conditions de défaites (sauf le cas de la "mort" d'un joueur, directement géré dans tirageCarteInodation)
     
     public boolean ifHeliportNoyee(){
         boolean retour = false;
@@ -596,7 +601,7 @@ public class Controleur implements Observer{
     }
     
     public boolean ifDefaite(){
-        return(ifNiveauMax() || ifHeliportNoyee() || this.ifTresorPierrePerdu() ||this.ifTresorZephyrPerdu() || this.ifTresorCristalPerdu() || this.ifTresorCalicePerdu());
+        return(ifNiveauMax() || ifHeliportNoyee() || ifTresorPierrePerdu() || ifTresorZephyrPerdu() || ifTresorCristalPerdu() || ifTresorCalicePerdu() || partiePerdue);
     }
     
 //  ================================== SCENARIO 1: test partie normale ============================================================
