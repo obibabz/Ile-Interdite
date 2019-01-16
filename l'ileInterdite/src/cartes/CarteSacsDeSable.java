@@ -11,18 +11,13 @@ package cartes;
  */
 public class CarteSacsDeSable extends CarteTirage{
     private int test = 0;
-    private final String nom = "Sac de Sable";
 
     public int getTest() {
         return test;
     }
 
-    public String getNom() {
-        return nom;
-    }
-
     public CarteSacsDeSable() {
-        super.setNom("Carte Sac de Sable");
+        super.setNom("Sac de Sable");
     }
     
 }

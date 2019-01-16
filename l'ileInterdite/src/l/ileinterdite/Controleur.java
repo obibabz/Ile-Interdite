@@ -158,7 +158,7 @@ public class Controleur implements Observer{
             else if (((Message) arg).getCommande() == Commandes.CHOISIR_TUILE_D){
                 int idTuile =((Message) arg).getIdTuile();
                 ArrayList<Integer> listeIdTuiles = listeJoueurs.get(idJoueur).getTuilesAccessibles(grille);
-                this.vuePlateau.setTuilesDefaut(listeIdTuiles);
+                this.vuePlateau.setTuilesDefaut();
                 gererDeplacement(idTuile, idJoueur);
                 vuePlateau.getMessageBox().displayMessage("Vous vous êtes déplacés sur : <br/>" +JCourant.getPosition().getNom(), couleur1, Boolean.TRUE, Boolean.TRUE);
                 nbActionsRestantes-=1;
@@ -169,7 +169,7 @@ public class Controleur implements Observer{
             else if (((Message) arg).getCommande() == Commandes.CHOISIR_TUILE_A){
                 int idTuile =((Message) arg).getIdTuile();
                 ArrayList<Integer> listeIdTuiles = listeJoueurs.get(idJoueur).getTuilesAssechables(grille);
-                this.vuePlateau.setTuilesDefaut(listeIdTuiles);
+                this.vuePlateau.setTuilesDefaut();
                 gererAssechement(idTuile, idJoueur);
                 listeIdTuiles = listeJoueurs.get(idJoueur).getTuilesAssechables(grille);
                 vuePlateau.getMessageBox().displayMessage("Vous avez asséché : <br/>" +grille.getListeTuiles().get(idTuile).getNom(), couleur1, Boolean.TRUE, Boolean.TRUE);
@@ -252,6 +252,12 @@ public class Controleur implements Observer{
                 
                 defausseTirage.put(idCarte, c);//On rajoute la carte à la défausse
                 gestionDefausse(idJoueur);//On relance la gestion de défausse tant que le joueur a plus de 5 cartes en main
+                if("Sac de Sable".equals(c.getNom())){
+                    utilisationSac(idCarte, idJoueur);
+                }
+                else if(("Helicoptere").equals(c.getNom())){
+                    utilisationHelicoptere(idCarte, idJoueur);
+                }
             }
             
             else if (((Message ) arg).getCommande() == Commandes.ANNULER) {
@@ -259,12 +265,13 @@ public class Controleur implements Observer{
                 for(Integer key : this.grille.getListeTuiles().keySet()){
                     listeIdTuiles.add(key);
                 }
-                vuePlateau.setTuilesDefaut(listeIdTuiles);
+                vuePlateau.setTuilesDefaut();
                 vuePlateau.getListeVuesJoueurs().get(idJoueur).setVueJCourant();   
             }
             else if(((Message) arg).getCommande() == Commandes.UTILISER_CARTE){
                 ArrayList<Integer> listeIdCartes = new ArrayList<>();
                 listeIdCartes = JCourant.getCartesUtilisables();
+                vuePlateau.setCartesDefaussables(listeIdCartes, idJoueur);
             }
         }
     }
@@ -347,6 +354,7 @@ public class Controleur implements Observer{
         if(piocheTirage.isEmpty()){
             for(Integer key : defausseTirage.keySet()){
                 piocheTirage.put(key, defausseTirage.get(key));
+                listeId.add(key);
             }
         }
             CarteTirage c = piocheTirage.get(listeId.get(0));
@@ -370,6 +378,19 @@ public class Controleur implements Observer{
             vuePlateau.setCartesDefaussables(listeIdCartes, idJoueur);
         }
     }
+    public void utilisationSac(Integer idCarte, Integer idJoueur){
+            ArrayList<Integer> idTuiles = new ArrayList<>();
+            idTuiles = this.grille.getToutesTuilesInondees();
+            vuePlateau.setTuilesAssechement(idTuiles, idJoueur, listeJoueurs.get(idJoueur).getPion().getCouleurSelectionAssechee(), listeJoueurs.get(idJoueur).getPion().getCouleurSelectionInondee());
+            nbActionsRestantes+=1;
+        
+    }
+    public void utilisationHelicoptere(Integer idCarte, Integer idJoueur){
+        ArrayList<Integer> idTuiles = new ArrayList<>();
+            idTuiles = this.grille.getToutesTuilesPasCoulees();
+            vuePlateau.setTuilesDeplacement(idTuiles, idJoueur, listeJoueurs.get(idJoueur).getPion().getCouleurSelectionAssechee(), listeJoueurs.get(idJoueur).getPion().getCouleurSelectionInondee());
+            nbActionsRestantes +=1;
+    }
     //Gestion montée des eaux
     
     public void piocheCarteMonteeDesEaux(){
@@ -390,26 +411,40 @@ public class Controleur implements Observer{
         Tuile t = grille.getListeTuiles().get(c.getId());
         VueTuile vt = vuePlateau.getVueGrille().getListeTuiles().get(c.getId());
         // inondation de la tuile correspondante
-        if(grille.getListeTuiles().get(c.getId()).getEtatTuile() == EtatTuile.ASSECHEE){        //
-            grille.getListeTuiles().get(c.getId()).setEtatTuile(EtatTuile.INONDEE);
+        if (piocheInondation.isEmpty()){
+            for(CarteInondation ci: this.defausseInondation){
+                piocheInondation.add(ci);
+            }
+        }
+        if(t.getEtatTuile() == EtatTuile.ASSECHEE){        //
+            t.setEtatTuile(EtatTuile.INONDEE);
             defausseInondation.add(c);
             piocheInondation.remove(0);
             vuePlateau.getMessageBox().displayMessage("La tuile : "+grille.getListeTuiles().get(c.getId()).getNom()+" a été inondée", Color.BLACK, Boolean.TRUE, Boolean.TRUE);
             vt.setEtat(EtatTuile.INONDEE.toString());
             vt.setCouleurDefaut();
-        }else if(grille.getListeTuiles().get(c.getId()).getEtatTuile() == EtatTuile.INONDEE){
-            grille.getListeTuiles().get(c.getId()).setEtatTuile(EtatTuile.COULEE);
+        }else if(t.getEtatTuile() == EtatTuile.INONDEE){
+            t.setEtatTuile(EtatTuile.COULEE);
+            vt.setEtat(EtatTuile.COULEE.toString());
+            vt.setCouleurDefaut();
             vuePlateau.getMessageBox().displayMessage("La tuile "+grille.getListeTuiles().get(c.getId()).getNom()+" a été coulée.", Color.BLACK, Boolean.TRUE, Boolean.TRUE);
             piocheInondation.remove(0);
-            if(!grille.getListeTuiles().get(c.getId()).getJoueursSurTuile().isEmpty()){
-                for(Integer key : grille.getListeTuiles().get(c.getId()).getJoueursSurTuile().keySet()){
-                    if(!grille.getListeTuiles().get(c.getId()).getJoueursSurTuile().get(key).getTuilesAccessibles(grille).isEmpty()){
-                        vuePlateau.setTuilesDeplacement(grille.getListeTuiles().get(c.getId()).getJoueursSurTuile().get(key).getTuilesAccessibles(grille), key, Color.blue, Color.blue);
+            if(!t.getJoueursSurTuile().isEmpty()){
+                for(Integer key : t.getJoueursSurTuile().keySet()){
+                    if(!t.getJoueursSurTuile().get(key).getTuilesAccessibles(grille).isEmpty()){
+                        vuePlateau.setTuilesDeplacement(t.getJoueursSurTuile().get(key).getTuilesAccessibles(grille), key, Color.blue, Color.blue);
                     }else{
                         partiePerdue = true;
+                        
                     }
                 }
             }
+        }
+        else if(t.getEtatTuile() == EtatTuile.COULEE){
+            piocheInondation.remove(0);
+            piocheCarteInondee();
+            
+            
         }
     }
 
@@ -684,9 +719,9 @@ public class Controleur implements Observer{
         ArrayList<CarteInondation> listeCartesInond = new ArrayList();
         for(Integer key : listeTuiles.keySet()){
             CarteInondation cI = new CarteInondation(listeTuiles.get(key));
-            CarteInondation cI2 = new CarteInondation(listeTuiles.get(key));
+            
             piocheInond.add(cI);
-            piocheInond.add(cI2);
+            
         }
         
         
@@ -708,10 +743,11 @@ public class Controleur implements Observer{
             if(i<5){
                 CarteTresor ct = new CarteTresor(Tresor.CALICE);
                 listeCartes.put(ct.getId(), ct);
-            }/*
+            }
             if(5<=i && i<10){
-                CarteTresor ct = new CarteTresor(Tresor.PIERRE);
+                CarteHelicoptere ct = new CarteHelicoptere();
                 listeCartes.put(ct.getId(), ct);
+                
             }
             if(10<=i && i<15){
                 CarteTresor ct = new CarteTresor(Tresor.CRISTAL);
@@ -720,13 +756,13 @@ public class Controleur implements Observer{
             if(15<=i && i<20){
                 CarteTresor ct = new CarteTresor(Tresor.ZEPHYR);
                 listeCartes.put(ct.getId(), ct);
-            }*/
+            }
             if(20<=i && i<25){
                 CarteSacsDeSable ct = new CarteSacsDeSable();
                 listeCartes.put(ct.getId(), ct);
             }
             if(25<=i && i<30){
-                CarteHelicoptere ct = new CarteHelicoptere();
+                CarteTresor ct = new CarteTresor(Tresor.PIERRE);
                 listeCartes.put(ct.getId(), ct);
             }
             if(30<=i && i<31){
@@ -788,8 +824,6 @@ public class Controleur implements Observer{
         vP.setListeVuesCartes(piocheTirage);
         vP.addObserver(controleur);
         vP.afficher();
-        controleur.tirageCarte();
-        controleur.tirageCarte();
         
         
     }

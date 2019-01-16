@@ -167,6 +167,24 @@ public class Grille {
     public LinkedHashMap<Integer, Tuile> getListeTuiles() {
         return listeTuiles;
     }
+    public ArrayList<Integer> getToutesTuilesInondees(){
+        ArrayList<Integer> idTuiles = new ArrayList<>();
+        for(Integer key : this.listeTuiles.keySet()){
+            if(listeTuiles.get(key).getEtatTuile() == EtatTuile.INONDEE){
+                idTuiles.add(key);
+            }
+        }
+        return idTuiles;
+    }
+    public ArrayList<Integer> getToutesTuilesPasCoulees(){
+        ArrayList<Integer> idTuiles = new ArrayList<>();
+        for(Integer key : this.listeTuiles.keySet()){
+            if(listeTuiles.get(key).getEtatTuile() != EtatTuile.COULEE){
+                idTuiles.add(key);
+            }
+        }
+        return idTuiles;
+    }
     
     public ArrayList<Integer> getTuilesInondees(ArrayList<Integer> tuiles){
         ArrayList<Integer> tuilesInondees = new ArrayList();
