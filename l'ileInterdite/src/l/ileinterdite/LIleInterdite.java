@@ -45,10 +45,7 @@ public class LIleInterdite {
     public static void main(String[] args) {
         // TODO code application logic here
         scenario1();
-        
-        scenario1();
-        
-        
+     
     }
     
 //  ================================== SCENARIO 1: test partie normale ============================================================

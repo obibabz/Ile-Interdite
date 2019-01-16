@@ -165,7 +165,6 @@ public class Controleur implements Observer{
                 
                 //GESTION DU POUVOIR DE L'INGENIEUR
                 if("Ingenieur".equals(listeJoueurs.get(idJoueur).getClass().getSimpleName()) && !listeIdTuiles.isEmpty() && listeJoueurs.get(idJoueur).getNbAssech() <2){
-                    System.out.println("00");
                     if(Utils.poserQuestion("Voulez vous assécher une seconde tuile")){
                         this.vuePlateau.setTuilesAssechement(listeIdTuiles, idJoueur, couleur1, couleur2);
                         nbActionsRestantes+=1;
@@ -179,12 +178,14 @@ public class Controleur implements Observer{
             }
             
             else if (((Message ) arg).getCommande() == Commandes.TERMINER) {
-                actionFinTour(o, idJoueur);
+                actionFinTour();
                 nbActionsRestantes = 3;
                 ((VuePlateau) o).getListeVuesJoueurs().get((idJoueur)).setVueJPrecedant();
                 joueurSuivant();
+                
                 vuePlateau.getListeVuesJoueurs().get(JCourant.getId()).setVueJCourant();
                 vuePlateau.getMessageBox().displayMessage("C'est à  : <br/>" +JCourant.getClass().getSimpleName()+" de jouer.", JCourant.getPion().getCouleur(), Boolean.TRUE, Boolean.TRUE);
+                actionDebutTour();
             }
             else if (((Message ) arg).getCommande() == Commandes.POUVOIR) {
                 
@@ -223,6 +224,17 @@ public class Controleur implements Observer{
                 listeJoueurs.get(idJoueur).addCartesEnMain(ct); //On ajoute la carte au joueur cible
                 vuePlateau.getListeVuesJoueurs().get(idJoueur).ajouterCarte(idCarte, vc);//On ajoute la vue carte au joueur cible
             }
+            else if (((Message) arg).getCommande() == Commandes.DEFAUSSER_CARTE){
+                int idCarte = ((Message) arg).getIdCarte();
+                CarteTirage c = listeJoueurs.get(idJoueur).getCartesEnMain().get(idCarte);
+                listeJoueurs.get(idJoueur).retirerCarte(c);
+                
+                ArrayList<Integer> listeIdCartes = new ArrayList<>();
+                listeIdCartes.addAll(listeJoueurs.get(idJoueur).getCartesEnMain().keySet());
+                vuePlateau.getListeVuesJoueurs().get(idJoueur).retirerCarte(idCarte);
+                vuePlateau.setCartesDefaut(listeIdCartes, idJoueur);
+                gestionDefausse(idJoueur);
+            }
             
             else if (((Message ) arg).getCommande() == Commandes.ANNULER) {
                 ArrayList<Integer> listeIdTuiles = new ArrayList<>();
@@ -240,10 +252,15 @@ public class Controleur implements Observer{
             this.vuePlateau.getListeVuesJoueurs().get(idJCourant).setVueFinTour();
         }
     }    
-            
-    public void actionFinTour(Observable o, int idJCourant){
+    public void actionDebutTour(){
+        System.out.println("0");
+        gestionDefausse(JCourant.getId());
+    }       
+    public void actionFinTour(){
+        
         tirageCarte();
-        tirageCarte();      //Tirage des cartes Tresor et Inondation
+        tirageCarte();
+             //Tirage des cartes Tresor et Inondation
         tirageInondation();
 
         if (ifVictoire()){
@@ -310,22 +327,20 @@ public class Controleur implements Observer{
             piocheCarteMonteeDesEaux();
             piocheTirage.put(c.getId(), c);
         }else{
-            if(JCourant.cartesEnMainsinf5()){
                 JCourant.addCartesEnMain(c);
-            }
-            else{
-                gestionDefausse(c);
-            }
-    
                 vuePlateau.getListeVuesJoueurs().get(JCourant.getId()).ajouterCarte(listeId.get(0), vuePlateau.getListeVuesCartes().get(listeId.get(0)));
         }   
         piocheTirage.remove(listeId.get(0));
+        
     }
-    public void gestionDefausse(CarteTirage ct){
-        ArrayList<Integer> cartesJ = new ArrayList<>(); cartesJ.addAll(JCourant.getCartesEnMain().keySet());
-        cartesJ.add(ct.getId());
-        JCourant.addCartesEnMain(ct);
-        vuePlateau.setCartesDefaussables(cartesJ, JCourant.getId());
+    public void gestionDefausse(Integer idJoueur){
+        System.out.println("1");
+        if(!listeJoueurs.get(idJoueur).cartesEnMaininf5()){
+            System.out.println("2");
+            ArrayList<Integer> listeIdCartes = new ArrayList<>();
+            listeIdCartes.addAll(listeJoueurs.get(idJoueur).getCartesEnMain().keySet());
+            vuePlateau.setCartesDefaussables(listeIdCartes, idJoueur);
+        }
     }
     //Gestion montée des eaux
     

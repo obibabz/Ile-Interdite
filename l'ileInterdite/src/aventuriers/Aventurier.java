@@ -43,7 +43,7 @@ public abstract class Aventurier extends ObjetIdentifie{
     public Integer getNbAssech() {
         return nbAssech;
     }
-    public boolean cartesEnMainsinf5(){
+    public boolean cartesEnMaininf5(){
         return this.getCartesEnMain().size()<=5;
     }
 

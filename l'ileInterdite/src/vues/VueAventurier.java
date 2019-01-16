@@ -183,19 +183,10 @@ public class VueAventurier extends JPanel{
     }
 
     public void ajouterCarte(Integer id, VueCarte vc){
-        System.out.println("0");
         this.cartesEnMain.put(id, vc);
-                System.out.println("1");
-
         panelCartes.removeAll();
-                System.out.println("2");
-
         for(Integer key : this.cartesEnMain.keySet()){
-                    System.out.println("3");
-
             panelCartes.add(cartesEnMain.get(key));
-                    System.out.println("4");
-
         }
     }
     public void retirerCarte(Integer id){
