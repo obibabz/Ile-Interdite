@@ -145,7 +145,8 @@ public class VueAventurier extends JPanel{
     }
     //AFFICHAGE SI NBACTIONSRESTANTES =0
     public void setVueFinTour(){
-        
+            this.btnUtiliserCarte.setEnabled(false);
+            this.btnDonnerCarte.setEnabled(false);
             this.btnBouger.setEnabled(false);
             this.btnAssecher.setEnabled(false);
             if("Pilote".equals(nomAventurier)){
@@ -161,8 +162,6 @@ public class VueAventurier extends JPanel{
     //DESACTIVATION DE LA VUE
     public void setVueJPrecedant(){
             this.setVueFinTour();
-            
-            this.btnTerminerTour.setEnabled(false);
             this.panelAventurier.setBackground(couleurGrisee);
             this.mainPanel.setBorder(BorderFactory.createLineBorder(couleurGrisee, 2)) ;
             this.panelCentre.setBorder(new MatteBorder(0, 0, 2, 0, couleurGrisee));
@@ -174,6 +173,7 @@ public class VueAventurier extends JPanel{
             this.btnAnnuler.setEnabled(false);
             this.btnAssecher.setEnabled(true);
             this.btnTerminerTour.setEnabled(true);
+            this.btnUtiliserCarte.setEnabled(true);
             if("Pilote".equals(nomAventurier)){
                 this.btnAutreAction.setEnabled(true);
             }

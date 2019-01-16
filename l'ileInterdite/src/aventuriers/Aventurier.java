@@ -104,6 +104,15 @@ public abstract class Aventurier extends ObjetIdentifie{
         }
         return cartesDonnables;
     }
+    public ArrayList <Integer> getCartesUtilisables(){
+        ArrayList<Integer> cartesUtilisables = new ArrayList<>();
+        for(Integer key : cartesEnMain.keySet()){
+            if (!"CarteTresor".equals(cartesEnMain.get(key).getClass().getSimpleName())){
+                cartesUtilisables.add(key);
+            }
+        }
+        return cartesUtilisables;
+    }
 
     public LinkedHashMap<Integer, CarteTirage> getCartesEnMain() {
         return cartesEnMain;

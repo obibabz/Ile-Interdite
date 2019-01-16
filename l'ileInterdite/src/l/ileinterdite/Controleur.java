@@ -28,6 +28,8 @@ import cartes.CarteMonteeDesEaux;
 import cartes.CarteSacsDeSable;
 import cartes.CarteTresor;
 import java.awt.Color;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import util.Message;
 import util.MessageBox;
@@ -207,6 +209,7 @@ public class Controleur implements Observer{
                 ArrayList<Integer> idJoueurs = JCourant.getJoueursCiblables(grille);
                 if(!JCourant.getCartesTresor().isEmpty()){
                     vuePlateau.setBoutonsRecevoirCarte(idJoueurs, idJoueur);
+                    vuePlateau.getListeVuesJoueurs().get(idJoueur).setVueChoix();
                 }
             }
             else if(((Message ) arg).getCommande() == Commandes.RECEVOIR_CARTE){
@@ -231,17 +234,23 @@ public class Controleur implements Observer{
 
                 listeJoueurs.get(idJoueur).addCartesEnMain(ct); //On ajoute la carte au joueur cible
                 vuePlateau.getListeVuesJoueurs().get(idJoueur).ajouterCarte(idCarte, vc);//On ajoute la vue carte au joueur cible
+                vuePlateau.getListeVuesJoueurs().get(JCourant.getId()).setVueJCourant();
+                nbActionsRestantes -=1;
             }
             else if (((Message) arg).getCommande() == Commandes.DEFAUSSER_CARTE){
                 int idCarte = ((Message) arg).getIdCarte();
                 CarteTirage c = listeJoueurs.get(idJoueur).getCartesEnMain().get(idCarte);
-                listeJoueurs.get(idJoueur).retirerCarte(c);
+                listeJoueurs.get(idJoueur).retirerCarte(c);//On retire la carte de la main du joueur
                 
                 ArrayList<Integer> listeIdCartes = new ArrayList<>();
                 listeIdCartes.addAll(listeJoueurs.get(idJoueur).getCartesEnMain().keySet());
-                vuePlateau.getListeVuesJoueurs().get(idJoueur).retirerCarte(idCarte);
-                vuePlateau.setCartesDefaut(listeIdCartes, idJoueur);
-                gestionDefausse(idJoueur);
+                
+                vuePlateau.getListeVuesCartes().put(idCarte, vuePlateau.getListeVuesJoueurs().get(idJoueur).getCartesEnMain().get(idCarte));//On stock la VueCarte sur le plateau pour ne pas la perdre
+                vuePlateau.getListeVuesJoueurs().get(idJoueur).retirerCarte(idCarte);//On retire la VueCarte de la VueAventurier qui se défausse
+                vuePlateau.setCartesDefaut(listeIdCartes, idJoueur);//On affiche le changement
+                
+                defausseTirage.put(idCarte, c);//On rajoute la carte à la défausse
+                gestionDefausse(idJoueur);//On relance la gestion de défausse tant que le joueur a plus de 5 cartes en main
             }
             
             else if (((Message ) arg).getCommande() == Commandes.ANNULER) {
@@ -251,6 +260,10 @@ public class Controleur implements Observer{
                 }
                 vuePlateau.setTuilesDefaut(listeIdTuiles);
                 vuePlateau.getListeVuesJoueurs().get(idJoueur).setVueJCourant();   
+            }
+            else if(((Message) arg).getCommande() == Commandes.UTILISER_CARTE){
+                ArrayList<Integer> listeIdCartes = new ArrayList<>();
+                listeIdCartes = JCourant.getCartesUtilisables();
             }
         }
     }
@@ -329,8 +342,13 @@ public class Controleur implements Observer{
     public void tirageCarte(){
         ArrayList<Integer> listeId = new ArrayList<>();
         listeId.addAll( piocheTirage.keySet());
-        CarteTirage c = piocheTirage.get(listeId.get(0));
-        
+        if(piocheTirage.isEmpty()){
+            for(Integer key : defausseTirage.keySet()){
+                piocheTirage.put(key, defausseTirage.get(key));
+            }
+        }
+            CarteTirage c = piocheTirage.get(listeId.get(0));
+       
         if (c.getClass().getSimpleName() == "CarteMonteeDesEaux"){
             piocheCarteMonteeDesEaux();
             piocheTirage.put(c.getId(), c);
@@ -678,7 +696,7 @@ public class Controleur implements Observer{
             if(i<5){
                 CarteTresor ct = new CarteTresor(Tresor.CALICE);
                 listeCartes.put(ct.getId(), ct);
-            }
+            }/*
             if(5<=i && i<10){
                 CarteTresor ct = new CarteTresor(Tresor.PIERRE);
                 listeCartes.put(ct.getId(), ct);
@@ -690,7 +708,7 @@ public class Controleur implements Observer{
             if(15<=i && i<20){
                 CarteTresor ct = new CarteTresor(Tresor.ZEPHYR);
                 listeCartes.put(ct.getId(), ct);
-            }
+            }*/
             if(20<=i && i<25){
                 CarteSacsDeSable ct = new CarteSacsDeSable();
                 listeCartes.put(ct.getId(), ct);
@@ -705,7 +723,7 @@ public class Controleur implements Observer{
             }
             i++;
         }
-        
+        //((Collections) listeCartes).shuffle();
         LinkedHashMap<Integer, VueCarte> piocheTirage = new LinkedHashMap();
         
         for(Integer key : listeCartes.keySet()){

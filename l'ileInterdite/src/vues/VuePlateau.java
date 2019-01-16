@@ -94,14 +94,7 @@ public class VuePlateau extends Observable {
                     clearChanged();
                 }
             });
-            listeVuesJoueurs.get(key).getBtnDonnerCarte().addActionListener(new ActionListener(){
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    setChanged();
-                    notifyObservers(new Message(Commandes.DONNER, key, null, null, null));
-                    clearChanged();
-                }
-            });
+      
             listeVuesJoueurs.get(key).getBtnUtiliserCarte().addActionListener(new ActionListener(){
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -139,6 +132,14 @@ public class VuePlateau extends Observable {
                 public void actionPerformed(ActionEvent e) {
                     setChanged();
                     notifyObservers(new Message(Commandes.DONNER_CARTE, key, null, null, null));
+                    clearChanged();
+                }
+            });
+            listeVuesJoueurs.get(key).getBtnUtiliserCarte().addActionListener(new ActionListener(){
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    setChanged();
+                    notifyObservers(new Message(Commandes.UTILISER_CARTE, key, null, null, null));
                     clearChanged();
                 }
             });
