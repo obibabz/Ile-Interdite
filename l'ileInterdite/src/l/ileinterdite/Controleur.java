@@ -411,26 +411,40 @@ public class Controleur implements Observer{
         Tuile t = grille.getListeTuiles().get(c.getId());
         VueTuile vt = vuePlateau.getVueGrille().getListeTuiles().get(c.getId());
         // inondation de la tuile correspondante
-        if(grille.getListeTuiles().get(c.getId()).getEtatTuile() == EtatTuile.ASSECHEE){        //
-            grille.getListeTuiles().get(c.getId()).setEtatTuile(EtatTuile.INONDEE);
+        if (piocheInondation.isEmpty()){
+            for(CarteInondation ci: this.defausseInondation){
+                piocheInondation.add(ci);
+            }
+        }
+        if(t.getEtatTuile() == EtatTuile.ASSECHEE){        //
+            t.setEtatTuile(EtatTuile.INONDEE);
             defausseInondation.add(c);
             piocheInondation.remove(0);
             vuePlateau.getMessageBox().displayMessage("La tuile : "+grille.getListeTuiles().get(c.getId()).getNom()+" a été inondée", Color.BLACK, Boolean.TRUE, Boolean.TRUE);
             vt.setEtat(EtatTuile.INONDEE.toString());
             vt.setCouleurDefaut();
-        }else if(grille.getListeTuiles().get(c.getId()).getEtatTuile() == EtatTuile.INONDEE){
-            grille.getListeTuiles().get(c.getId()).setEtatTuile(EtatTuile.COULEE);
+        }else if(t.getEtatTuile() == EtatTuile.INONDEE){
+            t.setEtatTuile(EtatTuile.COULEE);
+            vt.setEtat(EtatTuile.COULEE.toString());
+            vt.setCouleurDefaut();
             vuePlateau.getMessageBox().displayMessage("La tuile "+grille.getListeTuiles().get(c.getId()).getNom()+" a été coulée.", Color.BLACK, Boolean.TRUE, Boolean.TRUE);
             piocheInondation.remove(0);
-            if(!grille.getListeTuiles().get(c.getId()).getJoueursSurTuile().isEmpty()){
-                for(Integer key : grille.getListeTuiles().get(c.getId()).getJoueursSurTuile().keySet()){
-                    if(!grille.getListeTuiles().get(c.getId()).getJoueursSurTuile().get(key).getTuilesAccessibles(grille).isEmpty()){
-                        vuePlateau.setTuilesDeplacement(grille.getListeTuiles().get(c.getId()).getJoueursSurTuile().get(key).getTuilesAccessibles(grille), key, Color.blue, Color.blue);
+            if(!t.getJoueursSurTuile().isEmpty()){
+                for(Integer key : t.getJoueursSurTuile().keySet()){
+                    if(!t.getJoueursSurTuile().get(key).getTuilesAccessibles(grille).isEmpty()){
+                        vuePlateau.setTuilesDeplacement(t.getJoueursSurTuile().get(key).getTuilesAccessibles(grille), key, Color.blue, Color.blue);
                     }else{
                         partiePerdue = true;
+                        
                     }
                 }
             }
+        }
+        else if(t.getEtatTuile() == EtatTuile.COULEE){
+            piocheInondation.remove(0);
+            piocheCarteInondee();
+            
+            
         }
     }
 
