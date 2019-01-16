@@ -116,6 +116,10 @@ public class Controleur implements Observer{
     public void setListeJoueurs(LinkedHashMap<Integer, Aventurier> listeJoueurs) {
         this.listeJoueurs = listeJoueurs;
     }
+
+    public void setNiveauInond(int niveauInond) {
+        this.niveauInond = niveauInond;
+    }
     
 
 
@@ -131,32 +135,30 @@ public class Controleur implements Observer{
             Color couleur1 = listeJoueurs.get(idJoueur).getPion().getCouleurSelectionAssechee();
             Color couleur2 =listeJoueurs.get(idJoueur).getPion().getCouleurSelectionInondee();
             
-            
+             // Commande de Déplacement
             if (((Message) arg).getCommande() == Commandes.BOUGER) { 
                 ArrayList<Integer> listeIdTuiles = listeJoueurs.get(idJoueur).getTuilesAccessibles(grille);
                 if(!listeIdTuiles.isEmpty()){
                     this.vuePlateau.setTuilesDeplacement(listeIdTuiles, idJoueur, couleur1, couleur2);
                     vuePlateau.getMessageBox().displayMessage("Vous pouvez vous déplacer vers : <br/>" +listeIdTuilesToString(listeIdTuiles), couleur1, Boolean.TRUE, Boolean.TRUE);
                     vuePlateau.getListeVuesJoueurs().get(idJoueur).setVueChoix();
-                }
-                else{
+                }else{
                     vuePlateau.getMessageBox().displayMessage("Vous ne pouvez vous déplacer nul-part." +listeIdTuilesToString(listeIdTuiles), couleur1, Boolean.TRUE, Boolean.TRUE);
                 }
-            }
-            else if (((Message) arg).getCommande() == Commandes.ASSECHER) {
+                
+                // Commande d'Assechement
+            }else if (((Message) arg).getCommande() == Commandes.ASSECHER) {
                     ArrayList<Integer>listeIdTuiles = listeJoueurs.get(idJoueur).getTuilesAssechables(grille);
                     
                     if(!listeIdTuiles.isEmpty()){
                         this.vuePlateau.setTuilesAssechement(listeIdTuiles, idJoueur, couleur1, couleur2  );
                         vuePlateau.getMessageBox().displayMessage("Vous pouvez assécher : <br/>" +listeIdTuilesToString(listeIdTuiles), couleur1, Boolean.TRUE, Boolean.TRUE);
                         vuePlateau.getListeVuesJoueurs().get(idJoueur).setVueChoix();
-                    }
-                    else{
+                    }else{
                         vuePlateau.getMessageBox().displayMessage("Il n'y a pas de tuile asséchable adjacente" +listeIdTuilesToString(listeIdTuiles), couleur1, Boolean.TRUE, Boolean.TRUE);
                     }
-                    
-            }
-            else if (((Message) arg).getCommande() == Commandes.CHOISIR_TUILE_D){
+                 // Choix de la tuile de déplacement   
+            }else if (((Message) arg).getCommande() == Commandes.CHOISIR_TUILE_D){
                 int idTuile =((Message) arg).getIdTuile();
                 ArrayList<Integer> listeIdTuiles = listeJoueurs.get(idJoueur).getTuilesAccessibles(grille);
                 this.vuePlateau.setTuilesDefaut();
@@ -166,8 +168,8 @@ public class Controleur implements Observer{
                 vuePlateau.getListeVuesJoueurs().get(idJoueur).setVueJCourant();
                 verifFinTour(o, idJoueur);
                 
-            }
-            else if (((Message) arg).getCommande() == Commandes.CHOISIR_TUILE_A){
+                //Choix de la tuile d'assechement
+            }else if (((Message) arg).getCommande() == Commandes.CHOISIR_TUILE_A){
                 int idTuile =((Message) arg).getIdTuile();
                 ArrayList<Integer> listeIdTuiles = listeJoueurs.get(idJoueur).getTuilesAssechables(grille);
                 this.vuePlateau.setTuilesDefaut();
@@ -185,10 +187,9 @@ public class Controleur implements Observer{
                 }
                 nbActionsRestantes-=1;
                 vuePlateau.getListeVuesJoueurs().get(idJoueur).setVueJCourant();
-                System.out.println(nbActionsRestantes);
                 verifFinTour(o, idJoueur);
             }
-            
+                // Gestion de la fin du tour
             else if (((Message ) arg).getCommande() == Commandes.TERMINER) {
                 actionFinTour();
                 nbActionsRestantes = 3;
@@ -213,15 +214,12 @@ public class Controleur implements Observer{
                     vuePlateau.setBoutonsRecevoirCarte(idJoueurs, idJoueur);
                     vuePlateau.getListeVuesJoueurs().get(idJoueur).setVueChoix();
                 }
-            }
-            else if(((Message ) arg).getCommande() == Commandes.RECEVOIR_CARTE){
+                //reçu d'une carte
+            }else if(((Message ) arg).getCommande() == Commandes.RECEVOIR_CARTE){
                 ArrayList<Integer> idJoueurs = JCourant.getJoueursCiblables(grille);
                 vuePlateau.setBoutonsDonnerCarte(idJoueurs, idJoueur);
                 
                 ArrayList<Integer> idCartes = JCourant.getCartesTresor();
-                for(Integer key :idCartes){
-                    System.out.println(key);
-                }
                 vuePlateau.setCartesDonnables(idCartes, JCourant.getId(), idJoueur);
             }
             //CHOIX DE LA CARTE
@@ -262,7 +260,7 @@ public class Controleur implements Observer{
                     }
                 }
             }
-            
+             //Annulation
             else if (((Message ) arg).getCommande() == Commandes.ANNULER) {
                 ArrayList<Integer> listeIdTuiles = new ArrayList<>();
                 for(Integer key : this.grille.getListeTuiles().keySet()){
@@ -270,7 +268,7 @@ public class Controleur implements Observer{
                 }
                 vuePlateau.setTuilesDefaut();
                 vuePlateau.getListeVuesJoueurs().get(idJoueur).setVueJCourant();   
-            }
+            }//Utilisation de la carte
             else if(((Message) arg).getCommande() == Commandes.UTILISER_CARTE){
                 ArrayList<Integer> listeIdCartes = new ArrayList<>();
                 listeIdCartes = JCourant.getCartesUtilisables();
@@ -288,15 +286,16 @@ public class Controleur implements Observer{
         }
     }
     
+    //Action a éxécuter en cas de fin du tour pour cause d'actions restante epuisée
     public void verifFinTour(Observable o, int idJCourant){
         if (nbActionsRestantes == 0){
             this.vuePlateau.getListeVuesJoueurs().get(idJCourant).setVueFinTour();
         }
     }    
     public void actionDebutTour(){
-        System.out.println("0");
         gestionDefausse(JCourant.getId());
-    }       
+    }
+        //Action a éxécuter a la fin d'un tour
     public void actionFinTour(){
         
              //Tirage des cartes Tresor et Inondation
@@ -369,44 +368,50 @@ public class Controleur implements Observer{
                 listeId.add(key);
             }
         }
-            CarteTirage c = piocheTirage.get(listeId.get(0));
+        
+        CarteTirage c = piocheTirage.get(listeId.get(0));
        
         if (c.getClass().getSimpleName() == "CarteMonteeDesEaux"){
             piocheCarteMonteeDesEaux();
             piocheTirage.put(c.getId(), c);
         }else{
                 JCourant.addCartesEnMain(c);
+                vuePlateau.getMessageBox().displayMessage("Le joueur "+JCourant.getNomJoueur()+" a tiré une carte "+c.getNom()+".", JCourant.getPion().getCouleur(), Boolean.TRUE, Boolean.TRUE);
                 vuePlateau.getListeVuesJoueurs().get(JCourant.getId()).ajouterCarte(listeId.get(0), vuePlateau.getListeVuesCartes().get(listeId.get(0)));
         }   
         
         // Pas propre pour commencer le fait que les cartes s'affichent mal
         vuePlateau.afficher();
         piocheTirage.remove(listeId.get(0));
-        
     }
+    
     public void gestionDefausse(Integer idJoueur){
-        System.out.println("1");
         if(!listeJoueurs.get(idJoueur).cartesEnMaininf5()){
-            System.out.println("2");
             ArrayList<Integer> listeIdCartes = new ArrayList<>();
             listeIdCartes.addAll(listeJoueurs.get(idJoueur).getCartesEnMain().keySet());
             vuePlateau.setCartesDefaussables(listeIdCartes, idJoueur);
         }
     }
+    
     public void utilisationSac(Integer idCarte, Integer idJoueur){
-            ArrayList<Integer> idTuiles = new ArrayList<>();
-            idTuiles = this.grille.getToutesTuilesInondees();
-            vuePlateau.setTuilesAssechement(idTuiles, idJoueur, listeJoueurs.get(idJoueur).getPion().getCouleurSelectionAssechee(), listeJoueurs.get(idJoueur).getPion().getCouleurSelectionInondee());
-            nbActionsRestantes+=1;
-        
+        ArrayList<Integer> idTuiles = new ArrayList<>();
+        idTuiles = this.grille.getToutesTuilesInondees();
+        vuePlateau.setTuilesAssechement(idTuiles, idJoueur, listeJoueurs.get(idJoueur).getPion().getCouleurSelectionAssechee(), listeJoueurs.get(idJoueur).getPion().getCouleurSelectionInondee());
+        nbActionsRestantes+=1;
+        vuePlateau.getMessageBox().displayMessage("Le joueur "+listeJoueurs.get(idJoueur).getNomJoueur()+" a utilisé une carte Sac de Sable.", JCourant.getPion().getCouleur(), Boolean.TRUE, Boolean.TRUE);
     }
+    
     public void utilisationHelicoptere(Integer idCarte, Integer idJoueur){
         ArrayList<Integer> idTuiles = new ArrayList<>();
             idTuiles = this.grille.getToutesTuilesPasCoulees();
             vuePlateau.setTuilesDeplacement(idTuiles, idJoueur, listeJoueurs.get(idJoueur).getPion().getCouleurSelectionAssechee(), listeJoueurs.get(idJoueur).getPion().getCouleurSelectionInondee());
             nbActionsRestantes +=1;
+            vuePlateau.getMessageBox().displayMessage("Le joueur "+listeJoueurs.get(idJoueur).getNomJoueur()+" a utilisé une carte Helicoptere.", JCourant.getPion().getCouleur(), Boolean.TRUE, Boolean.TRUE);
     }
-    //Gestion montée des eaux
+   
+    
+
+//Gestion montée des eaux
     
     public void piocheCarteMonteeDesEaux(){
         niveauInond++;
@@ -415,6 +420,9 @@ public class Controleur implements Observer{
         piocheInondation.clear();
         piocheInondation.addAll(defausseInondation);
         defausseInondation.clear();
+        vuePlateau.getMessageBox().displayMessage("Une carte montee des eaux a été pioché", JCourant.getPion().getCouleur(), Boolean.TRUE, Boolean.TRUE);
+        vuePlateau.getMessageBox().displayAlerte("Une carte montee des eaux a été pioché");
+        vuePlateau.getVueNiveau().setNiveau(niveauInond);
     }
     
     
@@ -422,16 +430,16 @@ public class Controleur implements Observer{
     //pioche d'une carte inondation
 
     public void piocheCarteInondee(){
-        CarteInondation c = piocheInondation.get(0);
-        Tuile t = grille.getListeTuiles().get(c.getId());
-        VueTuile vt = vuePlateau.getVueGrille().getListeTuiles().get(c.getId());
-        // inondation de la tuile correspondante
+        // Inondation de la tuile correspondante
         if (piocheInondation.isEmpty()){
             for(CarteInondation ci: this.defausseInondation){
                 piocheInondation.add(ci);
             }
         }
-        if(t.getEtatTuile() == EtatTuile.ASSECHEE){        //
+        CarteInondation c = piocheInondation.get(0);
+        Tuile t = grille.getListeTuiles().get(c.getId());
+        VueTuile vt = vuePlateau.getVueGrille().getListeTuiles().get(c.getId());
+        if(t.getEtatTuile() == EtatTuile.ASSECHEE){
             t.setEtatTuile(EtatTuile.INONDEE);
             defausseInondation.add(c);
             piocheInondation.remove(0);
@@ -450,7 +458,6 @@ public class Controleur implements Observer{
                         vuePlateau.setTuilesDeplacement(t.getJoueursSurTuile().get(key).getTuilesAccessibles(grille), key, Color.blue, Color.blue);
                     }else{
                         partiePerdue = true;
-                        
                     }
                 }
             }
@@ -487,10 +494,12 @@ public class Controleur implements Observer{
             piocheCarteInondee();
         }
     }
-
-    //gestion tirage carte inondee
     
-    // fonction pour les conditions de Victoire et de Defaite
+    
+
+
+// Test des différentes conditions de victoire
+    
     public boolean ifCarteHelico(Aventurier a){
         boolean retour = false;
         String cH = "CarteHelicoptere";
@@ -529,6 +538,82 @@ public class Controleur implements Observer{
         }
         return retour;
     }
+
+    
+            //Test des différentes conditions de défaites (sauf le cas de la "mort" d'un joueur, directement géré dans tirageCarteInodation)
+    
+    public boolean ifHeliportNoyee(){
+        boolean retour = false;
+        
+        Tuile t = JCourant.getPosition();
+        for(Integer key : this.grille.getListeTuiles().keySet()){
+            if (this.grille.getListeTuiles().get(key).getNom()=="Heliport"){
+                t = this.grille.getListeTuiles().get(key);
+            }
+        }
+        
+        return t.getEtatTuile() == EtatTuile.COULEE;
+    }
+    
+    public boolean ifNiveauMax(){
+        return niveauInond == 10; 
+    }
+    
+    public boolean ifTresorPierrePerdu(){
+        int nbTempleInondee=0;
+        if(!tresorPossede.contains(Tresor.PIERRE)){
+            for(Integer key : this.grille.getListeTuiles().keySet()){
+                if (grille.getListeTuiles().get(key).getTresor()==Tresor.PIERRE && grille.getListeTuiles().get(key).getEtatTuile() == EtatTuile.COULEE){
+                    nbTempleInondee++;
+                }
+            }
+        }
+        return nbTempleInondee == 2;
+    }
+    
+    public boolean ifTresorZephyrPerdu(){
+        int nbTempleInondee=0;    
+        if(!tresorPossede.contains(Tresor.ZEPHYR)){
+            for(Integer key : this.grille.getListeTuiles().keySet()){
+                if (this.grille.getListeTuiles().get(key).getTresor()==Tresor.ZEPHYR && grille.getListeTuiles().get(key).getEtatTuile() == EtatTuile.COULEE){
+                    nbTempleInondee++;
+                }
+            }
+        }
+        return nbTempleInondee == 2;
+    }
+    
+    public boolean ifTresorCristalPerdu(){
+        int nbTempleInondee=0;    
+        if(!tresorPossede.contains(Tresor.CRISTAL)){
+            for(Integer key : this.grille.getListeTuiles().keySet()){
+                if (this.grille.getListeTuiles().get(key).getTresor()==Tresor.CRISTAL && grille.getListeTuiles().get(key).getEtatTuile() == EtatTuile.COULEE){
+                    nbTempleInondee++;
+                }
+            }
+        }
+        return nbTempleInondee == 2;
+    }
+    
+    public boolean ifTresorCalicePerdu(){
+        int nbTempleInondee=0;    
+        if(!tresorPossede.contains(Tresor.CALICE)){
+            for(Integer key : this.grille.getListeTuiles().keySet()){
+                if (this.grille.getListeTuiles().get(key).getTresor()==Tresor.CALICE && grille.getListeTuiles().get(key).getEtatTuile() == EtatTuile.COULEE){
+                    nbTempleInondee++;
+                }
+            }
+        }
+        return nbTempleInondee == 2;
+    }
+    
+    public boolean ifDefaite(){
+        return(ifNiveauMax() || ifHeliportNoyee() || ifTresorPierrePerdu() || ifTresorZephyrPerdu() || ifTresorCristalPerdu() || ifTresorCalicePerdu() || partiePerdue);
+    }
+    
+    
+
+
     // GESTION DE VUES
     
     public VueTuile initVueTuile(Tuile t){
@@ -579,81 +664,9 @@ public class Controleur implements Observer{
         return res;
     }
 
-    
-    
-    
-            //Test des différentes conditions de défaites (sauf le cas de la "mort" d'un joueur, directement géré dans tirageCarteInodation)
-    
-    public boolean ifHeliportNoyee(){
-        boolean retour = false;
-        
-        Tuile t = JCourant.getPosition();
-        for(Integer key : this.grille.getListeTuiles().keySet()){
-            if (this.grille.getListeTuiles().get(key).getNom()=="Heliport"){
-                t = this.grille.getListeTuiles().get(key);
-            }
-        }
-        
-        return t.getEtatTuile() == EtatTuile.COULEE;
-    }
-    
-    public boolean ifNiveauMax(){
-        return niveauInond == 10; 
-    }
-    
-    public boolean ifTresorPierrePerdu(){
-        int nbTempleInondee=0;
-        if(!tresorPossede.contains(Tresor.PIERRE)){
-            for(Integer key : this.grille.getListeTuiles().keySet()){
-                if (grille.getListeTuiles().get(key).getTresor()==Tresor.PIERRE && grille.getListeTuiles().get(key).getEtatTuile() == EtatTuile.COULEE){
-                        nbTempleInondee++;
-                        System.out.println("Nombre de temple inondee : "+nbTempleInondee+ "  carte comptee : "+grille.getListeTuiles().get(key).getNom());
-                }
-            }
-        }
-        return nbTempleInondee == 2;
-    }
-    
-    public boolean ifTresorZephyrPerdu(){
-        int nbTempleInondee=0;    
-        if(!tresorPossede.contains(Tresor.ZEPHYR)){
-            for(Integer key : this.grille.getListeTuiles().keySet()){
-                if (this.grille.getListeTuiles().get(key).getTresor()==Tresor.ZEPHYR && grille.getListeTuiles().get(key).getEtatTuile() == EtatTuile.COULEE){
-                        nbTempleInondee++;
-                }
-            }
-        }
-        return nbTempleInondee == 2;
-    }
-    
-    public boolean ifTresorCristalPerdu(){
-        int nbTempleInondee=0;    
-        if(!tresorPossede.contains(Tresor.CRISTAL)){
-            for(Integer key : this.grille.getListeTuiles().keySet()){
-                if (this.grille.getListeTuiles().get(key).getTresor()==Tresor.CRISTAL && grille.getListeTuiles().get(key).getEtatTuile() == EtatTuile.COULEE){
-                        nbTempleInondee++;
-                }
-            }
-        }
-        return nbTempleInondee == 2;
-    }
-    
-    public boolean ifTresorCalicePerdu(){
-        int nbTempleInondee=0;    
-        if(!tresorPossede.contains(Tresor.CALICE)){
-            for(Integer key : this.grille.getListeTuiles().keySet()){
-                if (this.grille.getListeTuiles().get(key).getTresor()==Tresor.CALICE && grille.getListeTuiles().get(key).getEtatTuile() == EtatTuile.COULEE){
-                        nbTempleInondee++;
-                }
-            }
-        }
-        return nbTempleInondee == 2;
-    }
-    
-    public boolean ifDefaite(){
-        return(ifNiveauMax() || ifHeliportNoyee() || ifTresorPierrePerdu() || ifTresorZephyrPerdu() || ifTresorCristalPerdu() || ifTresorCalicePerdu() || partiePerdue);
-    }
-    
+
+
+
 //  ================================== SCENARIO 1: test partie normale ============================================================
     public static void scenario1() {
     
