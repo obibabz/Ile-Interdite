@@ -94,15 +94,7 @@ public class VuePlateau extends Observable {
                     clearChanged();
                 }
             });
-      
-            listeVuesJoueurs.get(key).getBtnUtiliserCarte().addActionListener(new ActionListener(){
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    setChanged();
-                    notifyObservers(new Message(Commandes.CHOISIR_CARTE, key, null, null, null));
-                    clearChanged();
-                }
-            });
+  
             listeVuesJoueurs.get(key).getBtnTerminerTour().addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -190,8 +182,10 @@ public class VuePlateau extends Observable {
         this.listeVuesJoueurs.get(idJoueur).getBtnAnnuler().setEnabled(true);
     }
     //REMISE PAR DEFAUT DE L'AFFICHAGE DES TUILES APRES UN DEPLACEMENT OU UN ASSECHEMENT
-    public void setTuilesDefaut(ArrayList<Integer> listeIdTuiles){
-        for(Integer idTuile : listeIdTuiles){
+    public void setTuilesDefaut(){
+        ArrayList<Integer> idTuiles = new ArrayList<>();
+        idTuiles.addAll(this.vueGrille.getListeTuiles().keySet());
+        for(Integer idTuile : idTuiles){
             JButton btnTuile = this.vueGrille.getListeTuiles().get(idTuile).getBtnTuile();
             if (!(btnTuile.getActionListeners().length == 0) ){
                 btnTuile.removeActionListener(btnTuile.getActionListeners()[0]);
@@ -237,7 +231,9 @@ public class VuePlateau extends Observable {
         for (Integer idCarte : listeIdCartes){
             VueCarte vc = this.listeVuesJoueurs.get(idJoueur).getCartesEnMain().get(idCarte);
             vc.setSkinDefaut();
-            vc.getBtnCarte().removeActionListener(vc.getBtnCarte().getActionListeners()[0]);
+            if(!(vc.getBtnCarte().getActionListeners().length ==0)){
+                vc.getBtnCarte().removeActionListener(vc.getBtnCarte().getActionListeners()[0]);
+            }
              
         }
     }
