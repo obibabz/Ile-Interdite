@@ -94,14 +94,7 @@ public class VuePlateau extends Observable {
                     clearChanged();
                 }
             });
-            listeVuesJoueurs.get(key).getBtnDonnerCarte().addActionListener(new ActionListener(){
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    setChanged();
-                    notifyObservers(new Message(Commandes.DONNER, key, null, null, null));
-                    clearChanged();
-                }
-            });
+      
             listeVuesJoueurs.get(key).getBtnUtiliserCarte().addActionListener(new ActionListener(){
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -139,6 +132,14 @@ public class VuePlateau extends Observable {
                 public void actionPerformed(ActionEvent e) {
                     setChanged();
                     notifyObservers(new Message(Commandes.DONNER_CARTE, key, null, null, null));
+                    clearChanged();
+                }
+            });
+            listeVuesJoueurs.get(key).getBtnUtiliserCarte().addActionListener(new ActionListener(){
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    setChanged();
+                    notifyObservers(new Message(Commandes.UTILISER_CARTE, key, null, null, null));
                     clearChanged();
                 }
             });
@@ -201,15 +202,32 @@ public class VuePlateau extends Observable {
     }
     
     //AFFICHAGE DE VUE POUR CHOISIR UNE CARTE
-    public void setCartesUtilisables(ArrayList<Integer> listeIdCartes, Integer idJoueurCourant, Integer idJoueurCible){
+    public void setCartesDonnables(ArrayList<Integer> listeIdCartes, Integer idJoueurCourant, Integer idJoueurCible){
         for (Integer idCarte : listeIdCartes){
             VueCarte vc = this.listeVuesJoueurs.get(idJoueurCourant).getCartesEnMain().get(idCarte);
+            
+   
             vc.setSkinCliquable();
             vc.getBtnCarte().addActionListener(new ActionListener(){
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     setChanged();
                     notifyObservers(new Message(Commandes.CHOISIR_CARTE, idJoueurCible, idCarte, null, null));
+                    clearChanged();
+                }
+            });
+        }
+    }
+    public void setCartesDefaussables(ArrayList<Integer> listeIdCartes, Integer idJoueurCourant){
+        for (Integer idCarte : listeIdCartes){
+            VueCarte vc = this.listeVuesJoueurs.get(idJoueurCourant).getCartesEnMain().get(idCarte);
+            vc.setSkinCliquable();
+            
+            vc.getBtnCarte().addActionListener(new ActionListener(){
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    setChanged();
+                    notifyObservers(new Message(Commandes.DEFAUSSER_CARTE, idJoueurCourant, idCarte, null, null));
                     clearChanged();
                 }
             });

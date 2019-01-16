@@ -43,18 +43,16 @@ public abstract class Aventurier extends ObjetIdentifie{
     public Integer getNbAssech() {
         return nbAssech;
     }
-
-    public void addCartesEnMain(CarteTirage c){
-        if(cartesEnMain.size()<5){
-            cartesEnMain.put(c.getId(),c);
-        }
-        else{ 
-            this.defausseCarte(c);
-        }
+    public boolean cartesEnMaininf5(){
+        return this.getCartesEnMain().size()<=5;
     }
 
-    public void defausseCarte(CarteTirage c){
-        cartesEnMain.remove(id);
+    public void addCartesEnMain(CarteTirage c){
+            cartesEnMain.put(c.getId(),c);
+    }
+
+    public void retirerCarte(CarteTirage c){
+        cartesEnMain.remove(c.getId());
     }
     
     public String getNomJoueur() {
@@ -105,6 +103,15 @@ public abstract class Aventurier extends ObjetIdentifie{
             }
         }
         return cartesDonnables;
+    }
+    public ArrayList <Integer> getCartesUtilisables(){
+        ArrayList<Integer> cartesUtilisables = new ArrayList<>();
+        for(Integer key : cartesEnMain.keySet()){
+            if (!"CarteTresor".equals(cartesEnMain.get(key).getClass().getSimpleName())){
+                cartesUtilisables.add(key);
+            }
+        }
+        return cartesUtilisables;
     }
 
     public LinkedHashMap<Integer, CarteTirage> getCartesEnMain() {
