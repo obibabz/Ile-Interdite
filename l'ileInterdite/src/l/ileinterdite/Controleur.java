@@ -335,10 +335,12 @@ public class Controleur implements Observer{
         // inondation de la tuile correspondante
         if(grille.getListeTuiles().get(c.getId()).getEtatTuile() == EtatTuile.ASSECHEE){        //
             grille.getListeTuiles().get(c.getId()).setEtatTuile(EtatTuile.INONDEE);
+            vuePlateau.getMessageBox().displayMessage("La tuile "+grille.getListeTuiles().get(c.getId()).getNom()+" a été inondée.", Color.BLACK, Boolean.TRUE, Boolean.TRUE);
             defausseInondation.add(c);
             piocheInondation.remove(0);
         }else if(grille.getListeTuiles().get(c.getId()).getEtatTuile() == EtatTuile.INONDEE){
             grille.getListeTuiles().get(c.getId()).setEtatTuile(EtatTuile.COULEE);
+            vuePlateau.getMessageBox().displayMessage("La tuile "+grille.getListeTuiles().get(c.getId()).getNom()+" a été coulée.", Color.BLACK, Boolean.TRUE, Boolean.TRUE);
             piocheInondation.remove(0);
             if(!grille.getListeTuiles().get(c.getId()).getJoueursSurTuile().isEmpty()){
                 for(Integer key : grille.getListeTuiles().get(c.getId()).getJoueursSurTuile().keySet()){
