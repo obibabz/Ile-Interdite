@@ -17,7 +17,7 @@ import javax.swing.JPanel;
  *
  * @author Administrateur
  */
-public class VueCarte extends JPanel{
+public class VueCarte extends JPanel {
     private final String nomCarte;
     private final JButton btnCarte;
 

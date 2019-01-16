@@ -28,6 +28,7 @@ import cartes.CarteMonteeDesEaux;
 import cartes.CarteSacsDeSable;
 import cartes.CarteTresor;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedHashMap;
@@ -199,16 +200,16 @@ public class Controleur implements Observer{
                 actionDebutTour();
             }
             else if (((Message ) arg).getCommande() == Commandes.POUVOIR) {
-                
-                //((VueAventurier) o).getPosition().setText(JCourant.getPosition().getNom());
-                //((VueAventurier) o).getBtnAutreAction().setEnabled(false);
+                ArrayList<Integer> idTuiles = new ArrayList<>();
+                idTuiles = grille.getToutesTuilesPasCoulees();
+                vuePlateau.setTuilesDeplacement(idTuiles, idJoueur, couleur2, couleur2);
                 
             }
             //COMMANDE DONNER CARTE
             else if(((Message ) arg).getCommande() == Commandes.DONNER_CARTE){
                 
                 ArrayList<Integer> idJoueurs = JCourant.getJoueursCiblables(grille);
-                if(!JCourant.getCartesTresor().isEmpty()){
+                if(!idJoueurs.isEmpty() && !JCourant.getCartesTresor().isEmpty()){
                     vuePlateau.setBoutonsRecevoirCarte(idJoueurs, idJoueur);
                     vuePlateau.getListeVuesJoueurs().get(idJoueur).setVueChoix();
                 }
@@ -252,11 +253,13 @@ public class Controleur implements Observer{
                 
                 defausseTirage.put(idCarte, c);//On rajoute la carte à la défausse
                 gestionDefausse(idJoueur);//On relance la gestion de défausse tant que le joueur a plus de 5 cartes en main
-                if("Sac de Sable".equals(c.getNom())){
-                    utilisationSac(idCarte, idJoueur);
-                }
-                else if(("Helicoptere").equals(c.getNom())){
-                    utilisationHelicoptere(idCarte, idJoueur);
+                if(Utils.poserQuestion("Voulez vous utiliser la carte ?")){
+                    if("Sac de Sable".equals(c.getNom())){
+                        utilisationSac(idCarte, idJoueur);
+                    }
+                    else if(("Helicoptere").equals(c.getNom())){
+                        utilisationHelicoptere(idCarte, idJoueur);
+                    }
                 }
             }
             
@@ -272,6 +275,15 @@ public class Controleur implements Observer{
                 ArrayList<Integer> listeIdCartes = new ArrayList<>();
                 listeIdCartes = JCourant.getCartesUtilisables();
                 vuePlateau.setCartesDefaussables(listeIdCartes, idJoueur);
+            }
+            else if(((Message) arg).getCommande() == Commandes.RECUPERER_TRESOR){
+                Utils.Tresor t = listeJoueurs.get(idJoueur).getPosition().getTresor();
+                if(t != null){
+                    if(listeJoueurs.get(idJoueur).tresorRecuperable(t))
+                    this.tresorPossede.add(t);
+                    this.vuePlateau.getMessageBox().displayTresor(t);
+                    
+                }
             }
         }
     }
@@ -366,6 +378,9 @@ public class Controleur implements Observer{
                 JCourant.addCartesEnMain(c);
                 vuePlateau.getListeVuesJoueurs().get(JCourant.getId()).ajouterCarte(listeId.get(0), vuePlateau.getListeVuesCartes().get(listeId.get(0)));
         }   
+        
+        // Pas propre pour commencer le fait que les cartes s'affichent mal
+        vuePlateau.afficher();
         piocheTirage.remove(listeId.get(0));
         
     }
@@ -808,7 +823,7 @@ public class Controleur implements Observer{
             vuesTuiles.put(vT.getIdVueTuile(), vT);
         }
       
-        MessageBox mb = new MessageBox();mb.setCaliceVisible();
+        MessageBox mb = new MessageBox();
         VueGrille vG = new VueGrille(vuesTuiles);
         
         
@@ -817,7 +832,11 @@ public class Controleur implements Observer{
         vP.setListeVuesCartes(piocheTirage);
         vP.addObserver(controleur);
         vP.afficher();
-        
+        controleur.tirageCarte();
+        controleur.tirageCarte();
+        controleur.tirageCarte();
+        controleur.tirageCarte();
+
         
     }
     

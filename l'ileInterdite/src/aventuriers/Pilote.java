@@ -21,7 +21,7 @@ public class Pilote extends Aventurier{
         super(nomJoueur, position, pion);
     }
     public ArrayList<Integer> getTuileAccessiblesPouvoir(Grille g){
-        return g.getTuilePouvoirPilote(getPosition().getId());
+        return g.getToutesTuilesPasCoulees();
     }
     
     

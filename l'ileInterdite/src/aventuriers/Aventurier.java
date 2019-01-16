@@ -13,6 +13,7 @@ import cartes.CarteTirage;
 import cartes.CarteTresor;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import util.Utils;
 import util.Utils.Pion;
 import util.Utils.EtatTuile;
 /**
@@ -112,6 +113,22 @@ public abstract class Aventurier extends ObjetIdentifie{
             }
         }
         return cartesUtilisables;
+    }
+    
+    public boolean tresorRecuperable(Utils.Tresor t){
+        boolean cond = (this.position.getTresor() == t);
+        return (cond && verifCartesTresor(t));
+    }
+    
+    public boolean verifCartesTresor(Utils.Tresor t){
+        
+        int nbCartesCorrectes = 0;
+        for(Integer key : this.getCartesEnMain().keySet()){
+            if (this.getCartesEnMain().get(key).getNom() ==t.toString()){
+                nbCartesCorrectes +=1;
+            }
+        }
+        return nbCartesCorrectes>=4;
     }
 
     public LinkedHashMap<Integer, CarteTirage> getCartesEnMain() {

@@ -59,7 +59,8 @@ public class VueAventurier extends JPanel{
         //this.window = new JFrame();
         //window.setSize(350, 200);
         //le titre = nom du joueur                                                                                                                                                      
-        //window.setTitle(nomJoueur);      
+        //window.setTitle(nomJoueur); 
+        
         mainPanel = new JPanel(new BorderLayout());
         this.add(mainPanel);
         mainPanel.setBackground(new Color(230, 230, 230));
@@ -95,6 +96,7 @@ public class VueAventurier extends JPanel{
         panelPosition.add(position);
         
         //PANEL CARTES
+        System.out.println("vues.VueAventurier.<init>() : panelCarte=" + this.getCartesEnMain().size());
         panelCartes = new JPanel(new GridLayout(1,this.getCartesEnMain().size()));
         panelCentre.add(panelCartes);
         for(Integer key : this.cartesEnMain.keySet()){
@@ -162,6 +164,7 @@ public class VueAventurier extends JPanel{
     //DESACTIVATION DE LA VUE
     public void setVueJPrecedant(){
             this.setVueFinTour();
+            this.btnRecupTresor.setEnabled(false);
             this.btnTerminerTour.setEnabled(false);
             this.panelAventurier.setBackground(couleurGrisee);
             this.mainPanel.setBorder(BorderFactory.createLineBorder(couleurGrisee, 2)) ;
@@ -169,6 +172,7 @@ public class VueAventurier extends JPanel{
     }
     //ACTIVATION DE LA VUE
     public void setVueJCourant(){
+            this.btnRecupTresor.setEnabled(true);
             this.btnDonnerCarte.setEnabled(true);
             this.btnBouger.setEnabled(true);
             this.btnAnnuler.setEnabled(false);
@@ -186,12 +190,19 @@ public class VueAventurier extends JPanel{
     public void ajouterCarte(Integer id, VueCarte vc){
         this.cartesEnMain.put(id, vc);
         panelCartes.removeAll();
+        panelCartes.setLayout(new GridLayout(1,this.cartesEnMain.keySet().size()));
+        System.out.println("vues.VueAventurier.ajouterCarte() : joueur a " + this.cartesEnMain.keySet().size() + " cartes");
         for(Integer key : this.cartesEnMain.keySet()){
             panelCartes.add(cartesEnMain.get(key));
+   
+            System.out.println("\tAjout de la carte " + key);
+     
         }
     }
     public void retirerCarte(Integer id){
-        this.cartesEnMain.remove(id);panelCartes.removeAll();
+        this.cartesEnMain.remove(id);
+        panelCartes.removeAll();
+        panelCartes.setLayout(new GridLayout(1,this.cartesEnMain.keySet().size()));
         for(Integer key : this.cartesEnMain.keySet()){
             panelCartes.add(cartesEnMain.get(key));
         }

@@ -142,28 +142,13 @@ public class Grille {
                 
         return liste;
     }
-    
-    public ArrayList<Integer> getTuilePouvoirPilote(Integer tuile){
-        
-        ArrayList<Integer> tuilesPilote = new ArrayList();
-        int i = 0;
-        int j = 0;
-        
-        while (i < 6  ){
-            j = 0;
-            while ( j < 6 ){
-
-                if (grille[i][j].getNom() != "Void" && grille[i][j].getEtatTuile() != EtatTuile.COULEE && tuile != grille[i][j].getId()){
-                    tuilesPilote.add(grille[i][j].getId());
-
-                }
-                j++;
-            }
-            i++;
+    public ArrayList<Integer> getToutLesJoueurs(){
+        ArrayList<Integer> idJoueurs = new ArrayList<>();
+        for(Integer key : this.listeTuiles.keySet()){
+            idJoueurs.addAll(listeTuiles.get(key).getJoueursSurTuile().keySet());
         }
-        return tuilesPilote;
+        return idJoueurs;
     }
-
     public LinkedHashMap<Integer, Tuile> getListeTuiles() {
         return listeTuiles;
     }
