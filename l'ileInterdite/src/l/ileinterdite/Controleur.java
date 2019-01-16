@@ -437,10 +437,12 @@ public class Controleur implements Observer{
             piocheCarteInondee();
         }
     }
-
-    //gestion tirage carte inondee
     
-    // fonction pour les conditions de Victoire et de Defaite
+    
+
+
+// Test des différentes conditions de victoire
+    
     public boolean ifCarteHelico(Aventurier a){
         boolean retour = false;
         String cH = "CarteHelicoptere";
@@ -479,55 +481,7 @@ public class Controleur implements Observer{
         }
         return retour;
     }
-    // GESTION DE VUES
-    
-    public VueTuile initVueTuile(Tuile t){
-        
-        VueTuile vT;
-        ArrayList<Color> couleurs = new ArrayList<>();
-        for(Integer key  : t.getJoueursSurTuile().keySet()){
-            couleurs.add(t.getJoueursSurTuile().get(key).getPion().getCouleur());
-        }
-        String tresor;
-        tresor = null;
-        if("La Caverne des Ombres".equals(t.getNom()) || "La Caverne du Brasier".equals(t.getNom())){
-            tresor = Tresor.CRISTAL.toString();
-        }
-        else if("Le Palais de Corail".equals(t.getNom()) || "Le Palais des Marées".equals(t.getNom())){
-            tresor = Tresor.CALICE.toString();
-        }
-        else if("Le Temple de la Lune".equals(t.getNom()) || "Le Temple du Soleil".equals(t.getNom())){
-            tresor = Tresor.PIERRE.toString();
-        }
-        else if("Le Jardin des Murmures".equals(t.getNom()) || "Le Jardin des Hurlements".equals(t.getNom())){
-            tresor = Tresor.ZEPHYR.toString();
-        }
-        vT = new VueTuile(t.getId(), t.getNom(), tresor, t.getEtatTuile().toString(), couleurs);
-        
-        return vT;
-    }
 
-    public LinkedHashMap<Integer, CarteTirage> getPiocheTirage() {
-        return piocheTirage;
-    }
-
-    public void setPiocheTirage(LinkedHashMap<Integer, CarteTirage> piocheTirage) {
-        this.piocheTirage = piocheTirage;
-    }
-    
-    public void setPiocheInondation(ArrayList<CarteInondation> piocheInondation) {
-        this.piocheInondation = piocheInondation;
-    }
-    
-    public String listeIdTuilesToString(ArrayList<Integer> listeTuiles){
-        String res ="";
-        for(Integer key : listeTuiles){
-            res+=this.grille.getListeTuiles().get(key).getNom();
-            
-            res += " ";
-        }
-        return res;
-    }
 
     
     
@@ -604,6 +558,62 @@ public class Controleur implements Observer{
         return(ifNiveauMax() || ifHeliportNoyee() || ifTresorPierrePerdu() || ifTresorZephyrPerdu() || ifTresorCristalPerdu() || ifTresorCalicePerdu() || partiePerdue);
     }
     
+    
+
+
+    // GESTION DE VUES
+    
+    public VueTuile initVueTuile(Tuile t){
+        
+        VueTuile vT;
+        ArrayList<Color> couleurs = new ArrayList<>();
+        for(Integer key  : t.getJoueursSurTuile().keySet()){
+            couleurs.add(t.getJoueursSurTuile().get(key).getPion().getCouleur());
+        }
+        String tresor;
+        tresor = null;
+        if("La Caverne des Ombres".equals(t.getNom()) || "La Caverne du Brasier".equals(t.getNom())){
+            tresor = Tresor.CRISTAL.toString();
+        }
+        else if("Le Palais de Corail".equals(t.getNom()) || "Le Palais des Marées".equals(t.getNom())){
+            tresor = Tresor.CALICE.toString();
+        }
+        else if("Le Temple de la Lune".equals(t.getNom()) || "Le Temple du Soleil".equals(t.getNom())){
+            tresor = Tresor.PIERRE.toString();
+        }
+        else if("Le Jardin des Murmures".equals(t.getNom()) || "Le Jardin des Hurlements".equals(t.getNom())){
+            tresor = Tresor.ZEPHYR.toString();
+        }
+        vT = new VueTuile(t.getId(), t.getNom(), tresor, t.getEtatTuile().toString(), couleurs);
+        
+        return vT;
+    }
+
+    public LinkedHashMap<Integer, CarteTirage> getPiocheTirage() {
+        return piocheTirage;
+    }
+
+    public void setPiocheTirage(LinkedHashMap<Integer, CarteTirage> piocheTirage) {
+        this.piocheTirage = piocheTirage;
+    }
+    
+    public void setPiocheInondation(ArrayList<CarteInondation> piocheInondation) {
+        this.piocheInondation = piocheInondation;
+    }
+    
+    public String listeIdTuilesToString(ArrayList<Integer> listeTuiles){
+        String res ="";
+        for(Integer key : listeTuiles){
+            res+=this.grille.getListeTuiles().get(key).getNom();
+            
+            res += " ";
+        }
+        return res;
+    }
+
+
+
+
 //  ================================== SCENARIO 1: test partie normale ============================================================
     public static void scenario1() {
     
