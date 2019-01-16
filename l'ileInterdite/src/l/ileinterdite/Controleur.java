@@ -184,7 +184,6 @@ public class Controleur implements Observer{
                 }
                 nbActionsRestantes-=1;
                 vuePlateau.getListeVuesJoueurs().get(idJoueur).setVueJCourant();
-                System.out.println(nbActionsRestantes);
                 verifFinTour(o, idJoueur);
             }
             
@@ -218,9 +217,6 @@ public class Controleur implements Observer{
                 vuePlateau.setBoutonsDonnerCarte(idJoueurs, idJoueur);
                 
                 ArrayList<Integer> idCartes = JCourant.getCartesTresor();
-                for(Integer key :idCartes){
-                    System.out.println(key);
-                }
                 vuePlateau.setCartesDonnables(idCartes, JCourant.getId(), idJoueur);
             }
             //CHOIX DE LA CARTE
@@ -282,7 +278,6 @@ public class Controleur implements Observer{
         }
     }    
     public void actionDebutTour(){
-        System.out.println("0");
         gestionDefausse(JCourant.getId());
     }       
     public void actionFinTour(){
@@ -372,9 +367,7 @@ public class Controleur implements Observer{
     }
     
     public void gestionDefausse(Integer idJoueur){
-        System.out.println("1");
         if(!listeJoueurs.get(idJoueur).cartesEnMaininf5()){
-            System.out.println("2");
             ArrayList<Integer> listeIdCartes = new ArrayList<>();
             listeIdCartes.addAll(listeJoueurs.get(idJoueur).getCartesEnMain().keySet());
             vuePlateau.setCartesDefaussables(listeIdCartes, idJoueur);
@@ -396,7 +389,10 @@ public class Controleur implements Observer{
             nbActionsRestantes +=1;
             vuePlateau.getMessageBox().displayMessage("Le joueur "+listeJoueurs.get(idJoueur).getNomJoueur()+" a utilisé une carte Helicoptere.", JCourant.getPion().getCouleur(), Boolean.TRUE, Boolean.TRUE);
     }
-    //Gestion montée des eaux
+   
+    
+
+//Gestion montée des eaux
     
     public void piocheCarteMonteeDesEaux(){
         niveauInond++;
@@ -548,8 +544,7 @@ public class Controleur implements Observer{
         if(!tresorPossede.contains(Tresor.PIERRE)){
             for(Integer key : this.grille.getListeTuiles().keySet()){
                 if (grille.getListeTuiles().get(key).getTresor()==Tresor.PIERRE && grille.getListeTuiles().get(key).getEtatTuile() == EtatTuile.COULEE){
-                        nbTempleInondee++;
-                        System.out.println("Nombre de temple inondee : "+nbTempleInondee+ "  carte comptee : "+grille.getListeTuiles().get(key).getNom());
+                    nbTempleInondee++;
                 }
             }
         }
@@ -561,7 +556,7 @@ public class Controleur implements Observer{
         if(!tresorPossede.contains(Tresor.ZEPHYR)){
             for(Integer key : this.grille.getListeTuiles().keySet()){
                 if (this.grille.getListeTuiles().get(key).getTresor()==Tresor.ZEPHYR && grille.getListeTuiles().get(key).getEtatTuile() == EtatTuile.COULEE){
-                        nbTempleInondee++;
+                    nbTempleInondee++;
                 }
             }
         }
@@ -573,7 +568,7 @@ public class Controleur implements Observer{
         if(!tresorPossede.contains(Tresor.CRISTAL)){
             for(Integer key : this.grille.getListeTuiles().keySet()){
                 if (this.grille.getListeTuiles().get(key).getTresor()==Tresor.CRISTAL && grille.getListeTuiles().get(key).getEtatTuile() == EtatTuile.COULEE){
-                        nbTempleInondee++;
+                    nbTempleInondee++;
                 }
             }
         }
@@ -585,7 +580,7 @@ public class Controleur implements Observer{
         if(!tresorPossede.contains(Tresor.CALICE)){
             for(Integer key : this.grille.getListeTuiles().keySet()){
                 if (this.grille.getListeTuiles().get(key).getTresor()==Tresor.CALICE && grille.getListeTuiles().get(key).getEtatTuile() == EtatTuile.COULEE){
-                        nbTempleInondee++;
+                    nbTempleInondee++;
                 }
             }
         }
