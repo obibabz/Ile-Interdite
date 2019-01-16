@@ -340,6 +340,11 @@ public class Controleur implements Observer{
         }else if(grille.getListeTuiles().get(c.getId()).getEtatTuile() == EtatTuile.INONDEE){
             grille.getListeTuiles().get(c.getId()).setEtatTuile(EtatTuile.COULEE);
             piocheInondation.remove(0);
+            if(!grille.getListeTuiles().get(c.getId()).getJoueursSurTuile().isEmpty()){
+                for(Integer key : grille.getListeTuiles().get(c.getId()).getJoueursSurTuile().keySet()){
+                    vuePlateau.setTuilesDeplacement(grille.getListeTuiles().get(c.getId()).getJoueursSurTuile().get(key).getTuilesAccessibles(grille), key, Color.blue, Color.blue);
+                }
+            }
         }
     }
 
