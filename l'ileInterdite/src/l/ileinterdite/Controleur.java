@@ -694,9 +694,9 @@ public class Controleur implements Observer{
         ArrayList<CarteInondation> listeCartesInond = new ArrayList();
         for(Integer key : listeTuiles.keySet()){
             CarteInondation cI = new CarteInondation(listeTuiles.get(key));
-            CarteInondation cI2 = new CarteInondation(listeTuiles.get(key));
+            
             piocheInond.add(cI);
-            piocheInond.add(cI2);
+            
         }
         
         
