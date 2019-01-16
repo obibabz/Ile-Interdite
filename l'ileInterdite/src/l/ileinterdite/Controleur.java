@@ -357,18 +357,20 @@ public class Controleur implements Observer{
                 listeId.add(key);
             }
         }
-            CarteTirage c = piocheTirage.get(listeId.get(0));
+        
+        CarteTirage c = piocheTirage.get(listeId.get(0));
        
         if (c.getClass().getSimpleName() == "CarteMonteeDesEaux"){
             piocheCarteMonteeDesEaux();
             piocheTirage.put(c.getId(), c);
         }else{
                 JCourant.addCartesEnMain(c);
+                vuePlateau.getMessageBox().displayMessage("Le joueur "+JCourant.getNomJoueur()+" a tiré une carte "+c.getNom()+".", JCourant.getPion().getCouleur(), Boolean.TRUE, Boolean.TRUE);
                 vuePlateau.getListeVuesJoueurs().get(JCourant.getId()).ajouterCarte(listeId.get(0), vuePlateau.getListeVuesCartes().get(listeId.get(0)));
         }   
         piocheTirage.remove(listeId.get(0));
-        
     }
+    
     public void gestionDefausse(Integer idJoueur){
         System.out.println("1");
         if(!listeJoueurs.get(idJoueur).cartesEnMaininf5()){
@@ -378,18 +380,21 @@ public class Controleur implements Observer{
             vuePlateau.setCartesDefaussables(listeIdCartes, idJoueur);
         }
     }
+    
     public void utilisationSac(Integer idCarte, Integer idJoueur){
-            ArrayList<Integer> idTuiles = new ArrayList<>();
-            idTuiles = this.grille.getToutesTuilesInondees();
-            vuePlateau.setTuilesAssechement(idTuiles, idJoueur, listeJoueurs.get(idJoueur).getPion().getCouleurSelectionAssechee(), listeJoueurs.get(idJoueur).getPion().getCouleurSelectionInondee());
-            nbActionsRestantes+=1;
-        
+        ArrayList<Integer> idTuiles = new ArrayList<>();
+        idTuiles = this.grille.getToutesTuilesInondees();
+        vuePlateau.setTuilesAssechement(idTuiles, idJoueur, listeJoueurs.get(idJoueur).getPion().getCouleurSelectionAssechee(), listeJoueurs.get(idJoueur).getPion().getCouleurSelectionInondee());
+        nbActionsRestantes+=1;
+        vuePlateau.getMessageBox().displayMessage("Le joueur "+listeJoueurs.get(idJoueur).getNomJoueur()+" a utilisé une carte Sac de Sable.", JCourant.getPion().getCouleur(), Boolean.TRUE, Boolean.TRUE);
     }
+    
     public void utilisationHelicoptere(Integer idCarte, Integer idJoueur){
         ArrayList<Integer> idTuiles = new ArrayList<>();
             idTuiles = this.grille.getToutesTuilesPasCoulees();
             vuePlateau.setTuilesDeplacement(idTuiles, idJoueur, listeJoueurs.get(idJoueur).getPion().getCouleurSelectionAssechee(), listeJoueurs.get(idJoueur).getPion().getCouleurSelectionInondee());
             nbActionsRestantes +=1;
+            vuePlateau.getMessageBox().displayMessage("Le joueur "+listeJoueurs.get(idJoueur).getNomJoueur()+" a utilisé une carte Helicoptere.", JCourant.getPion().getCouleur(), Boolean.TRUE, Boolean.TRUE);
     }
     //Gestion montée des eaux
     
@@ -400,6 +405,8 @@ public class Controleur implements Observer{
         piocheInondation.clear();
         piocheInondation.addAll(defausseInondation);
         defausseInondation.clear();
+        vuePlateau.getMessageBox().displayMessage("Une carte montee des eaux a été pioché", JCourant.getPion().getCouleur(), Boolean.TRUE, Boolean.TRUE);
+        vuePlateau.getVueNiveau().setNiveau(niveauInond);
     }
     
     
@@ -435,7 +442,6 @@ public class Controleur implements Observer{
                         vuePlateau.setTuilesDeplacement(t.getJoueursSurTuile().get(key).getTuilesAccessibles(grille), key, Color.blue, Color.blue);
                     }else{
                         partiePerdue = true;
-                        
                     }
                 }
             }
