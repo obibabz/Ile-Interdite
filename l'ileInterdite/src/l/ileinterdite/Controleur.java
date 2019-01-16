@@ -310,14 +310,15 @@ public class Controleur implements Observer{
     //Fonction de dépalcement et d'assechement
     
     public void gererDeplacement(Integer idTuileArrivee, Integer idJoueur){
+        Aventurier joueur = listeJoueurs.get(idJoueur);
         LinkedHashMap<Integer, VueTuile> listeVuesTuiles = this.vuePlateau.getVueGrille().getListeTuiles();
-        Integer idTuileDepart =JCourant.getPosition().getId();
-        Color couleur = JCourant.getPion().getCouleur();
+        Integer idTuileDepart =joueur.getPosition().getId();
+        Color couleur = joueur.getPion().getCouleur();
         
-        this.grille.getListeTuiles().get(idTuileArrivee).arriveeJoueur( JCourant);
-        this.grille.getListeTuiles().get(idTuileDepart).departJoueur(JCourant.getId());
-        this.JCourant.setPosition(this.grille.getListeTuiles().get(idTuileArrivee));
-        this.vuePlateau.getListeVuesJoueurs().get(idJoueur).getPosition().setText(JCourant.getPosition().getNom());
+        this.grille.getListeTuiles().get(idTuileArrivee).arriveeJoueur( joueur);
+        this.grille.getListeTuiles().get(idTuileDepart).departJoueur(joueur.getId());
+        joueur.setPosition(this.grille.getListeTuiles().get(idTuileArrivee));
+        this.vuePlateau.getListeVuesJoueurs().get(idJoueur).getPosition().setText(joueur.getPosition().getNom());
 
         listeVuesTuiles.get(idTuileDepart).getJoueursSurTuile().remove(couleur);
         listeVuesTuiles.get(idTuileDepart).setCasesJoueurs();
