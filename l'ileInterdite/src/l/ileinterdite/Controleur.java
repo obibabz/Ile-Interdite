@@ -794,8 +794,15 @@ public class Controleur implements Observer{
         //((Collections) listeCartes).shuffle();
         
         LinkedHashMap<Integer, VueCarte> piocheTirage = new LinkedHashMap();
+        ArrayList<Integer> ordreTirage = new ArrayList();
         
         for(Integer key : listeCartes.keySet()){
+            ordreTirage.add(key);
+        }
+        
+        java.util.Collections.shuffle(ordreTirage);
+        
+        for(Integer key : ordreTirage){
             VueCarte vc = new VueCarte(listeCartes.get(key).getNom());
             piocheTirage.put(key, vc);
         }
