@@ -854,6 +854,7 @@ public class Controleur implements Observer{
         vP.addObserver(controleur);
         vP.afficher();
         /*controleur.tirageCarte();
+        vuePlateau.getMessageBox().displayMessage("Une carte montee des eaux a été pioché", JCourant.getPion().getCouleur(), Boolean.TRUE, Boolean.TRUE);
         controleur.tirageCarte();
         controleur.tirageCarte();
         controleur.tirageCarte();*/
@@ -1070,7 +1071,7 @@ public class Controleur implements Observer{
     
     //  ================================== SCENARIO 3: DEFAITE: un joueur est coulé ============================================================
     public static void scenario3() {
-        Tuile V1 = new Tuile("Void", EtatTuile.ASSECHEE); V1.setEtatTuile(null);
+         Tuile V1 = new Tuile("Void", EtatTuile.ASSECHEE); V1.setEtatTuile(null);
         Tuile V2 = new Tuile("Void", EtatTuile.ASSECHEE); V2.setEtatTuile(null);
         Tuile V3 = new Tuile("Void", EtatTuile.ASSECHEE); V3.setEtatTuile(null);
         Tuile V4 = new Tuile("Void", EtatTuile.ASSECHEE); V4.setEtatTuile(null);
@@ -1083,29 +1084,30 @@ public class Controleur implements Observer{
         Tuile V11 = new Tuile("Void", EtatTuile.ASSECHEE); V11.setEtatTuile(null);
         Tuile V12 = new Tuile("Void", EtatTuile.ASSECHEE); V12.setEtatTuile(null);
         Tuile PAb = new Tuile("Le Pont des Abîmes", EtatTuile.COULEE); 
-        Tuile PBr = new Tuile("La Porte de Bronze", EtatTuile.COULEE); 
-        Tuile COm = new Tuile("La Caverne des Ombres", EtatTuile.INONDEE); COm.setTresor(Tresor.CRISTAL);
-        Tuile PFe = new Tuile("La Porte de Fer", EtatTuile.COULEE);
+        Tuile PBr = new Tuile("La Porte de Bronze", EtatTuile.ASSECHEE); 
+        Tuile COm = new Tuile("La Caverne des Ombres", EtatTuile.COULEE); COm.setTresor(Tresor.CRISTAL);
+        Tuile PFe = new Tuile("La Porte de Fer", EtatTuile.INONDEE);
         Tuile POr = new Tuile("La Porte d'Or", EtatTuile.COULEE);
-        Tuile FOu = new Tuile("Les Falaises de l'Oubli", EtatTuile.COULEE);
-        Tuile PCo = new Tuile("Le Palais de Corail", EtatTuile.INONDEE); PCo.setTresor(Tresor.CALICE);
-        Tuile PAr = new Tuile("La Porte d'Argent", EtatTuile.INONDEE);
-        Tuile DIl = new Tuile("Les Dunes de l'Illusion", EtatTuile.INONDEE);
-        Tuile H = new Tuile("Heliport", EtatTuile.INONDEE);
-        Tuile PCu = new Tuile("La Porte de Cuivre", EtatTuile.COULEE);
-        Tuile JHu = new Tuile("Le Jardin des Hurlements", EtatTuile.COULEE); JHu.setTresor(Tresor.ZEPHYR);
-        Tuile FPo = new Tuile("La Forêt Pourpre", EtatTuile.COULEE);
-        Tuile LPe = new Tuile("Le Lagon Perdu", EtatTuile.INONDEE);
-        Tuile MBr = new Tuile("Le Marais Brumeux", EtatTuile.INONDEE);
-        Tuile O = new Tuile("Observatoire", EtatTuile.INONDEE);
-        Tuile RFa = new Tuile("Le Rocher Fantôme", EtatTuile.COULEE);
-        Tuile CBr = new Tuile("La Caverne du Brasier", EtatTuile.COULEE); CBr.setTresor(Tresor.CRISTAL);
-        Tuile TSo = new Tuile("Le Temple du Soleil", EtatTuile.COULEE); TSo.setTresor(Tresor.PIERRE);
-        Tuile TLu = new Tuile("Le Temple de la Lune", EtatTuile.INONDEE); TLu.setTresor(Tresor.PIERRE);
-        Tuile PMa = new Tuile("Le Palais des Marées", EtatTuile.INONDEE); PMa.setTresor(Tresor.CALICE);
-        Tuile VCr = new Tuile("Le Val du Crépuscule", EtatTuile.COULEE);
-        Tuile TGu = new Tuile("La Tour du Guet", EtatTuile.INONDEE);
-        Tuile JMu = new Tuile("Le Jardin des Murmures", EtatTuile.INONDEE); JMu.setTresor(Tresor.ZEPHYR);
+        Tuile FOu = new Tuile("Les Falaises de l'Oubli", EtatTuile.ASSECHEE);
+        Tuile PCo = new Tuile("Le Palais de Corail", EtatTuile.ASSECHEE); PCo.setTresor(Tresor.CALICE);
+        Tuile PAr = new Tuile("La Porte d'Argent", EtatTuile.ASSECHEE);
+        Tuile DIl = new Tuile("Les Dunes de l'Illusion", EtatTuile.COULEE);
+        Tuile H = new Tuile("Heliport", EtatTuile.ASSECHEE);
+        Tuile PCu = new Tuile("La Porte de Cuivre", EtatTuile.ASSECHEE);
+        Tuile JHu = new Tuile("Le Jardin des Hurlements", EtatTuile.ASSECHEE); JHu.setTresor(Tresor.ZEPHYR);
+        Tuile FPo = new Tuile("La Forêt Pourpre", EtatTuile.ASSECHEE);
+        Tuile LPe = new Tuile("Le Lagon Perdu", EtatTuile.ASSECHEE);
+        Tuile MBr = new Tuile("Le Marais Brumeux", EtatTuile.ASSECHEE);
+        Tuile O = new Tuile("Observatoire", EtatTuile.ASSECHEE);
+        Tuile RFa = new Tuile("Le Rocher Fantôme", EtatTuile.ASSECHEE);
+        Tuile CBr = new Tuile("La Caverne du Brasier", EtatTuile.ASSECHEE); CBr.setTresor(Tresor.CRISTAL);
+        Tuile TSo = new Tuile("Le Temple du Soleil", EtatTuile.ASSECHEE); TSo.setTresor(Tresor.PIERRE);
+        Tuile TLu = new Tuile("Le Temple de la Lune", EtatTuile.ASSECHEE); TLu.setTresor(Tresor.PIERRE);
+        Tuile PMa = new Tuile("Le Palais des Marées", EtatTuile.ASSECHEE); PMa.setTresor(Tresor.CALICE);
+        Tuile VCr = new Tuile("Le Val du Crépuscule", EtatTuile.ASSECHEE);
+        Tuile TGu = new Tuile("La Tour du Guet", EtatTuile.ASSECHEE);
+        Tuile JMu = new Tuile("Le Jardin des Murmures", EtatTuile.ASSECHEE); JMu.setTresor(Tresor.ZEPHYR);
+        
         
         LinkedHashMap<Integer, Tuile> listeTuiles = new LinkedHashMap<>();
         listeTuiles.put(PAb.getId(), PAb);
@@ -1140,12 +1142,8 @@ public class Controleur implements Observer{
         ArrayList<CarteInondation> listeCartesInond = new ArrayList();
         for(Integer key : listeTuiles.keySet()){
             CarteInondation cI = new CarteInondation(listeTuiles.get(key));
-            
             piocheInond.add(cI);
-            
         }
-        
-        java.util.Collections.shuffle(piocheInond);
         
         Pion rouge = Pion.ROUGE;
         Pion bleu = Pion.BLEU;
@@ -1216,13 +1214,12 @@ public class Controleur implements Observer{
         
         Controleur controleur = new Controleur();
 
-        controleur.setGrille(grid);
+                controleur.setGrille(grid);
         controleur.setListeJoueurs(joueursSurGrille);
         controleur.setJCourant(joueur1);
         controleur.setNbActionsRestantes(3);
-        
-        
-        
+        controleur.setPiocheTirage(listeCartes);
+        controleur.setPiocheInondation(piocheInond);
      
         // INNITIALISATION PLATEAU
         
