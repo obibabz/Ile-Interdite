@@ -736,11 +736,11 @@ public class Controleur implements Observer{
         ArrayList<CarteInondation> piocheInond = new ArrayList();
         
         ArrayList<CarteInondation> listeCartesInond = new ArrayList();
+        
         for(Integer key : listeTuiles.keySet()){
             CarteInondation cI = new CarteInondation(listeTuiles.get(key));
             
             piocheInond.add(cI);
-            
         }
         
         java.util.Collections.shuffle(piocheInond);
@@ -827,7 +827,7 @@ public class Controleur implements Observer{
         vuesAventurier.put(joueur4.getId(), vue4);
         
         Controleur controleur = new Controleur();
-
+        
         controleur.setGrille(grid);
         controleur.setListeJoueurs(joueursSurGrille);
         controleur.setJCourant(joueur1);
