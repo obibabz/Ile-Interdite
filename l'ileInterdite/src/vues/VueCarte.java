@@ -35,11 +35,11 @@ public class VueCarte extends JPanel {
     public JButton getBtnCarte() {
         return btnCarte;
     }
-    public void setSkinCliquable(){
+    public void setCarteCliquable(){
         this.setBorder(BorderFactory.createLineBorder(Color.yellow, 2));
         this.getBtnCarte().setEnabled(true);
     }
-    public void setSkinDefaut(){
+    public void setCarteDefaut(){
         this.setBorder(BorderFactory.createLineBorder(Color.darkGray, 1));
         this.getBtnCarte().setEnabled(false);
     }

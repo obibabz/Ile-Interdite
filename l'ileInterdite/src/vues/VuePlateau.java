@@ -202,7 +202,7 @@ public class VuePlateau extends Observable {
             VueCarte vc = this.listeVuesJoueurs.get(idJoueurCourant).getCartesEnMain().get(idCarte);
             
    
-            vc.setSkinCliquable();
+            vc.setCarteCliquable();
             vc.getBtnCarte().addActionListener(new ActionListener(){
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -216,7 +216,7 @@ public class VuePlateau extends Observable {
     public void setCartesDefaussables(ArrayList<Integer> listeIdCartes, Integer idJoueurCourant){
         for (Integer idCarte : listeIdCartes){
             VueCarte vc = this.listeVuesJoueurs.get(idJoueurCourant).getCartesEnMain().get(idCarte);
-            vc.setSkinCliquable();
+            vc.setCarteCliquable();
             
             vc.getBtnCarte().addActionListener(new ActionListener(){
                 @Override
@@ -231,7 +231,7 @@ public class VuePlateau extends Observable {
     public void setCartesDefaut(ArrayList<Integer> listeIdCartes, Integer idJoueur){
         for (Integer idCarte : listeIdCartes){
             VueCarte vc = this.listeVuesJoueurs.get(idJoueur).getCartesEnMain().get(idCarte);
-            vc.setSkinDefaut();
+            vc.setCarteDefaut();
             if(!(vc.getBtnCarte().getActionListeners().length ==0)){
                 vc.getBtnCarte().removeActionListener(vc.getBtnCarte().getActionListeners()[0]);
             }
