@@ -20,9 +20,10 @@ public class Messager extends Aventurier{
     public Messager(String nomJoueur , Tuile position, Pion pion) {
         super(nomJoueur, position, pion);
     }
+    @Override
     public ArrayList<Integer> getJoueursCiblables(Grille g){
         ArrayList <Integer> cibles =  g.getToutLesJoueurs();
-        cibles.remove(this);
+        cibles.remove(this.getId());
         return cibles;
     }
     

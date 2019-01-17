@@ -237,17 +237,7 @@ public class Controleur implements Observer{
             else if (((Message) arg).getCommande() == Commandes.DEFAUSSER_CARTE){
                 int idCarte = ((Message) arg).getIdCarte();
                 CarteTirage c = listeJoueurs.get(idJoueur).getCartesEnMain().get(idCarte);
-                listeJoueurs.get(idJoueur).retirerCarte(c);//On retire la carte de la main du joueur
-                
-                ArrayList<Integer> listeIdCartes = new ArrayList<>();
-                listeIdCartes.addAll(listeJoueurs.get(idJoueur).getCartesEnMain().keySet());
-                
-                vuePlateau.getListeVuesCartes().put(idCarte, vuePlateau.getListeVuesJoueurs().get(idJoueur).getCartesEnMain().get(idCarte));//On stock la VueCarte sur le plateau pour ne pas la perdre
-                vuePlateau.getListeVuesJoueurs().get(idJoueur).retirerCarte(idCarte);//On retire la VueCarte de la VueAventurier qui se défausse
-                vuePlateau.setCartesDefaut(listeIdCartes, idJoueur);//On affiche le changement
-                
-                defausseTirage.put(idCarte, c);//On rajoute la carte à la défausse
-                gestionDefausse(idJoueur);//On relance la gestion de défausse tant que le joueur a plus de 5 cartes en main
+                defausseCarte(idJoueur, idCarte);
                 if(Utils.poserQuestion("Voulez vous utiliser la carte ?")){
                     if("Sable".equals(c.getNom())){
                         utilisationSac(idCarte, idJoueur);
@@ -391,6 +381,20 @@ public class Controleur implements Observer{
         // Pas propre pour commencer le fait que les cartes s'affichent mal
         vuePlateau.afficher();
         piocheTirage.remove(listeId.get(0));
+    }
+    public void defausseCarte(Integer idJoueur, Integer idCarte){
+                CarteTirage c = listeJoueurs.get(idJoueur).getCartesEnMain().get(idCarte);
+                listeJoueurs.get(idJoueur).retirerCarte(c);//On retire la carte de la main du joueur
+                
+                ArrayList<Integer> listeIdCartes = new ArrayList<>();
+                listeIdCartes.addAll(listeJoueurs.get(idJoueur).getCartesEnMain().keySet());
+                
+                vuePlateau.getListeVuesCartes().put(idCarte, vuePlateau.getListeVuesJoueurs().get(idJoueur).getCartesEnMain().get(idCarte));//On stock la VueCarte sur le plateau pour ne pas la perdre
+                vuePlateau.getListeVuesJoueurs().get(idJoueur).retirerCarte(idCarte);//On retire la VueCarte de la VueAventurier qui se défausse
+                vuePlateau.setCartesDefaut(listeIdCartes, idJoueur);//On affiche le changement
+                
+                defausseTirage.put(idCarte, c);//On rajoute la carte à la défausse
+                gestionDefausse(idJoueur);//On relance la gestion de défausse tant que le joueur a plus de 5 cartes en main
     }
     
     public void gestionDefausse(Integer idJoueur){
