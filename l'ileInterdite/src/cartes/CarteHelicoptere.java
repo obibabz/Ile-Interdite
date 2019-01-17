@@ -13,7 +13,7 @@ public class CarteHelicoptere extends CarteTirage{
     private int test = 0;
 
     public CarteHelicoptere() {
-        super.setNom("Helicoptere");
+        super.setNom("Heli");
     }
 
     public int getTest() {
