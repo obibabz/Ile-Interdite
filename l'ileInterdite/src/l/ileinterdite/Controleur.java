@@ -268,9 +268,13 @@ public class Controleur implements Observer{
             }
             else if(((Message) arg).getCommande() == Commandes.RECUPERER_TRESOR){
                 Utils.Tresor t = listeJoueurs.get(idJoueur).getPosition().getTresor();
+                
                 if(t != null){
                     if(listeJoueurs.get(idJoueur).tresorRecuperable(t))
+                    for(Utils.Tresor te : this.tresorPossede){System.out.println(te.toString());}
+                    System.out.println("2");
                     this.tresorPossede.add(t);
+                    for(Utils.Tresor te : this.tresorPossede){System.out.println(te.toString());}
                     this.vuePlateau.getMessageBox().displayTresor(t);
                     Utils.afficherInformation("Vous avez récupéré "+ t.toString());
                     
@@ -539,7 +543,7 @@ public class Controleur implements Observer{
         System.out.println("0");
         if(ifToutLesJoueursSurHeliport()){
             System.out.println("1");
-            for(Utils.Tresor t : this.tresorPossede){System.out.println(t.toString());}
+            
            
             if(ifToutLesTrésors()){
                 System.out.println("2");
