@@ -124,7 +124,7 @@ public abstract class Aventurier extends ObjetIdentifie{
         
         int nbCartesCorrectes = 0;
         for(Integer key : this.getCartesEnMain().keySet()){
-            if (this.getCartesEnMain().get(key).getNom() ==t.toString()){
+            if (this.getCartesEnMain().get(key).getNom().equals(t.toString().substring(0,2))){
                 nbCartesCorrectes +=1;
             }
         }

@@ -14,6 +14,8 @@ package l.ileinterdite;
 import aventuriers.Aventurier;
 import aventuriers.Explorateur;
 import aventuriers.Ingenieur;
+import aventuriers.Messager;
+import aventuriers.Navigateur;
 import aventuriers.Pilote;
 import aventuriers.Plongeur;
 import cartes.CarteHelicoptere;
@@ -195,9 +197,12 @@ public class Controleur implements Observer{
             else if (((Message ) arg).getCommande() == Commandes.TERMINER) {
                 actionFinTour();
                 nbActionsRestantes = 3;
+                
                 ((VuePlateau) o).getListeVuesJoueurs().get((idJoueur)).setVueJPrecedant();
                 joueurSuivant();
-                
+                if("Navigateur".equals(JCourant.getClass().getSimpleName())){
+                    nbActionsRestantes = 4;
+                }
                 vuePlateau.getListeVuesJoueurs().get(JCourant.getId()).setVueJCourant();
                 vuePlateau.getMessageBox().displayMessage("C'est à  : <br/>" +JCourant.getClass().getSimpleName()+" de jouer.", JCourant.getPion().getCouleur(), Boolean.TRUE, Boolean.TRUE);
                 actionDebutTour();
@@ -270,14 +275,15 @@ public class Controleur implements Observer{
                 Utils.Tresor t = listeJoueurs.get(idJoueur).getPosition().getTresor();
                 
                 if(t != null){
-                    if(listeJoueurs.get(idJoueur).tresorRecuperable(t))
-                    for(Utils.Tresor te : this.tresorPossede){System.out.println(te.toString());}
-                    System.out.println("2");
+                    if(listeJoueurs.get(idJoueur).tresorRecuperable(t)){
+                    //for(Utils.Tresor te : this.tresorPossede){System.out.println(te.toString());}
+                    //System.out.println("2");
                     this.tresorPossede.add(t);
-                    for(Utils.Tresor te : this.tresorPossede){System.out.println(te.toString());}
+                    //for(Utils.Tresor te : this.tresorPossede){System.out.println(te.toString());}
                     this.vuePlateau.getMessageBox().displayTresor(t);
                     Utils.afficherInformation("Vous avez récupéré "+ t.toString());
                     this.nbActionsRestantes-=1;
+                }
                     
                 }
             }
@@ -291,6 +297,7 @@ public class Controleur implements Observer{
         }
     }    
     public void actionDebutTour(){
+    
         gestionDefausse(JCourant.getId());
     }
         //Action a éxécuter a la fin d'un tour
@@ -784,35 +791,39 @@ public class Controleur implements Observer{
         LinkedHashMap<Integer, CarteTirage> listeCartes = new LinkedHashMap<>();
         int i =0;
         while(i<=31){
-            /*if(i<5){
+            if(i<5){
                 CarteTresor ct = new CarteTresor(Tresor.CALICE);
                 listeCartes.put(ct.getId(), ct);
             }
             if(5<=i && i<10){
                 CarteHelicoptere ct = new CarteHelicoptere();
                 listeCartes.put(ct.getId(), ct);
-                
             }
-            if(10<=i && i<15){
-                CarteTresor ct = new CarteTresor(Tresor.CRISTAL);
-                listeCartes.put(ct.getId(), ct);
-            }
-            if(15<=i && i<20){
-                CarteTresor ct = new CarteTresor(Tresor.ZEPHYR);
-                listeCartes.put(ct.getId(), ct);
-            }
-            if(20<=i && i<25){
-                CarteSacsDeSable ct = new CarteSacsDeSable();
-                listeCartes.put(ct.getId(), ct);
-            }
-            if(25<=i && i<30){
-                CarteTresor ct = new CarteTresor(Tresor.PIERRE);
-                listeCartes.put(ct.getId(), ct);
-            }*/
-            if(0<=i && i<31){
+            if(10<=i && i<11){
             CarteMonteeDesEaux ct = new CarteMonteeDesEaux();
             listeCartes.put(ct.getId(), ct);
             }
+            if(11<=i && i<16){
+                CarteSacsDeSable ct = new CarteSacsDeSable();
+                listeCartes.put(ct.getId(), ct);
+            }  
+            if(16<=i && i<21){
+                CarteTresor ct = new CarteTresor(Tresor.ZEPHYR);
+                listeCartes.put(ct.getId(), ct);
+            }
+  
+            
+            if(21<=i && i<26){
+                CarteTresor ct = new CarteTresor(Tresor.CRISTAL);
+                listeCartes.put(ct.getId(), ct);
+            }
+            
+            if(26<=i && i<31){
+                CarteTresor ct = new CarteTresor(Tresor.PIERRE);
+                listeCartes.put(ct.getId(), ct);
+            }
+            
+            
             i++;
         }
         //((Collections) listeCartes).shuffle();
@@ -833,8 +844,8 @@ public class Controleur implements Observer{
         
         LinkedHashMap<Integer, Aventurier> joueursSurGrille = new LinkedHashMap();
         Aventurier joueur1 = new Ingenieur("joueur1", PBr, rouge); joueursSurGrille.put(joueur1.getId(), joueur1);PMa.arriveeJoueur(joueur1); joueur1.setPosition(PMa);
-        Aventurier joueur2 = new Explorateur("joueur2", PCu, vert); joueursSurGrille.put(joueur2.getId(), joueur2);PCu.arriveeJoueur(joueur2);
-        Aventurier joueur3 = new Plongeur("joueur3", PFe, violet); joueursSurGrille.put(joueur3.getId(), joueur3);PFe.arriveeJoueur(joueur3);
+        Aventurier joueur2 = new Navigateur("joueur2", PCu, jaune); joueursSurGrille.put(joueur2.getId(), joueur2);PCu.arriveeJoueur(joueur2);
+        Aventurier joueur3 = new Messager("joueur3", PFe, orange); joueursSurGrille.put(joueur3.getId(), joueur3);PFe.arriveeJoueur(joueur3);
         Aventurier joueur4 = new Pilote("joueur4", H, bleu); joueursSurGrille.put(joueur4.getId(), joueur4);H.arriveeJoueur(joueur4);
         //Aventurier joueur5 = new Navigateur("joueur5", POr, jaune); joueursSurGrille.add(joueur5);
         //Aventurier joueur6 = new Messager("joueur6", PAr, orange); joueursSurGrille.add(joueur6);
@@ -876,11 +887,12 @@ public class Controleur implements Observer{
         vP.setListeVuesCartes(piocheTirage);
         vP.addObserver(controleur);
         vP.afficher();
-        /*controleur.tirageCarte();
-        vuePlateau.getMessageBox().displayMessage("Une carte montee des eaux a été pioché", JCourant.getPion().getCouleur(), Boolean.TRUE, Boolean.TRUE);
-        controleur.tirageCarte();
-        controleur.tirageCarte();
-        controleur.tirageCarte();*/
+        controleur.piocheCarteInondee();
+        controleur.piocheCarteInondee();
+        controleur.piocheCarteInondee();
+        controleur.piocheCarteInondee();
+        controleur.piocheCarteInondee();
+        controleur.piocheCarteInondee();
 
         
     }
@@ -1380,7 +1392,7 @@ public class Controleur implements Observer{
         }
         
         LinkedHashMap<Integer, Aventurier> joueursSurGrille = new LinkedHashMap();
-        Aventurier joueur1 = new Ingenieur("joueur1", PCu, rouge); joueursSurGrille.put(joueur1.getId(), joueur1);PCu.arriveeJoueur(joueur1); joueur1.setPosition(PMa);
+        Aventurier joueur1 = new Ingenieur("joueur1", O, rouge); joueursSurGrille.put(joueur1.getId(), joueur1);O.arriveeJoueur(joueur1);
         Aventurier joueur2 = new Explorateur("joueur2", PCo, vert); joueursSurGrille.put(joueur2.getId(), joueur2);PCo.arriveeJoueur(joueur2);
         Aventurier joueur3 = new Plongeur("joueur3", DIl, violet); joueursSurGrille.put(joueur3.getId(), joueur3);DIl.arriveeJoueur(joueur3);
         Aventurier joueur4 = new Pilote("joueur4", H, bleu); joueursSurGrille.put(joueur4.getId(), joueur4);H.arriveeJoueur(joueur4);
@@ -1558,7 +1570,7 @@ public class Controleur implements Observer{
         
         LinkedHashMap<Integer, Aventurier> joueursSurGrille = new LinkedHashMap();
         Aventurier joueur1 = new Ingenieur("joueur1", PMa, rouge); joueursSurGrille.put(joueur1.getId(), joueur1);PMa.arriveeJoueur(joueur1); joueur1.setPosition(PMa);
-        Aventurier joueur2 = new Explorateur("joueur2", PCu, vert); joueursSurGrille.put(joueur2.getId(), joueur2);PCu.arriveeJoueur(joueur2);
+        Aventurier joueur2 = new Explorateur("joueur2", O, vert); joueursSurGrille.put(joueur2.getId(), joueur2);O.arriveeJoueur(joueur2);
         Aventurier joueur3 = new Plongeur("joueur3", O, violet); joueursSurGrille.put(joueur3.getId(), joueur3);O.arriveeJoueur(joueur3);
         Aventurier joueur4 = new Pilote("joueur4", O, bleu); joueursSurGrille.put(joueur4.getId(), joueur4);O.arriveeJoueur(joueur4);
         //Aventurier joueur5 = new Navigateur("joueur5", POr, jaune); joueursSurGrille.add(joueur5);

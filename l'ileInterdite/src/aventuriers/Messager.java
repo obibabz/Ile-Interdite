@@ -6,6 +6,8 @@
 package aventuriers;
 
 import aventuriers.Aventurier;
+import java.util.ArrayList;
+import l.ileinterdite.Grille;
 import util.Utils.Pion;
 import l.ileinterdite.Tuile;
 
@@ -18,7 +20,11 @@ public class Messager extends Aventurier{
     public Messager(String nomJoueur , Tuile position, Pion pion) {
         super(nomJoueur, position, pion);
     }
-    
+    public ArrayList<Integer> getJoueursCiblables(Grille g){
+        ArrayList <Integer> cibles =  g.getToutLesJoueurs();
+        cibles.remove(this);
+        return cibles;
+    }
     
     
 }
