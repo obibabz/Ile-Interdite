@@ -14,7 +14,7 @@ public class CarteTresor extends CarteTirage{
 
     public CarteTresor(Tresor tresor) {
         this.tresor = tresor;
-        super.setNom(tresor.toString());
+        super.setNom(tresor.toString().substring(3,5));
     }
 
     public Tresor getTresor() {
