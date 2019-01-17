@@ -1094,15 +1094,15 @@ public class Controleur implements Observer{
         Tuile FPo = new Tuile("La Forêt Pourpre", EtatTuile.ASSECHEE);
         Tuile LPe = new Tuile("Le Lagon Perdu", EtatTuile.ASSECHEE);
         Tuile MBr = new Tuile("Le Marais Brumeux", EtatTuile.ASSECHEE);
-        Tuile O = new Tuile("Observatoire", EtatTuile.ASSECHEE);
+        Tuile O = new Tuile("Observatoire", EtatTuile.COULEE);
         Tuile RFa = new Tuile("Le Rocher Fantôme", EtatTuile.ASSECHEE);
         Tuile CBr = new Tuile("La Caverne du Brasier", EtatTuile.ASSECHEE); CBr.setTresor(Tresor.CRISTAL);
         Tuile TSo = new Tuile("Le Temple du Soleil", EtatTuile.ASSECHEE); TSo.setTresor(Tresor.PIERRE);
-        Tuile TLu = new Tuile("Le Temple de la Lune", EtatTuile.ASSECHEE); TLu.setTresor(Tresor.PIERRE);
-        Tuile PMa = new Tuile("Le Palais des Marées", EtatTuile.ASSECHEE); PMa.setTresor(Tresor.CALICE);
-        Tuile VCr = new Tuile("Le Val du Crépuscule", EtatTuile.ASSECHEE);
+        Tuile TLu = new Tuile("Le Temple de la Lune", EtatTuile.COULEE); TLu.setTresor(Tresor.PIERRE);
+        Tuile PMa = new Tuile("Le Palais des Marées", EtatTuile.INONDEE); PMa.setTresor(Tresor.CALICE);
+        Tuile VCr = new Tuile("Le Val du Crépuscule", EtatTuile.COULEE);
         Tuile TGu = new Tuile("La Tour du Guet", EtatTuile.ASSECHEE);
-        Tuile JMu = new Tuile("Le Jardin des Murmures", EtatTuile.ASSECHEE); JMu.setTresor(Tresor.ZEPHYR);
+        Tuile JMu = new Tuile("Le Jardin des Murmures", EtatTuile.COULEE); JMu.setTresor(Tresor.ZEPHYR);
         
         
         LinkedHashMap<Integer, Tuile> listeTuiles = new LinkedHashMap<>();
