@@ -152,7 +152,8 @@ public class VuePlateau extends Observable {
         }
         
     }
-    public void setTuilesAssechement(ArrayList<Integer> listeIdTuiles, Integer idJoueur, Color couleur, Color couleur2){
+    public void setAffichageAssechement(ArrayList<Integer> listeIdTuiles, Integer idJoueur, Color couleur, Color couleur2){
+        this.getListeVuesJoueurs().get(idJoueur).setVueChoix();
         for (Integer idTuile : listeIdTuiles){
             this.vueGrille.getListeTuiles().get(idTuile).getBtnTuile().addActionListener(new ActionListener(){
                 @Override

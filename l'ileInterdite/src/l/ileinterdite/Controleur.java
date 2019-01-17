@@ -151,9 +151,9 @@ public class Controleur implements Observer{
                     ArrayList<Integer>listeIdTuiles = listeJoueurs.get(idJoueur).getTuilesAssechables(grille);
                     
                     if(!listeIdTuiles.isEmpty()){
-                        this.vuePlateau.setTuilesAssechement(listeIdTuiles, idJoueur, couleur1, couleur2  );
+                        this.vuePlateau.setAffichageAssechement(listeIdTuiles, idJoueur, couleur1, couleur2  );
                         vuePlateau.getMessageBox().displayMessage("Vous pouvez assécher : <br/>" +listeIdTuilesToString(listeIdTuiles), couleur1, Boolean.TRUE, Boolean.TRUE);
-                        vuePlateau.getListeVuesJoueurs().get(idJoueur).setVueChoix();
+                        
                     }else{
                         vuePlateau.getMessageBox().displayMessage("Il n'y a pas de tuile asséchable adjacente" +listeIdTuilesToString(listeIdTuiles), couleur1, Boolean.TRUE, Boolean.TRUE);
                     }
@@ -180,7 +180,7 @@ public class Controleur implements Observer{
                 //GESTION DU POUVOIR DE L'INGENIEUR
                 if("Ingenieur".equals(listeJoueurs.get(idJoueur).getClass().getSimpleName()) && !listeIdTuiles.isEmpty() && listeJoueurs.get(idJoueur).getNbAssech() <2){
                     if(Utils.poserQuestion("Voulez vous assécher une seconde tuile")){
-                        this.vuePlateau.setTuilesAssechement(listeIdTuiles, idJoueur, couleur1, couleur2);
+                        this.vuePlateau.setAffichageAssechement(listeIdTuiles, idJoueur, couleur1, couleur2);
                         nbActionsRestantes+=1;
                     }
                     
@@ -396,7 +396,7 @@ public class Controleur implements Observer{
     public void utilisationSac(Integer idCarte, Integer idJoueur){
         ArrayList<Integer> idTuiles = new ArrayList<>();
         idTuiles = this.grille.getToutesTuilesInondees();
-        vuePlateau.setTuilesAssechement(idTuiles, idJoueur, listeJoueurs.get(idJoueur).getPion().getCouleurSelectionAssechee(), listeJoueurs.get(idJoueur).getPion().getCouleurSelectionInondee());
+        vuePlateau.setAffichageAssechement(idTuiles, idJoueur, listeJoueurs.get(idJoueur).getPion().getCouleurSelectionAssechee(), listeJoueurs.get(idJoueur).getPion().getCouleurSelectionInondee());
         nbActionsRestantes+=1;
         vuePlateau.getMessageBox().displayMessage("Le joueur "+listeJoueurs.get(idJoueur).getNomJoueur()+" a utilisé une carte Sac de Sable.", JCourant.getPion().getCouleur(), Boolean.TRUE, Boolean.TRUE);
     }
@@ -455,7 +455,7 @@ public class Controleur implements Observer{
             if(!t.getJoueursSurTuile().isEmpty()){
                 for(Integer key : t.getJoueursSurTuile().keySet()){
                     if(!t.getJoueursSurTuile().get(key).getTuilesAccessibles(grille).isEmpty()){
-                        vuePlateau.setTuilesDeplacement(t.getJoueursSurTuile().get(key).getTuilesAccessibles(grille), key, Color.blue, Color.blue);
+                        vuePlateau.setTuilesDeplacement(t.getJoueursSurTuile().get(key).getTuilesAccessibles(grille), key, t.getJoueursSurTuile().get(key).getPion().getCouleurSelectionAssechee(), t.getJoueursSurTuile().get(key).getPion().getCouleurSelectionInondee());
                     }else{
                         partiePerdue = true;
                     }
