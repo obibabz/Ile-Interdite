@@ -258,6 +258,11 @@ public class VuePlateau extends Observable {
             
         }
     }
+    public void setPlateauFinJeu(){
+        for(Integer key : this.listeVuesJoueurs.keySet()){
+            listeVuesJoueurs.get(key).setVueJPrecedant();
+        }
+    }
     public void setBoutonsDonnerCarte(ArrayList<Integer> listeIdJoueurs, Integer idJoueur){
         for(Integer key : listeIdJoueurs){
             

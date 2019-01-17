@@ -277,7 +277,7 @@ public class Controleur implements Observer{
                     for(Utils.Tresor te : this.tresorPossede){System.out.println(te.toString());}
                     this.vuePlateau.getMessageBox().displayTresor(t);
                     Utils.afficherInformation("Vous avez récupéré "+ t.toString());
-                    
+                    this.nbActionsRestantes-=1;
                     
                 }
             }
@@ -302,11 +302,13 @@ public class Controleur implements Observer{
         tirageInondation();
 
         if (ifVictoire()){
-            util.Utils.afficherInformation("VOUS AVEZ GAGNEE");
+            util.Utils.afficherInformation("Victoire !");
+            vuePlateau.setPlateauFinJeu();
         }
 
         if(ifDefaite()){
-            util.Utils.afficherInformation("VOUS AVEZ PERDU");
+            util.Utils.afficherInformation("Défaite.");
+            vuePlateau.setPlateauFinJeu();
         }
         
     }
