@@ -23,8 +23,8 @@ public class LIleInterdite {
     public static void main(String[] args) {
         // TODO code application logic here
         //scenario1();
-        scenario2();
-        //scenario3();
+        //scenario2();
+        scenario3();
         //scenario4();
         //scenario5();
     }
