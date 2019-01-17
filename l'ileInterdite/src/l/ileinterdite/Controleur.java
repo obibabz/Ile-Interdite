@@ -298,11 +298,11 @@ public class Controleur implements Observer{
         tirageInondation();
 
         if (ifVictoire()){
-            System.out.println("INSEREZ VUE VICTOIRE");
+            util.Utils.afficherInformation("VOUS AVEZ GAGNEE");
         }
 
         if(ifDefaite()){
-            System.out.println("INSEREZ VUE DEFAITE");
+            util.Utils.afficherInformation("VOUS AVEZ PERDU");
         }
         
     }
