@@ -178,12 +178,14 @@ public class Controleur implements Observer{
                 vuePlateau.getMessageBox().displayMessage("Vous avez asséché : <br/>" +grille.getListeTuiles().get(idTuile).getNom(), couleur1, Boolean.TRUE, Boolean.TRUE);
                 
                 //GESTION DU POUVOIR DE L'INGENIEUR
-                if("Ingenieur".equals(listeJoueurs.get(idJoueur).getClass().getSimpleName()) && !listeIdTuiles.isEmpty() && listeJoueurs.get(idJoueur).getNbAssech() <2){
-                    if(Utils.poserQuestion("Voulez vous assécher une seconde tuile")){
-                        this.vuePlateau.setAffichageAssechement(listeIdTuiles, idJoueur, couleur1, couleur2);
-                        nbActionsRestantes+=1;
+                if(!((Message) arg).hasIdCarte()){
+                    if("Ingenieur".equals(listeJoueurs.get(idJoueur).getClass().getSimpleName()) && !listeIdTuiles.isEmpty() && listeJoueurs.get(idJoueur).getNbAssech() <2){
+                        if(Utils.poserQuestion("Voulez vous assécher une seconde tuile")){
+                            this.vuePlateau.setAffichageAssechement(listeIdTuiles, idJoueur, couleur1, couleur2);
+                            nbActionsRestantes+=1;
+                        }
+
                     }
-                    
                 }
                 nbActionsRestantes-=1;
                 vuePlateau.getListeVuesJoueurs().get(idJoueur).setVueJCourant();
@@ -225,17 +227,7 @@ public class Controleur implements Observer{
             //CHOIX DE LA CARTE
             else if(((Message ) arg).getCommande() == Commandes.CHOISIR_CARTE){
                 int idCarte = ((Message) arg).getIdCarte();
-                CarteTirage ct= JCourant.getCartesEnMain().get(idCarte);//On récupère la carte en question
-                vuePlateau.setCartesDefaut(JCourant.getCartesTresor(), JCourant.getId());//On remet l'affichade par défaut des cartes
-                
-                JCourant.retirerCarte(ct);//On la retire de la main du JCourant
-                VueCarte vc = vuePlateau.getListeVuesJoueurs().get(JCourant.getId()).getCartesEnMain().get(idCarte);
-                vuePlateau.getListeVuesJoueurs().get(JCourant.getId()).retirerCarte(idCarte);//On retire la VueCarte associée de la VueAventurier du JCourant
-
-                listeJoueurs.get(idJoueur).addCartesEnMain(ct); //On ajoute la carte au joueur cible
-                vuePlateau.getListeVuesJoueurs().get(idJoueur).ajouterCarte(idCarte, vc);//On ajoute la vue carte au joueur cible
-                vuePlateau.getListeVuesJoueurs().get(JCourant.getId()).setVueJCourant();
-                nbActionsRestantes -=1;
+                donnerCarte(idCarte, idJoueur);
             }
             else if (((Message) arg).getCommande() == Commandes.DEFAUSSER_CARTE){
                 int idCarte = ((Message) arg).getIdCarte();
@@ -252,10 +244,10 @@ public class Controleur implements Observer{
                 defausseTirage.put(idCarte, c);//On rajoute la carte à la défausse
                 gestionDefausse(idJoueur);//On relance la gestion de défausse tant que le joueur a plus de 5 cartes en main
                 if(Utils.poserQuestion("Voulez vous utiliser la carte ?")){
-                    if("Sac de Sable".equals(c.getNom())){
+                    if("Sable".equals(c.getNom())){
                         utilisationSac(idCarte, idJoueur);
                     }
-                    else if(("Helicoptere").equals(c.getNom())){
+                    else if(("Heli").equals(c.getNom())){
                         utilisationHelicoptere(idCarte, idJoueur);
                     }
                 }
@@ -280,6 +272,8 @@ public class Controleur implements Observer{
                     if(listeJoueurs.get(idJoueur).tresorRecuperable(t))
                     this.tresorPossede.add(t);
                     this.vuePlateau.getMessageBox().displayTresor(t);
+                    Utils.afficherInformation("Vous avez récupéré "+ t.toString());
+                    
                     
                 }
             }
@@ -401,6 +395,20 @@ public class Controleur implements Observer{
         vuePlateau.getMessageBox().displayMessage("Le joueur "+listeJoueurs.get(idJoueur).getNomJoueur()+" a utilisé une carte Sac de Sable.", JCourant.getPion().getCouleur(), Boolean.TRUE, Boolean.TRUE);
     }
     
+    public void donnerCarte(Integer idCarte, Integer idJoueurCible){
+        
+                CarteTirage ct= JCourant.getCartesEnMain().get(idCarte);//On récupère la carte en question
+                vuePlateau.setCartesDefaut(JCourant.getCartesTresor(), JCourant.getId());//On remet l'affichade par défaut des cartes
+                
+                JCourant.retirerCarte(ct);//On la retire de la main du JCourant
+                VueCarte vc = vuePlateau.getListeVuesJoueurs().get(JCourant.getId()).getCartesEnMain().get(idCarte);
+                vuePlateau.getListeVuesJoueurs().get(JCourant.getId()).retirerCarte(idCarte);//On retire la VueCarte associée de la VueAventurier du JCourant
+
+                listeJoueurs.get(idJoueurCible).addCartesEnMain(ct); //On ajoute la carte au joueur cible
+                vuePlateau.getListeVuesJoueurs().get(idJoueurCible).ajouterCarte(idCarte, vc);//On ajoute la vue carte au joueur cible
+                vuePlateau.getListeVuesJoueurs().get(JCourant.getId()).setVueJCourant();
+                nbActionsRestantes -=1;
+    }
     public void utilisationHelicoptere(Integer idCarte, Integer idJoueur){
         ArrayList<Integer> idTuiles = new ArrayList<>();
             idTuiles = this.grille.getToutesTuilesPasCoulees();
@@ -455,7 +463,9 @@ public class Controleur implements Observer{
             if(!t.getJoueursSurTuile().isEmpty()){
                 for(Integer key : t.getJoueursSurTuile().keySet()){
                     if(!t.getJoueursSurTuile().get(key).getTuilesAccessibles(grille).isEmpty()){
+        
                         vuePlateau.setTuilesDeplacement(t.getJoueursSurTuile().get(key).getTuilesAccessibles(grille), key, t.getJoueursSurTuile().get(key).getPion().getCouleurSelectionAssechee(), t.getJoueursSurTuile().get(key).getPion().getCouleurSelectionInondee());
+                        Utils.afficherInformation("Le(s) joueur(s) sur la tuile "+t.getNom()+" se noie(nt), vous devez le(s) déplacer");
                     }else{
                         partiePerdue = true;
                     }
@@ -952,8 +962,9 @@ public class Controleur implements Observer{
         int i =0;
         while(i<=31){
             if(i<5){
-                CarteTresor ct = new CarteTresor(Tresor.CALICE);
+                CarteTresor ct = new CarteTresor(Tresor.ZEPHYR);
                 listeCartes.put(ct.getId(), ct);
+                
             }
             if(5<=i && i<10){
                 CarteTresor ct = new CarteTresor(Tresor.PIERRE);
@@ -964,7 +975,7 @@ public class Controleur implements Observer{
                 listeCartes.put(ct.getId(), ct);
             }
             if(15<=i && i<20){
-                CarteTresor ct = new CarteTresor(Tresor.ZEPHYR);
+                CarteTresor ct = new CarteTresor(Tresor.CALICE);
                 listeCartes.put(ct.getId(), ct);
             }
             if(20<=i && i<25){
@@ -1015,7 +1026,7 @@ public class Controleur implements Observer{
         controleur.setJCourant(joueur1);
         controleur.setNbActionsRestantes(3);
         controleur.setPiocheTirage(listeCartes);
-        
+        controleur.setPiocheInondation(piocheInond);
         
         
         
@@ -1029,42 +1040,27 @@ public class Controleur implements Observer{
         }
       
         MessageBox mb1 = new MessageBox();mb1.setCaliceVisible();
-        MessageBox mb2 = new MessageBox();mb2.setCristalVisible();
-        MessageBox mb3 = new MessageBox();mb3.setPierreVisible();
-        MessageBox mb4 = new MessageBox();mb4.setZephyrVisible();
+        mb1.setCristalVisible();
+        mb1.setPierreVisible();
+        
         VueGrille vG = new VueGrille(vuesTuiles);
         
         
         VuePlateau vP1 = new VuePlateau(vG, vuesAventurier, mb1, new VueNiveau(2));
         controleur.setVuePlateau(vP1);
+        controleur.tresorPossede.add(Tresor.CALICE);
+        controleur.tresorPossede.add(Tresor.PIERRE);
+        controleur.tresorPossede.add(Tresor.CRISTAL);
         vP1.setListeVuesCartes(piocheTirage);
         vP1.addObserver(controleur);
         vP1.afficher();
         controleur.tirageCarte();
-        
-        VuePlateau vP2 = new VuePlateau(vG, vuesAventurier, mb2, new VueNiveau(2));
-        controleur.setVuePlateau(vP2);
-        vP2.setListeVuesCartes(piocheTirage);
-        vP2.addObserver(controleur);
-        vP2.afficher();
+        controleur.tirageCarte();
+        controleur.tirageCarte();
         controleur.tirageCarte();
         
-        VuePlateau vP3 = new VuePlateau(vG, vuesAventurier, mb3, new VueNiveau(2));
-        controleur.setVuePlateau(vP3);
-        vP3.setListeVuesCartes(piocheTirage);
-        vP3.addObserver(controleur);
-        vP3.afficher();
-        controleur.tirageCarte();
-        
-        VuePlateau vP4 = new VuePlateau(vG, vuesAventurier, mb4, new VueNiveau(2));
-        controleur.setVuePlateau(vP4);
-        vP4.setListeVuesCartes(piocheTirage);
-        vP4.addObserver(controleur);
-        vP4.afficher();
-        controleur.tirageCarte();
+    
     }
-    
-    
     
     
     //  ================================== SCENARIO 3: DEFAITE: un joueur est coulé ============================================================
@@ -1169,8 +1165,7 @@ public class Controleur implements Observer{
                 listeCartes.put(ct.getId(), ct);
             }
             if(15<=i && i<20){
-                CarteTresor ct = new CarteTresor(Tresor.ZEPHYR);
-                listeCartes.put(ct.getId(), ct);
+                
             }
             if(20<=i && i<25){
                 CarteSacsDeSable ct = new CarteSacsDeSable();
