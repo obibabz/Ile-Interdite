@@ -1209,7 +1209,7 @@ public class Controleur implements Observer{
         
         Controleur controleur = new Controleur();
 
-                controleur.setGrille(grid);
+        controleur.setGrille(grid);
         controleur.setListeJoueurs(joueursSurGrille);
         controleur.setJCourant(joueur1);
         controleur.setNbActionsRestantes(3);
@@ -1253,18 +1253,18 @@ public class Controleur implements Observer{
         Tuile V10 = new Tuile("Void", EtatTuile.ASSECHEE); V10.setEtatTuile(null);
         Tuile V11 = new Tuile("Void", EtatTuile.ASSECHEE); V11.setEtatTuile(null);
         Tuile V12 = new Tuile("Void", EtatTuile.ASSECHEE); V12.setEtatTuile(null);
-        Tuile PAb = new Tuile("Le Pont des Abîmes", EtatTuile.COULEE); 
-        Tuile PBr = new Tuile("La Porte de Bronze", EtatTuile.COULEE); 
-        Tuile COm = new Tuile("La Caverne des Ombres", EtatTuile.COULEE); COm.setTresor(Tresor.CRISTAL);
+        Tuile PAb = new Tuile("Le Pont des Abîmes", EtatTuile.ASSECHEE); 
+        Tuile PBr = new Tuile("La Porte de Bronze", EtatTuile.ASSECHEE); 
+        Tuile COm = new Tuile("La Caverne des Ombres", EtatTuile.INONDEE); COm.setTresor(Tresor.CRISTAL);
         Tuile PFe = new Tuile("La Porte de Fer", EtatTuile.INONDEE);
         Tuile POr = new Tuile("La Porte d'Or", EtatTuile.COULEE);
         Tuile FOu = new Tuile("Les Falaises de l'Oubli", EtatTuile.COULEE);
-        Tuile PCo = new Tuile("Le Palais de Corail", EtatTuile.COULEE); PCo.setTresor(Tresor.CALICE);
+        Tuile PCo = new Tuile("Le Palais de Corail", EtatTuile.ASSECHEE); PCo.setTresor(Tresor.CALICE);
         Tuile PAr = new Tuile("La Porte d'Argent", EtatTuile.INONDEE);
         Tuile DIl = new Tuile("Les Dunes de l'Illusion", EtatTuile.INONDEE);
         Tuile H = new Tuile("Heliport", EtatTuile.INONDEE);
         Tuile PCu = new Tuile("La Porte de Cuivre", EtatTuile.COULEE);
-        Tuile JHu = new Tuile("Le Jardin des Hurlements", EtatTuile.COULEE); JHu.setTresor(Tresor.ZEPHYR);
+        Tuile JHu = new Tuile("Le Jardin des Hurlements", EtatTuile.ASSECHEE); JHu.setTresor(Tresor.ZEPHYR);
         Tuile FPo = new Tuile("La Forêt Pourpre", EtatTuile.COULEE);
         Tuile LPe = new Tuile("Le Lagon Perdu", EtatTuile.INONDEE);
         Tuile MBr = new Tuile("Le Marais Brumeux", EtatTuile.INONDEE);
@@ -1272,7 +1272,7 @@ public class Controleur implements Observer{
         Tuile RFa = new Tuile("Le Rocher Fantôme", EtatTuile.COULEE);
         Tuile CBr = new Tuile("La Caverne du Brasier", EtatTuile.COULEE); CBr.setTresor(Tresor.CRISTAL);
         Tuile TSo = new Tuile("Le Temple du Soleil", EtatTuile.COULEE); TSo.setTresor(Tresor.PIERRE);
-        Tuile TLu = new Tuile("Le Temple de la Lune", EtatTuile.COULEE); TLu.setTresor(Tresor.PIERRE);
+        Tuile TLu = new Tuile("Le Temple de la Lune", EtatTuile.ASSECHEE); TLu.setTresor(Tresor.PIERRE);
         Tuile PMa = new Tuile("Le Palais des Marées", EtatTuile.COULEE); PMa.setTresor(Tresor.CALICE);
         Tuile VCr = new Tuile("Le Val du Crépuscule", EtatTuile.COULEE);
         Tuile TGu = new Tuile("La Tour du Guet", EtatTuile.INONDEE);
@@ -1315,8 +1315,6 @@ public class Controleur implements Observer{
             piocheInond.add(cI);
             
         }
-        
-        java.util.Collections.shuffle(piocheInond);
         
         Pion rouge = Pion.ROUGE;
         Pion bleu = Pion.BLEU;
@@ -1367,9 +1365,9 @@ public class Controleur implements Observer{
         }
         
         LinkedHashMap<Integer, Aventurier> joueursSurGrille = new LinkedHashMap();
-        Aventurier joueur1 = new Ingenieur("joueur1", PFe, rouge); joueursSurGrille.put(joueur1.getId(), joueur1);PMa.arriveeJoueur(joueur1); joueur1.setPosition(PMa);
-        Aventurier joueur2 = new Explorateur("joueur2", PCo, vert); joueursSurGrille.put(joueur2.getId(), joueur2);PCu.arriveeJoueur(joueur2);
-        Aventurier joueur3 = new Plongeur("joueur3", DIl, violet); joueursSurGrille.put(joueur3.getId(), joueur3);PFe.arriveeJoueur(joueur3);
+        Aventurier joueur1 = new Ingenieur("joueur1", PCu, rouge); joueursSurGrille.put(joueur1.getId(), joueur1);PCu.arriveeJoueur(joueur1); joueur1.setPosition(PMa);
+        Aventurier joueur2 = new Explorateur("joueur2", PCo, vert); joueursSurGrille.put(joueur2.getId(), joueur2);PCo.arriveeJoueur(joueur2);
+        Aventurier joueur3 = new Plongeur("joueur3", DIl, violet); joueursSurGrille.put(joueur3.getId(), joueur3);DIl.arriveeJoueur(joueur3);
         Aventurier joueur4 = new Pilote("joueur4", H, bleu); joueursSurGrille.put(joueur4.getId(), joueur4);H.arriveeJoueur(joueur4);
         //Aventurier joueur5 = new Navigateur("joueur5", POr, jaune); joueursSurGrille.add(joueur5);
         //Aventurier joueur6 = new Messager("joueur6", PAr, orange); joueursSurGrille.add(joueur6);
@@ -1392,8 +1390,7 @@ public class Controleur implements Observer{
         controleur.setJCourant(joueur1);
         controleur.setNbActionsRestantes(3);
         controleur.setPiocheTirage(listeCartes);
-        
-        
+        controleur.setPiocheInondation(piocheInond);
         
         
      
@@ -1442,7 +1439,7 @@ public class Controleur implements Observer{
         Tuile PCo = new Tuile("Le Palais de Corail", EtatTuile.INONDEE); PCo.setTresor(Tresor.CALICE);
         Tuile PAr = new Tuile("La Porte d'Argent", EtatTuile.INONDEE);
         Tuile DIl = new Tuile("Les Dunes de l'Illusion", EtatTuile.INONDEE);
-        Tuile H = new Tuile("Heliport", EtatTuile.COULEE);
+        Tuile H = new Tuile("Heliport", EtatTuile.INONDEE);
         Tuile PCu = new Tuile("La Porte de Cuivre", EtatTuile.COULEE);
         Tuile JHu = new Tuile("Le Jardin des Hurlements", EtatTuile.COULEE); JHu.setTresor(Tresor.ZEPHYR);
         Tuile FPo = new Tuile("La Forêt Pourpre", EtatTuile.COULEE);
@@ -1450,7 +1447,7 @@ public class Controleur implements Observer{
         Tuile MBr = new Tuile("Le Marais Brumeux", EtatTuile.INONDEE);
         Tuile O = new Tuile("Observatoire", EtatTuile.INONDEE);
         Tuile RFa = new Tuile("Le Rocher Fantôme", EtatTuile.COULEE);
-        Tuile CBr = new Tuile("La Caverne du Brasier", EtatTuile.COULEE); CBr.setTresor(Tresor.CRISTAL);
+        Tuile CBr = new Tuile("La Caverne du Brasier", EtatTuile.ASSECHEE); CBr.setTresor(Tresor.CRISTAL);
         Tuile TSo = new Tuile("Le Temple du Soleil", EtatTuile.COULEE); TSo.setTresor(Tresor.PIERRE);
         Tuile TLu = new Tuile("Le Temple de la Lune", EtatTuile.INONDEE); TLu.setTresor(Tresor.PIERRE);
         Tuile PMa = new Tuile("Le Palais des Marées", EtatTuile.INONDEE); PMa.setTresor(Tresor.CALICE);
@@ -1495,8 +1492,6 @@ public class Controleur implements Observer{
             piocheInond.add(cI);
             
         }
-        
-        java.util.Collections.shuffle(piocheInond);
         
         Pion rouge = Pion.ROUGE;
         Pion bleu = Pion.BLEU;
@@ -1547,10 +1542,10 @@ public class Controleur implements Observer{
         }
         
         LinkedHashMap<Integer, Aventurier> joueursSurGrille = new LinkedHashMap();
-        Aventurier joueur1 = new Ingenieur("joueur1", PFe, rouge); joueursSurGrille.put(joueur1.getId(), joueur1);PMa.arriveeJoueur(joueur1); joueur1.setPosition(PMa);
-        Aventurier joueur2 = new Explorateur("joueur2", PCo, vert); joueursSurGrille.put(joueur2.getId(), joueur2);PCu.arriveeJoueur(joueur2);
-        Aventurier joueur3 = new Plongeur("joueur3", DIl, violet); joueursSurGrille.put(joueur3.getId(), joueur3);PFe.arriveeJoueur(joueur3);
-        Aventurier joueur4 = new Pilote("joueur4", O, bleu); joueursSurGrille.put(joueur4.getId(), joueur4);H.arriveeJoueur(joueur4);
+        Aventurier joueur1 = new Ingenieur("joueur1", PMa, rouge); joueursSurGrille.put(joueur1.getId(), joueur1);PMa.arriveeJoueur(joueur1); joueur1.setPosition(PMa);
+        Aventurier joueur2 = new Explorateur("joueur2", PCu, vert); joueursSurGrille.put(joueur2.getId(), joueur2);PCu.arriveeJoueur(joueur2);
+        Aventurier joueur3 = new Plongeur("joueur3", O, violet); joueursSurGrille.put(joueur3.getId(), joueur3);O.arriveeJoueur(joueur3);
+        Aventurier joueur4 = new Pilote("joueur4", O, bleu); joueursSurGrille.put(joueur4.getId(), joueur4);O.arriveeJoueur(joueur4);
         //Aventurier joueur5 = new Navigateur("joueur5", POr, jaune); joueursSurGrille.add(joueur5);
         //Aventurier joueur6 = new Messager("joueur6", PAr, orange); joueursSurGrille.add(joueur6);
 
@@ -1572,8 +1567,7 @@ public class Controleur implements Observer{
         controleur.setJCourant(joueur1);
         controleur.setNbActionsRestantes(3);
         controleur.setPiocheTirage(listeCartes);
-        
-        
+        controleur.setPiocheInondation(piocheInond);
         
         
      

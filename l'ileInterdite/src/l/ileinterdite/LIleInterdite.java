@@ -24,8 +24,8 @@ public class LIleInterdite {
         // TODO code application logic here
         //scenario1();
         //scenario2();
-        scenario3();
-        //scenario4();
+        //scenario3();
+        scenario4();
         //scenario5();
     }
 }
