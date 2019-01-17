@@ -365,8 +365,9 @@ public class Controleur implements Observer{
         
         CarteTirage c = piocheTirage.get(listeId.get(0));
        
-        if (c.getClass().getSimpleName() == "CarteMonteeDesEaux"){
+        if (c.getClass().getSimpleName().equals("CarteMonteeDesEaux")){
             piocheCarteMonteeDesEaux();
+            System.out.println(niveauInond);
             piocheTirage.put(c.getId(), c);
         }else{
                 JCourant.addCartesEnMain(c);
@@ -428,7 +429,7 @@ public class Controleur implements Observer{
         piocheInondation.clear();
         piocheInondation.addAll(defausseInondation);
         defausseInondation.clear();
-        vuePlateau.getMessageBox().displayMessage("Une carte montee des eaux a été pioché", JCourant.getPion().getCouleur(), Boolean.TRUE, Boolean.TRUE);
+        util.Utils.afficherInformation("Une carte montee des eaux a été pioché");
         vuePlateau.getMessageBox().displayAlerte("Une carte montee des eaux a été pioché");
         vuePlateau.getVueNiveau().setNiveau(niveauInond);
     }
@@ -746,11 +747,11 @@ public class Controleur implements Observer{
         ArrayList<CarteInondation> piocheInond = new ArrayList();
         
         ArrayList<CarteInondation> listeCartesInond = new ArrayList();
+        
         for(Integer key : listeTuiles.keySet()){
             CarteInondation cI = new CarteInondation(listeTuiles.get(key));
             
             piocheInond.add(cI);
-            
         }
         
         java.util.Collections.shuffle(piocheInond);
@@ -770,7 +771,7 @@ public class Controleur implements Observer{
         LinkedHashMap<Integer, CarteTirage> listeCartes = new LinkedHashMap<>();
         int i =0;
         while(i<=31){
-            if(i<5){
+            /*if(i<5){
                 CarteTresor ct = new CarteTresor(Tresor.CALICE);
                 listeCartes.put(ct.getId(), ct);
             }
@@ -794,8 +795,8 @@ public class Controleur implements Observer{
             if(25<=i && i<30){
                 CarteTresor ct = new CarteTresor(Tresor.PIERRE);
                 listeCartes.put(ct.getId(), ct);
-            }
-            if(30<=i && i<31){
+            }*/
+            if(0<=i && i<31){
             CarteMonteeDesEaux ct = new CarteMonteeDesEaux();
             listeCartes.put(ct.getId(), ct);
             }
@@ -837,7 +838,7 @@ public class Controleur implements Observer{
         vuesAventurier.put(joueur4.getId(), vue4);
         
         Controleur controleur = new Controleur();
-
+        
         controleur.setGrille(grid);
         controleur.setListeJoueurs(joueursSurGrille);
         controleur.setJCourant(joueur1);
