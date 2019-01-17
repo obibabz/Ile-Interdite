@@ -511,9 +511,9 @@ public class Controleur implements Observer{
     
     public boolean ifCarteHelico(Aventurier a){
         boolean retour = false;
-        String cH = "CarteHelicoptere";
+        String cH = "Heli";
         for(Integer key : a.getCartesEnMain().keySet()){
-            if(a.getCartesEnMain().get(key).getClass().getSimpleName().equals(cH)){
+            if(a.getCartesEnMain().get(key).getNom().equals(cH)){
                 retour = true;
             }
         }
@@ -536,10 +536,17 @@ public class Controleur implements Observer{
     
     public boolean ifVictoire(){
         boolean retour = false;
+        System.out.println("0");
         if(ifToutLesJoueursSurHeliport()){
+            System.out.println("1");
+            for(Utils.Tresor t : this.tresorPossede){System.out.println(t.toString());}
+           
             if(ifToutLesTrésors()){
+                System.out.println("2");
                 for(Integer key : listeJoueurs.keySet()){
+                    System.out.println("3");
                     if(ifCarteHelico(listeJoueurs.get(key))){
+                        System.out.println("4");
                         retour = true;
                     }
                 }
@@ -969,8 +976,9 @@ public class Controleur implements Observer{
                 
             }
             if(5<=i && i<10){
-                CarteTresor ct = new CarteTresor(Tresor.PIERRE);
+                CarteHelicoptere ct = new CarteHelicoptere();
                 listeCartes.put(ct.getId(), ct);
+                
             }
             if(10<=i && i<15){
                 CarteTresor ct = new CarteTresor(Tresor.CRISTAL);
@@ -985,8 +993,9 @@ public class Controleur implements Observer{
                 listeCartes.put(ct.getId(), ct);
             }
             if(25<=i && i<30){
-                CarteHelicoptere ct = new CarteHelicoptere();
+                CarteTresor ct = new CarteTresor(Tresor.PIERRE);
                 listeCartes.put(ct.getId(), ct);
+                
             }
             if(30<=i && i<31){
             CarteMonteeDesEaux ct = new CarteMonteeDesEaux();
@@ -1003,9 +1012,9 @@ public class Controleur implements Observer{
         }
         
         LinkedHashMap<Integer, Aventurier> joueursSurGrille = new LinkedHashMap();
-        Aventurier joueur1 = new Ingenieur("joueur1", PFe, rouge); joueursSurGrille.put(joueur1.getId(), joueur1);PMa.arriveeJoueur(joueur1); joueur1.setPosition(PMa);
-        Aventurier joueur2 = new Explorateur("joueur2", PCo, vert); joueursSurGrille.put(joueur2.getId(), joueur2);PCu.arriveeJoueur(joueur2);
-        Aventurier joueur3 = new Plongeur("joueur3", DIl, violet); joueursSurGrille.put(joueur3.getId(), joueur3);PFe.arriveeJoueur(joueur3);
+        Aventurier joueur1 = new Ingenieur("joueur1", PMa, rouge); joueursSurGrille.put(joueur1.getId(), joueur1);PMa.arriveeJoueur(joueur1);
+        Aventurier joueur2 = new Explorateur("joueur2", PCu, vert); joueursSurGrille.put(joueur2.getId(), joueur2);PCu.arriveeJoueur(joueur2);
+        Aventurier joueur3 = new Plongeur("joueur3", PFe, violet); joueursSurGrille.put(joueur3.getId(), joueur3);PFe.arriveeJoueur(joueur3);
         Aventurier joueur4 = new Pilote("joueur4", H, bleu); joueursSurGrille.put(joueur4.getId(), joueur4);H.arriveeJoueur(joueur4);
         //Aventurier joueur5 = new Navigateur("joueur5", POr, jaune); joueursSurGrille.add(joueur5);
         //Aventurier joueur6 = new Messager("joueur6", PAr, orange); joueursSurGrille.add(joueur6);
