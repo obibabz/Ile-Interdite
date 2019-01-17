@@ -464,9 +464,7 @@ public class Controleur implements Observer{
         }
         else if(t.getEtatTuile() == EtatTuile.COULEE){
             piocheInondation.remove(0);
-            piocheCarteInondee();
-            
-            
+            piocheCarteInondee();   
         }
     }
 
@@ -745,6 +743,7 @@ public class Controleur implements Observer{
             
         }
         
+        java.util.Collections.shuffle(piocheInond);
         
         
         Grille grid = new Grille(listeTuiles);
@@ -793,6 +792,7 @@ public class Controleur implements Observer{
             i++;
         }
         //((Collections) listeCartes).shuffle();
+        
         LinkedHashMap<Integer, VueCarte> piocheTirage = new LinkedHashMap();
         
         for(Integer key : listeCartes.keySet()){
@@ -922,7 +922,17 @@ public class Controleur implements Observer{
         
         Grille grid = new Grille(listeTuiles);
         
+                ArrayList<CarteInondation> piocheInond = new ArrayList();
         
+        ArrayList<CarteInondation> listeCartesInond = new ArrayList();
+        for(Integer key : listeTuiles.keySet()){
+            CarteInondation cI = new CarteInondation(listeTuiles.get(key));
+            
+            piocheInond.add(cI);
+            
+        }
+        
+        java.util.Collections.shuffle(piocheInond);
         
         Pion rouge = Pion.ROUGE;
         Pion bleu = Pion.BLEU;
@@ -1117,6 +1127,18 @@ public class Controleur implements Observer{
         
         Grille grid = new Grille(listeTuiles);
         
+        ArrayList<CarteInondation> piocheInond = new ArrayList();
+        
+        ArrayList<CarteInondation> listeCartesInond = new ArrayList();
+        for(Integer key : listeTuiles.keySet()){
+            CarteInondation cI = new CarteInondation(listeTuiles.get(key));
+            
+            piocheInond.add(cI);
+            
+        }
+        
+        java.util.Collections.shuffle(piocheInond);
+        
         Pion rouge = Pion.ROUGE;
         Pion bleu = Pion.BLEU;
         Pion jaune = Pion.JAUNE;
@@ -1283,6 +1305,18 @@ public class Controleur implements Observer{
         listeTuiles.put(JMu.getId(), JMu);
         
         Grille grid = new Grille(listeTuiles);
+        
+        ArrayList<CarteInondation> piocheInond = new ArrayList();
+        
+        ArrayList<CarteInondation> listeCartesInond = new ArrayList();
+        for(Integer key : listeTuiles.keySet()){
+            CarteInondation cI = new CarteInondation(listeTuiles.get(key));
+            
+            piocheInond.add(cI);
+            
+        }
+        
+        java.util.Collections.shuffle(piocheInond);
         
         Pion rouge = Pion.ROUGE;
         Pion bleu = Pion.BLEU;
@@ -1451,6 +1485,18 @@ public class Controleur implements Observer{
         listeTuiles.put(JMu.getId(), JMu);
         
         Grille grid = new Grille(listeTuiles);
+        
+        ArrayList<CarteInondation> piocheInond = new ArrayList();
+        
+        ArrayList<CarteInondation> listeCartesInond = new ArrayList();
+        for(Integer key : listeTuiles.keySet()){
+            CarteInondation cI = new CarteInondation(listeTuiles.get(key));
+            
+            piocheInond.add(cI);
+            
+        }
+        
+        java.util.Collections.shuffle(piocheInond);
         
         Pion rouge = Pion.ROUGE;
         Pion bleu = Pion.BLEU;
